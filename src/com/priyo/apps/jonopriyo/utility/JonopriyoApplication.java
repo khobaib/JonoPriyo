@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
 
-public class application extends Application {
+public class JonopriyoApplication extends Application {
     
     private static Context context;
     protected SharedPreferences User;
