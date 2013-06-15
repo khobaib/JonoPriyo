@@ -46,12 +46,12 @@ public class JsonParser {
 
         String editTokenVal = null;
         StringBuilder sb = null;
-        if (appToken != null) {
-            sb = new StringBuilder();
-            sb.append("Token token=\"" + appToken + "\"");
-            editTokenVal = sb.toString();
-            Log.d(TAG, "string token in header = " + editTokenVal);
-        }
+//        if (appToken != null) {
+//            sb = new StringBuilder();
+//            sb.append("token:\"" + appToken);
+//            editTokenVal = sb.toString();
+//            Log.d(TAG, "string token in header = " + editTokenVal);
+//        }
 
         if (params != null) {
             String paramString = URLEncodedUtils.format(params, "utf-8");
@@ -69,8 +69,10 @@ public class JsonParser {
                 HttpGet httpGet = new HttpGet(url);
                 httpGet.setHeader("Content-Type", "application/json");
                 httpGet.setHeader("Accept", "application/json");
-                if (editTokenVal != null)
-                    httpGet.setHeader("Authorization", editTokenVal);
+                if (appToken != null){
+                    httpGet.setHeader("token", appToken);
+                }
+//                    httpGet.setHeader("Authorization", editTokenVal);
 
                 httpResponse = httpClient.execute(httpGet);
 
@@ -78,8 +80,10 @@ public class JsonParser {
                 HttpPost httpPost = new HttpPost(url);
                 httpPost.setHeader("Content-Type", "application/json");
                 httpPost.setHeader("Accept", "application/json");
-                if (editTokenVal != null)
-                    httpPost.setHeader("Authorization", editTokenVal);
+                if (appToken != null){
+                    httpPost.setHeader("token", appToken);
+                }
+//                    httpPost.setHeader("Authorization", editTokenVal);
                 
                 StringEntity se = new StringEntity(content);
                 se.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));

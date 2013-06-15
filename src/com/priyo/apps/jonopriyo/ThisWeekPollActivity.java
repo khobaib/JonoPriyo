@@ -1,0 +1,221 @@
+package com.priyo.apps.jonopriyo;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.priyo.apps.jonopriyo.model.Poll;
+import com.priyo.apps.jonopriyo.model.ServerResponse;
+import com.priyo.apps.jonopriyo.parser.JsonParser;
+import com.priyo.apps.jonopriyo.utility.Constants;
+import com.priyo.apps.jonopriyo.utility.JonopriyoApplication;
+
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
+import android.widget.TextView;
+import android.widget.Toast;
+
+public class ThisWeekPollActivity extends Activity {
+
+    TextView tvPollQuestion;
+    RadioGroup rgAnswerOption;
+    
+    int selectedButtonId;
+
+    // Progress Dialog
+    private ProgressDialog pDialog;
+    JsonParser jsonParser;
+    JonopriyoApplication appInstance;
+
+    Poll thisWeekPoll;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.this_week_poll);
+
+        appInstance = (JonopriyoApplication) getApplication();
+        jsonParser = new JsonParser();
+        
+        selectedButtonId = -1;
+
+        tvPollQuestion = (TextView) findViewById(R.id.tv_poll_question);
+        rgAnswerOption = (RadioGroup) findViewById(R.id.rg_poll_answer);
+        rgAnswerOption.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+            
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                Toast.makeText(ThisWeekPollActivity.this, "checked id = " + checkedId, Toast.LENGTH_SHORT).show();
+                selectedButtonId = checkedId;
+            }
+        });
+
+        thisWeekPoll = null;
+        new RetrievePollData().execute();
+
+    }
+    
+    public void onClickSubmit(View v){
+        if(selectedButtonId == -1){
+            Toast.makeText(ThisWeekPollActivity.this, "Please cast your vote first.", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            Long qId = thisWeekPoll.getId();
+            Long ansId = thisWeekPoll.getAnswers().get(selectedButtonId-1).getId();
+            new CastVote().execute(qId, ansId);
+        }
+    }
+    
+    
+    public class CastVote extends AsyncTask<Long, Void, Boolean> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pDialog = new ProgressDialog(ThisWeekPollActivity.this);
+            pDialog.setMessage("Casting your vote, Please wait...");
+            pDialog.show();
+        }
+
+        @Override
+        protected Boolean doInBackground(Long... params) {
+            Log.d("MARKER", "reached this point");
+            String rootUrl = Constants.URL_ROOT;
+
+            List<NameValuePair> urlParam = new ArrayList<NameValuePair>();
+            urlParam.add(new BasicNameValuePair("method", Constants.METHOD_POST_USER_POLL));
+            
+
+            try {
+                JSONObject pollObj = new JSONObject();
+                pollObj.put("user_id", 5);              // hardcoded, no need this field.
+                pollObj.put("poll_question_id", params[0]);
+                pollObj.put("poll_ansswer_id", params[1]);
+                String pollData = pollObj.toString();
+                Log.d("sending poll data", pollData);
+                
+                String token = appInstance.getAccessToken();
+
+                ServerResponse response = jsonParser.retrieveServerData(Constants.REQUEST_TYPE_POST, rootUrl,
+                        urlParam, pollData, token);
+                if(response.getStatus() == 200){
+                    Log.d(">>>><<<<", "success in casting vote");
+                    JSONObject responsObj = response.getjObj();
+                    return true;
+                }
+                return false;
+            } catch (JSONException e) {                
+                e.printStackTrace();
+                return false;
+            }
+
+        }
+
+
+        @Override
+        protected void onPostExecute(Boolean success) {
+            pDialog.dismiss();
+            if(success){
+                alert("Your vote is cast successfully.", true);
+            }
+            else{
+                alert("Sorry try again.", false);
+            }
+
+        }
+    }
+
+
+    public class RetrievePollData extends AsyncTask<String, Void, Boolean> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pDialog = new ProgressDialog(ThisWeekPollActivity.this);
+            pDialog.setMessage("Retrieving poll data, Please wait...");
+            pDialog.show();
+        }
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+            Log.d("MARKER", "reached this point");
+            String rootUrl = Constants.URL_ROOT;
+
+            List<NameValuePair> urlParam = new ArrayList<NameValuePair>();
+            urlParam.add(new BasicNameValuePair("method", Constants.METHOD_GET_THIS_WEEK_POLL));
+
+            String token = appInstance.getAccessToken();
+
+            ServerResponse response = jsonParser.retrieveServerData(Constants.REQUEST_TYPE_GET, rootUrl,
+                    urlParam, null, token);
+            if(response.getStatus() == 200){
+                Log.d(">>>><<<<", "success in login");
+                JSONObject responsObj = response.getjObj();
+                thisWeekPoll = Poll.parsePoll(responsObj.toString());
+                return true;
+                //                String login = responsObj.getString("login");
+            }
+
+            return false;
+
+        }
+
+
+        @Override
+        protected void onPostExecute(Boolean success) {
+            pDialog.dismiss();
+            if(success){
+                tvPollQuestion.setText(thisWeekPoll.getQuestion());
+                
+                int ansCount = thisWeekPoll.getAnswers().size();
+                final RadioButton[] rb = new RadioButton[ansCount];
+                for(int buttonIndex = 0; buttonIndex < ansCount; buttonIndex++){
+                    rb[buttonIndex]  = new RadioButton(ThisWeekPollActivity.this);
+                    rgAnswerOption.addView(rb[buttonIndex]); //the RadioButtons are added to the radioGroup instead of the layout
+                    rb[buttonIndex].setText(thisWeekPoll.getAnswers().get(buttonIndex).getAnswer());
+                }
+            }
+            else{
+                //                Toast.makeText(LoginActivity.this, "Login error, please try again",  Toast.LENGTH_SHORT).show();
+            }
+
+        }
+
+
+
+    }
+    
+    
+    void alert(String message, final Boolean success) {
+        AlertDialog.Builder bld = new AlertDialog.Builder(ThisWeekPollActivity.this);
+        bld.setMessage(message);
+        bld.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+            
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if(success){
+                    startActivity(new Intent(ThisWeekPollActivity.this, PollResultActivity.class));
+                    finish();
+                }
+                
+            }
+        });
+        bld.create().show();
+    }
+
+}

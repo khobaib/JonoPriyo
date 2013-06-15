@@ -12,7 +12,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
-        android:text="Champions Trophy"
+        android:text="Poll Title"
         android:textColor="@color/honeycombish_blue"
         android:textSize="25dp" />
 
@@ -23,16 +23,36 @@
         android:layout_below="@+id/tv_poll_title"
         android:layout_centerHorizontal="true"
         android:layout_margin="10dp"
-        android:text="Who will win the champions trophy this year?"
+        android:text=""
         android:textColor="@color/white"
         android:textSize="20dp" />
 
-    <LinearLayout
+    <!--
+         <LinearLayout
         android:id="@+id/ll_poll_answer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:layout_below="@+id/tv_poll_question" >
     </LinearLayout>
+    -->
+
+    <RadioGroup
+        android:id="@+id/rg_poll_answer"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_poll_question"
+        android:layout_margin="10dp"
+        android:orientation="vertical" />
+
+    <Button
+        android:id="@+id/b_submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rg_poll_answer"
+        android:layout_marginTop="20dp"
+        android:onClick="onClickSubmit"
+        android:layout_centerHorizontal="true"
+        android:text="Submit" />
 
 </RelativeLayout>

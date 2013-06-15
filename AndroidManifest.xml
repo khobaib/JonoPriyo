@@ -8,6 +8,8 @@
         android:minSdkVersion="8"
         android:targetSdkVersion="17" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".utility.JonopriyoApplication"
         android:allowBackup="true"
@@ -16,7 +18,13 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.priyo.apps.jonopriyo.SplashActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".PollResultActivity"
@@ -29,12 +37,10 @@
         <activity
             android:name="RegisterActivity"
             android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
+        <activity android:name=".HomeActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".ThisWeekPollActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".AllPollsActivity" android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
