@@ -12,6 +12,7 @@ a. login success
 {
 	"login":"success"
 	"token":"112ldsjslkewrwer"
+	"image_url":"http://apps.jonopriyo.com/images/my_image.png"
 }
 
 b. login failure
@@ -179,7 +180,6 @@ response:
 
 request: POST
 {
-	"user_id":5
 	"poll_question_id":12
 	"poll_ansswer_id":122
 }
@@ -336,3 +336,12 @@ response:
 		"winner_image_url":"https://apps.jonopriyo.com/images/khobaib.png"
 	}
 ]
+
+
+
+changelist - 20-06-2013
+------------------------
+1. api method - 12,13,14
+2. remove user_id from  method#9 - post_user_poll
+3. add image_url in method#1- user_login
+
