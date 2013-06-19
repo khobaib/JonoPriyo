@@ -1,0 +1,86 @@
+country table
+-------------
+id - int
+name - text
+
+city table
+----------
+id - int
+country_id - int
+name - text
+
+area table
+----------
+id - int
+city_id - int
+name - text
+
+
+profession table
+----------------
+id - int
+type - text
+
+education table
+---------------
+id - int
+type - text
+
+
+user table
+----------
+id - int
+name - text
+email - text
+password (ssh key?) - text
+dob - date
+profession_id - int
+education_id - int
+sex - char (M/F)
+country_id - int
+city_id - int
+area_id - int
+address - text
+phone - text
+image_url - text
+
+
+poll table
+-------------------
+id - int
+poll_number - int
+poll_question - text
+is_new - boolean
+
+pollAnswer table (one poll has multiple asnwer)
+---------------------------------------------------------
+id - int
+poll_id - int
+poll_answer - text
+
+
+userAnswer table
+-----------------
+id - int
+user_id - int
+poll_id - int
+poll_answer_id - int
+
+
+
+winner table
+-------------
+id - int
+poll_id - int (foreign key - poll(id))
+user_id - int (foreign key - user(id))
+
+
+
+change-list
+-----------
+1. new table - winner table
+2. rename pollQuestion table to poll table 
+3. rename poll_question_id(pollAnswer table) to poll_id (check above)
+4. rename poll_question_id(userAnswer table) to poll_id (check above)
+5. new field in poll table - is_new
+6. new field in user table - image_url

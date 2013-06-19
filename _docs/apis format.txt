@@ -1,0 +1,338 @@
+1. method=user_login
+
+request: POST
+{
+	"email":"khobaib@gmail.com"
+	"password":"xyz"
+}
+
+response:
+
+a. login success
+{
+	"login":"success"
+	"token":"112ldsjslkewrwer"
+}
+
+b. login failure
+{
+	"login":"failure"
+}
+
+
+2. method=registration
+
+request: POST
+{
+	"name":"Khobaib Chowdhury"
+	"email":"khobaib@gmail.com"
+	"password":"xyz"
+	"dob":"29-05-2000"
+	"profession_id":12
+	"education_id":8
+	"sex":"M"
+	"country_id":6
+	"city_id":4
+	"area_id":123
+	"address":"5/F BUET"
+	"phone":"01717110926"
+}
+
+response:
+
+a. success
+{
+	"success"
+}
+
+b. duplicate email
+{
+	"email already exists"
+}
+
+
+
+3. method=get_countries
+
+request: GET
+{
+}
+
+response:
+"country":[
+	{
+		"id":5
+		"name":"Bangladesh"
+	},
+	{
+		"id":5
+		"name":"Bangladesh"
+	}
+]
+
+
+
+
+4. method=get_cities&country_id=5
+
+request: GET
+{
+}
+
+response:
+"city":[
+	{
+		"id":53
+		"name":"Khulna"
+	},
+	{
+		"id":54
+		"name":"Dhaka"
+	}
+]
+
+
+
+
+5. method=get_area&city_id=54
+
+request: GET
+{
+}
+
+"area":[
+	{
+		"id":12
+		"name":"BUET"
+	},
+	{
+		"id":16
+		"name":"Gulshan"
+	}
+]
+
+6. method=get_profession
+
+request: GET
+{
+}
+
+response:
+"profession":[
+	{
+		"id":12
+		"type":"Teacher"
+	},
+	{
+		"id":16
+		"type":"Private Service"
+	}
+]
+
+
+7. method=get_education
+
+request: GET
+{
+}
+
+response:
+"educatiton":[
+	{
+		"id":13
+		"type":"Student"
+	},
+	{
+		"id":6
+		"type":"H.Sc."
+	}
+]
+
+
+8. method=get_this_week_poll
+(remember the poll which has largest poll_number is this week's poll)
+
+request: GET
+{
+}
+
+response:
+{
+	"poll_id":12
+	"poll_number":15
+	"poll_question":"Who will be the Champion?"
+	"poll_answer":[
+		{
+			"poll_answer_id":121
+			"poll_answer":"Australia"
+		},
+		{
+			"poll_answer_id":122
+			"poll_answer":"India"
+		}
+	]
+}
+
+
+
+9. method=post_user_poll
+
+request: POST
+{
+	"user_id":5
+	"poll_question_id":12
+	"poll_ansswer_id":122
+}
+
+reponse:
+{
+	"ok"
+}
+
+
+10. method=poll_result&poll_id=12
+
+request: GET
+{
+}
+
+response:
+"poll_result":[
+	{
+		"poll_answer_id":121
+		"poll_answer":"Australia"
+		"result_count":12
+	},
+	{
+		"poll_answer_id":122
+		"poll_answer":"India"
+		"result_count":14
+	}
+]
+
+
+
+11. method=get_all_poll
+
+request: GET
+{
+}
+
+response:
+
+"poll_list":[
+	{
+		"poll_id":12
+		"poll_number":15
+		"poll_question":"Who will be the Champion?"
+		"poll_answer":[
+			{
+				"poll_answer_id":121
+				"poll_answer":"Australia"
+			},
+			{
+				"poll_answer_id":122
+				"poll_answer":"India"
+			}
+		]
+	},
+	{
+		"poll_id":13
+		"poll_number":112
+		"poll_question":"Which device ie the best?"
+		"poll_answer":[
+			{
+				"poll_answer_id":125
+				"poll_answer":"Galaxy-S3"
+			},
+			{
+				"poll_answer_id":126
+				"poll_answer":"iPhone-5"
+			}
+		]
+	}
+]
+
+
+12. method=upload_profile_picture
+
+request: POST
+{
+"image":"here_is_the_base_64_encoded_byte_data"
+}
+
+response:
+{
+"response":"success" or "failed to upload"
+}
+
+*** please discuss wih me where you want to store this image file.
+*** check this link how to upload & process image data in php, scroll down for the php part -
+http://development-in-android.blogspot.com/2012/09/upload-image-from-android-to-server.html
+
+
+13. method=get_my_polls
+
+request: GET
+{
+}
+
+response:
+
+"my_poll_list":[
+	{
+		"poll_id":12
+		"poll_number":15
+		"poll_question":"Who will be the Champion?"
+		"poll_answer":[
+			{
+				"poll_answer_id":121
+				"poll_answer":"Australia"
+			},
+			{
+				"poll_answer_id":122
+				"poll_answer":"India"
+			}
+		]
+		"my_answer_id":122
+	},
+	{
+		"poll_id":13
+		"poll_number":112
+		"poll_question":"Which device ie the best?"
+		"poll_answer":[
+			{
+				"poll_answer_id":125
+				"poll_answer":"Galaxy-S3"
+			},
+			{
+				"poll_answer_id":126
+				"poll_answer":"iPhone-5"
+			}
+		]
+		"my_answer_id":126
+	}
+]
+
+
+
+14. method=get_winners
+
+request: GET
+{
+}
+
+response:
+
+"winner_list":[
+	{
+		"poll_id":1
+		"winner_name":"Pratyai"
+		"winner_image_url":"https://apps.jonopriyo.com/images/pratyai.png"
+	},
+	{
+		"poll_id":2
+		"winner_name":"Khobaib"
+		"winner_image_url":"https://apps.jonopriyo.com/images/khobaib.png"
+	}
+]
