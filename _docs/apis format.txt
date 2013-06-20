@@ -263,7 +263,8 @@ request: POST
 
 response:
 {
-"response":"success" or "failed to upload"
+	"response":"success" or "failed to upload"
+	"image_url":"http://apps.jonopriyo.com/images/my_image.png"			// in case of "success"
 }
 
 *** please discuss wih me where you want to store this image file.
