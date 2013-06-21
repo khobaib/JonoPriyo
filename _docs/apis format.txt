@@ -158,7 +158,7 @@ request: GET
 }
 
 response:
-"new_polls":[
+"poll_list":[
 	{
 		"poll_id":12
 		"poll_number":15
@@ -202,8 +202,13 @@ request: POST
 }
 
 reponse:
+a. successfully cast the vote
 {
-	"ok"
+	"response":"success"
+}
+b. this user already cast a vote, so this vote won't be allowed.
+{
+	"response":"duplicate"
 }
 
 
@@ -299,7 +304,7 @@ request: GET
 
 response:
 
-"my_poll_list":[
+"poll_list":[
 	{
 		"poll_id":12
 		"poll_number":15
@@ -366,16 +371,22 @@ changelists
 
 20-06-2013
 ----------
-1. api method - 12,13,14
+1. api method - 12,13,14 added.
 2. remove user_id from  method#9 - post_user_poll
 3. add image_url in method#1- user_login
 
 
 21-06-2013
 ----------
-1. change in response of method=upload_profile_picture
+1. change in response of api#12 - method=upload_profile_picture
 2. change in the name of api #8 - "method=get_new_polls". Previously it was "method=get_this_week_poll"
 3. change in the response of #8 - now it returns array of polls, which are new. Keep in mind that multiple polls can be marked as new.
 4. api #11 renamed as method=get_all_polls instead of method=get_all_poll
 5. change in the response of #11 - field added in response, "is_new"
 6. change in the response of #13 - field added in response, "is_new"
+
+22-06-2013
+-----------
+1. change in response of api #9 - method=post_user_poll.
+2. change in api#8 & api13 - parent JsonObject key is changed to "poll_list".
+
