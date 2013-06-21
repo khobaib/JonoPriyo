@@ -1,5 +1,7 @@
 package com.priyo.apps.jonopriyo.utility;
 
+import com.priyo.apps.jonopriyo.model.Poll;
+
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -11,11 +13,14 @@ public class JonopriyoApplication extends Application {
     private static Context context;
     protected SharedPreferences User;
     
+    private Poll selectedPoll;
+    
     @Override
     public void onCreate() {
         super.onCreate();
         context = getApplicationContext();
         User = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        selectedPoll = null;
     }
     
     
@@ -28,8 +33,17 @@ public class JonopriyoApplication extends Application {
         return context;        
     }
     
-    
-    
+   
+    public Poll getSelectedPoll() {
+        return selectedPoll;
+    }
+
+
+    public void setSelectedPoll(Poll selectedPoll) {
+        this.selectedPoll = selectedPoll;
+    }
+
+
     public void setFirstTime(Boolean firstTimeFlag){
         Editor editor = User.edit();
         editor.putBoolean(Constants.FIRST_TIME, firstTimeFlag);
@@ -52,6 +66,12 @@ public class JonopriyoApplication extends Application {
     public void setAccessToken(String token){
         Editor editor = User.edit();
         editor.putString(Constants.ACCESS_TOKEN, token);
+        editor.commit();        
+    }
+    
+    public void setProfileImageUrl(String imageUrl){
+        Editor editor = User.edit();
+        editor.putString(Constants.PROFILE_PIC_URL, imageUrl);
         editor.commit();        
     }
     
@@ -80,6 +100,11 @@ public class JonopriyoApplication extends Application {
     public String getAccessToken(){
         String token = User.getString(Constants.ACCESS_TOKEN, null);
         return token;
+    }
+    
+    public String getProfileImageUrl(){
+        String imageUrl = User.getString(Constants.PROFILE_PIC_URL, null);
+        return imageUrl;
     }
 
 }

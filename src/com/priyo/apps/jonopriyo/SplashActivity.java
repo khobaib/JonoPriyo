@@ -13,6 +13,7 @@ import com.priyo.apps.jonopriyo.model.ServerResponse;
 import com.priyo.apps.jonopriyo.parser.JsonParser;
 import com.priyo.apps.jonopriyo.utility.Constants;
 import com.priyo.apps.jonopriyo.utility.JonopriyoApplication;
+import com.priyo.apps.jonopriyo.utility.Utility;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -40,6 +41,12 @@ public class SplashActivity extends Activity {
 
         appInstance = (JonopriyoApplication) getApplication();
         jsonParser = new JsonParser();
+        
+        Boolean isFirstTime = appInstance.isFirstTime();
+        if(isFirstTime){
+            Utility.createDirectory();
+            appInstance.setFirstTime(false);
+        }
 
         Boolean rememberMeFlag = appInstance.isRememberMe();
         Log.d("loggine remember me", "" + rememberMeFlag);
@@ -69,7 +76,7 @@ public class SplashActivity extends Activity {
 
     }
 
-    public class LoadCredentials extends AsyncTask<Void, Void, Boolean> {
+    private class LoadCredentials extends AsyncTask<Void, Void, Boolean> {
 
         @Override
         protected void onPreExecute() {
@@ -103,7 +110,9 @@ public class SplashActivity extends Activity {
                     String login = responsObj.getString("login");
                     if(login.equals("success")){
                         String token = responsObj.getString("token");
+                        String imageUrl = responsObj.getString("image_url");
                         appInstance.setAccessToken(token);
+                        appInstance.setProfileImageUrl(imageUrl);
                         return true;
                     }
                     else{

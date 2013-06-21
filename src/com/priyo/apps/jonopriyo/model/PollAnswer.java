@@ -27,7 +27,7 @@ public class PollAnswer {
             int numOfAns = ansArray.length();
             for(int ansIndex = 0; ansIndex < numOfAns; ansIndex++){
                 JSONObject thisAns = ansArray.getJSONObject(ansIndex);
-                Long id = thisAns.getLong("id");
+                Long id = thisAns.getLong("poll_answer_id");
                 String ans = thisAns.getString("poll_answer");
                 PollAnswer answer = new PollAnswer(id, ans);
                 ansList.add(answer);

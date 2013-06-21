@@ -9,6 +9,9 @@
         android:targetSdkVersion="17" />
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <application
         android:name=".utility.JonopriyoApplication"
@@ -38,9 +41,30 @@
             android:name="RegisterActivity"
             android:screenOrientation="portrait" >
         </activity>
-        <activity android:name=".HomeActivity" android:screenOrientation="portrait"></activity>
-        <activity android:name=".ThisWeekPollActivity" android:screenOrientation="portrait"></activity>
-        <activity android:name=".AllPollsActivity" android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".HomeActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".NewPollsActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".AllPollsActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".UploadPicActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".PollDetailsActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".MyPollsActivity"
+            android:screenOrientation="portrait" >
+        </activity>
     </application>
 
 </manifest>

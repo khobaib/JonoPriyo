@@ -11,6 +11,7 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URLEncodedUtils;
@@ -39,22 +40,22 @@ public class JsonParser {
 
     }
 
-    public ServerResponse retrieveServerData(int reqType, String url, List<NameValuePair> params, String content, String appToken) {
+    public ServerResponse retrieveServerData(int reqType, String url, List<NameValuePair> urlParams, String content, String appToken) {
         Log.d(TAG, "in retrieveServerData method");
 
         int status = 0;
 
-        String editTokenVal = null;
+//        String editTokenVal = null;
         StringBuilder sb = null;
-//        if (appToken != null) {
-//            sb = new StringBuilder();
-//            sb.append("token:\"" + appToken);
-//            editTokenVal = sb.toString();
-//            Log.d(TAG, "string token in header = " + editTokenVal);
-//        }
+        //        if (appToken != null) {
+        //            sb = new StringBuilder();
+        //            sb.append("token:\"" + appToken);
+        //            editTokenVal = sb.toString();
+        //            Log.d(TAG, "string token in header = " + editTokenVal);
+        //        }
 
-        if (params != null) {
-            String paramString = URLEncodedUtils.format(params, "utf-8");
+        if (urlParams != null) {
+            String paramString = URLEncodedUtils.format(urlParams, "utf-8");
             url += "?" + paramString;
             Log.d(TAG, "GET url = " + url);
         }
@@ -72,7 +73,7 @@ public class JsonParser {
                 if (appToken != null){
                     httpGet.setHeader("token", appToken);
                 }
-//                    httpGet.setHeader("Authorization", editTokenVal);
+                //                    httpGet.setHeader("Authorization", editTokenVal);
 
                 httpResponse = httpClient.execute(httpGet);
 
@@ -83,8 +84,8 @@ public class JsonParser {
                 if (appToken != null){
                     httpPost.setHeader("token", appToken);
                 }
-//                    httpPost.setHeader("Authorization", editTokenVal);
-                
+                //                    httpPost.setHeader("Authorization", editTokenVal);
+
                 StringEntity se = new StringEntity(content);
                 se.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
                 httpPost.setEntity(se);
@@ -130,4 +131,90 @@ public class JsonParser {
         // return ServerResponse
         return new ServerResponse(jObj, status);
     }
+
+
+
+
+
+    public ServerResponse postProfilePicture(String url, List<NameValuePair> urlParams, String content, String appToken) {
+        Log.d(TAG, "in retrieveServerData method");
+
+        int status = 0;
+
+        String editTokenVal = null;
+        StringBuilder sb = null;
+        
+        if (urlParams != null) {
+            String paramString = URLEncodedUtils.format(urlParams, "utf-8");
+            url += "?" + paramString;
+            Log.d(TAG, "GET url = " + url);
+        }
+
+
+        // Making HTTP request
+        try {
+            // request method is GET
+            DefaultHttpClient httpClient = new DefaultHttpClient();
+//            HttpResponse httpResponse = null;
+
+            HttpPost httpPost = new HttpPost(url);
+//            httpPost.setHeader("Content-Type", "application/json");
+            httpPost.setHeader("Accept", "application/json");
+            if (appToken != null){
+                httpPost.setHeader("token", appToken);
+            }
+            //                    httpPost.setHeader("Authorization", editTokenVal);
+
+//            httpPost.setEntity(new UrlEncodedFormEntity(content.toString()));
+            StringEntity se = new StringEntity(content);
+            se.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+            httpPost.setEntity(se);
+
+            HttpResponse httpResponse = httpClient.execute(httpPost);                
+
+
+            status = httpResponse.getStatusLine().getStatusCode();
+            Log.d(TAG, "STAUS = " + status);
+
+            HttpEntity httpEntity = httpResponse.getEntity();
+            is = httpEntity.getContent();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            Log.d(TAG, "trying to read input stream.");
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is, "iso-8859-1"), 8);
+            sb = new StringBuilder();
+            String line = null;
+            while ((line = reader.readLine()) != null) {
+                sb.append(line + "\n");
+            }
+            is.close();
+            Log.d(TAG, "sb = " + sb.toString());
+            json = sb.toString();
+        } catch (Exception e) {
+            Log.e("Buffer Error", "Error converting result " + e.toString());
+        }
+
+        // try parse the string to a JSON object
+        try {
+            jObj = new JSONObject(json);
+        } catch (JSONException e) {
+            Log.e("JSON Parser", "Error parsing data " + e.toString());
+        }
+
+        // return ServerResponse
+        return new ServerResponse(jObj, status);
+    }
+
+
+
+
+
+
 }

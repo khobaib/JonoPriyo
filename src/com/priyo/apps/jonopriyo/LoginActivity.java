@@ -120,13 +120,15 @@ public class LoginActivity extends Activity {
 
                 ServerResponse response = jsonParser.retrieveServerData(Constants.REQUEST_TYPE_POST, rootUrl,
                         urlParam, loginData, null);
-                if(response.getStatus() == 200){
+                if(response.getStatus() == Constants.RESPONSE_STATUS_CODE_SUCCESS){
                     Log.d(">>>><<<<", "success in login");
                     JSONObject responsObj = response.getjObj();
                     String login = responsObj.getString("login");
                     if(login.equals("success")){
                         String token = responsObj.getString("token");
+                        String imageUrl = responsObj.getString("image_url");
                         appInstance.setAccessToken(token);
+                        appInstance.setProfileImageUrl(imageUrl);
                         return true;
                     }
                     else{
