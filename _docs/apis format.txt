@@ -150,29 +150,46 @@ response:
 ]
 
 
-8. method=get_this_week_poll
-(remember the poll which has largest poll_number is this week's poll)
+8. method=get_new_polls
+(all the polls with is_new = 1 are new polls)
 
 request: GET
 {
 }
 
 response:
-{
-	"poll_id":12
-	"poll_number":15
-	"poll_question":"Who will be the Champion?"
-	"poll_answer":[
-		{
-			"poll_answer_id":121
-			"poll_answer":"Australia"
-		},
-		{
-			"poll_answer_id":122
-			"poll_answer":"India"
-		}
-	]
-}
+"new_polls":[
+	{
+		"poll_id":12
+		"poll_number":15
+		"poll_question":"Who will be the Champion?"
+		"poll_answer":[
+			{
+				"poll_answer_id":121
+				"poll_answer":"Australia"
+			},
+			{
+				"poll_answer_id":122
+				"poll_answer":"India"
+			}
+		]
+	},
+	{
+		"poll_id":13
+		"poll_number":13
+		"poll_question":"Who will be the Champion?"
+		"poll_answer":[
+			{
+				"poll_answer_id":121
+				"poll_answer":"Australia"
+			},
+			{
+				"poll_answer_id":122
+				"poll_answer":"India"
+			}
+		]
+	}
+]
 
 
 
@@ -212,7 +229,7 @@ response:
 
 
 
-11. method=get_all_poll
+11. method=get_all_polls
 
 request: GET
 {
@@ -225,6 +242,7 @@ response:
 		"poll_id":12
 		"poll_number":15
 		"poll_question":"Who will be the Champion?"
+		"is_new"=true
 		"poll_answer":[
 			{
 				"poll_answer_id":121
@@ -240,6 +258,7 @@ response:
 		"poll_id":13
 		"poll_number":112
 		"poll_question":"Which device ie the best?"
+		"is_new"=false
 		"poll_answer":[
 			{
 				"poll_answer_id":125
@@ -285,6 +304,7 @@ response:
 		"poll_id":12
 		"poll_number":15
 		"poll_question":"Who will be the Champion?"
+		"is_new"=false
 		"poll_answer":[
 			{
 				"poll_answer_id":121
@@ -301,6 +321,7 @@ response:
 		"poll_id":13
 		"poll_number":112
 		"poll_question":"Which device ie the best?"
+		"is_new"=true
 		"poll_answer":[
 			{
 				"poll_answer_id":125
@@ -340,9 +361,21 @@ response:
 
 
 
-changelist - 20-06-2013
-------------------------
+changelists 
+-----------
+
+20-06-2013
+----------
 1. api method - 12,13,14
 2. remove user_id from  method#9 - post_user_poll
 3. add image_url in method#1- user_login
 
+
+21-06-2013
+----------
+1. change in response of method=upload_profile_picture
+2. change in the name of api #8 - "method=get_new_polls". Previously it was "method=get_this_week_poll"
+3. change in the response of #8 - now it returns array of polls, which are new. Keep in mind that multiple polls can be marked as new.
+4. api #11 renamed as method=get_all_polls instead of method=get_all_poll
+5. change in the response of #11 - field added in response, "is_new"
+6. change in the response of #13 - field added in response, "is_new"
