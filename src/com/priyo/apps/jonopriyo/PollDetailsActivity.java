@@ -8,6 +8,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -18,6 +19,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
@@ -34,6 +36,8 @@ public class PollDetailsActivity extends Activity {
     
     TextView tvPollQuestion;
     RadioGroup rgAnswerOption;
+    
+    Button Submit;
     
     TextView Title;
     
@@ -52,7 +56,9 @@ public class PollDetailsActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.poll_details);       
+        setContentView(R.layout.poll_details);     
+        
+        fromActivity = getIntent().getExtras().getInt(Constants.FROM_ACTIVITY);
 
         appInstance = (JonopriyoApplication) getApplication();
         thisPoll = appInstance.getSelectedPoll();
@@ -61,9 +67,13 @@ public class PollDetailsActivity extends Activity {
 //        String pollNum = "Poll #" + thisPoll.getNumber();
         Title.setText("Poll #" + thisPoll.getNumber());
         
+        Submit = (Button) findViewById(R.id.b_submit);
+        if(fromActivity != Constants.PARENT_ACTIVITY_NEW_POLLS)
+            Submit.setVisibility(View.GONE);
+        
         jsonParser = new JsonParser();
         
-        fromActivity = getIntent().getExtras().getInt(Constants.FROM_ACTIVITY);
+        
         
         selectedButtonIndex = -1;
 
@@ -86,16 +96,20 @@ public class PollDetailsActivity extends Activity {
         final RadioButton[] rb = new RadioButton[ansCount];
         for(int buttonIndex = 0; buttonIndex < ansCount; buttonIndex++){
             rb[buttonIndex] = new RadioButton(PollDetailsActivity.this);
-//            rb[buttonIndex].setAlpha(1);
-//            rb[buttonIndex].setButtonDrawable(R.drawable.btn_radio_holo_dark);
+            if(fromActivity == Constants.PARENT_ACTIVITY_ALL_POLLS){
+                Log.d(">>>>", "ALL POLLS");
+//                rb[buttonIndex].setClickable(false);
+                rb[buttonIndex].setEnabled(false);
+                rb[buttonIndex].setTextColor(getResources().getColor(R.color.gray_snow2));
+            }
             Log.d("ID ID ID", "rb -> id = " + rb[buttonIndex].getId());
             rgAnswerOption.addView(rb[buttonIndex]);        //the RadioButtons are added to the radioGroup instead of the layout
             Log.d("--- ID ID ID", "rb -> id = " + rgAnswerOption.getChildAt(buttonIndex).getId());
 //            rbIdList.set(buttonIndex, rgAnswerOption.getChildAt(buttonIndex).getId());
             rbIdList.add(rgAnswerOption.getChildAt(buttonIndex).getId());
             rb[buttonIndex].setText(thisPoll.getAnswers().get(buttonIndex).getAnswer());
-        }
-//        new RetrievePollData().execute();
+        }        
+
 
     }
     

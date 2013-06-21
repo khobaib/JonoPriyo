@@ -221,7 +221,8 @@
         android:layout_alignParentTop="true"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
-        android:background="@color/white"
+        android:background="@drawable/image_back"
+        android:padding="5dp"
         android:onClick="onClickProfilePic"
         android:scaleType="fitXY"
         android:src="@drawable/profile_default" />
