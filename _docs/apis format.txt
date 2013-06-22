@@ -354,11 +354,15 @@ response:
 "winner_list":[
 	{
 		"poll_id":1
+		"poll_number":1
+		"poll_question":"Which device ie the best?"
 		"winner_name":"Pratyai"
 		"winner_image_url":"https://apps.jonopriyo.com/images/pratyai.png"
 	},
 	{
 		"poll_id":2
+		"poll_number":2
+		"poll_question":"Who will win champion trophy?"
 		"winner_name":"Khobaib"
 		"winner_image_url":"https://apps.jonopriyo.com/images/khobaib.png"
 	}
@@ -443,3 +447,4 @@ changelists
 23-06-2013
 ----------
 1. new api added - #15 & #16.
+2. modification of response in api #14.
