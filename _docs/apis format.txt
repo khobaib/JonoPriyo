@@ -365,6 +365,56 @@ response:
 ]
 
 
+15. method=get_profile_info
+
+request: GET
+{
+}
+
+response: 
+{
+	"response":"success"
+	"profile_info":{
+		"name":"Khobaib Chowdhury"
+		"email":"khobaib@gmail.com"
+		"dob":"29-05-2000"
+		"profession_id":12
+		"education_id":8
+		"sex":"M"
+		"country_id":6
+		"city_id":4
+		"area_id":123
+		"address":"5/F BUET"
+		"phone":"01717110926"
+	}
+}
+
+
+16. method=post_profile_info
+
+request: POST
+*** remember "email" field is not here, because once it is set in registration-time, it can't be changed again.
+
+{
+	"profile_info":{
+		"name":"Khobaib Chowdhury"
+		"dob":"29-05-2000"
+		"profession_id":12
+		"education_id":8
+		"sex":"M"
+		"country_id":6
+		"city_id":4
+		"area_id":123
+		"address":"5/F BUET"
+		"phone":"01717110926"
+	}	
+}
+
+response:
+{
+	"response":"success"
+}
+
 
 changelists 
 -----------
@@ -390,3 +440,6 @@ changelists
 1. change in response of api #9 - method=post_user_poll.
 2. change in api#8 & api13 - parent JsonObject key is changed to "poll_list".
 
+23-06-2013
+----------
+1. new api added - #15 & #16.
