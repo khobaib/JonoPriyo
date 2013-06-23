@@ -14,6 +14,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+
+// 06-23 11:35:58.002: D/JsonParser(13431): sb = {"error":"invalid verb"} after 24 minute
+
 public class HomeActivity extends Activity {
 
     JonopriyoApplication appInstance;
@@ -64,11 +67,13 @@ public class HomeActivity extends Activity {
     }
 
     public void onClickWinners(View v){
-
+        startActivity(new Intent(HomeActivity.this, WinnerListActivity.class));
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
     }
 
     public void onClickProfile(View v){
-
+        startActivity(new Intent(HomeActivity.this, ProfileActivity.class));
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
     }
 
     public void onClickShare(View v){

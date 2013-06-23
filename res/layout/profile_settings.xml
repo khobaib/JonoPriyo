@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
+    android:background="@color/gray70"
     android:descendantFocusability="beforeDescendants"
     android:focusableInTouchMode="true" >
 
@@ -15,8 +15,9 @@
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
         android:text="Profile Settings"
-        android:textColor="@color/honeycombish_blue"
-        android:textSize="25dp" />
+        android:textColor="@color/red"
+        android:textSize="25dp"
+        android:textStyle="bold" />
 
     <View
         android:id="@+id/v1"
@@ -43,7 +44,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="25dp"
                 android:gravity="right"
                 android:text="Name:"
                 android:textColor="@color/white"
@@ -56,20 +57,20 @@
                 android:layout_alignLeft="@+id/tv_name"
                 android:layout_alignRight="@+id/tv_name"
                 android:layout_below="@+id/tv_name"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="25dp"
                 android:gravity="right"
                 android:text="Email:"
                 android:textColor="@color/white"
                 android:textSize="18dp" />
 
-            <TextView
+    <!--         <TextView
                 android:id="@+id/tv_password"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@+id/tv_name"
                 android:layout_alignRight="@+id/tv_name"
                 android:layout_below="@+id/tv_email"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="25dp"
                 android:gravity="right"
                 android:text="Password:"
                 android:textColor="@color/white"
@@ -82,20 +83,20 @@
                 android:layout_alignLeft="@+id/tv_name"
                 android:layout_alignRight="@+id/tv_name"
                 android:layout_below="@+id/tv_password"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="25dp"
                 android:gravity="right"
                 android:text="Confirm Password:"
                 android:textColor="@color/white"
-                android:textSize="16dp" />
+                android:textSize="16dp" /> -->
 
             <TextView
-                android:id="@+id/tv_dob"
+                android:id="@+id/tv_dob_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@+id/tv_name"
                 android:layout_alignRight="@+id/tv_name"
-                android:layout_below="@+id/tv_confirm_password"
-                android:layout_marginTop="20dp"
+                android:layout_below="@+id/tv_email"
+                android:layout_marginTop="25dp"
                 android:gravity="right"
                 android:text="Date of Birth:"
                 android:textColor="@color/white"
@@ -107,8 +108,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@+id/tv_name"
                 android:layout_alignRight="@+id/tv_name"
-                android:layout_below="@+id/tv_dob"
-                android:layout_marginTop="20dp"
+                android:layout_below="@+id/tv_dob_title"
+                android:layout_marginTop="25dp"
                 android:gravity="right"
                 android:text="Profession:"
                 android:textColor="@color/white"
@@ -121,7 +122,7 @@
                 android:layout_alignLeft="@+id/tv_name"
                 android:layout_alignRight="@+id/tv_name"
                 android:layout_below="@+id/tv_profession"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="25dp"
                 android:gravity="right"
                 android:text="Education"
                 android:textColor="@color/white"
@@ -134,7 +135,7 @@
                 android:layout_alignLeft="@+id/tv_name"
                 android:layout_alignRight="@+id/tv_name"
                 android:layout_below="@+id/tv_education"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="25dp"
                 android:gravity="right"
                 android:text="Sex:"
                 android:textColor="@color/white"
@@ -147,7 +148,7 @@
                 android:layout_alignLeft="@+id/tv_name"
                 android:layout_alignRight="@+id/tv_name"
                 android:layout_below="@+id/tv_sex"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="25dp"
                 android:gravity="right"
                 android:text="Country:"
                 android:textColor="@color/white"
@@ -160,7 +161,7 @@
                 android:layout_alignLeft="@+id/tv_name"
                 android:layout_alignRight="@+id/tv_name"
                 android:layout_below="@+id/tv_country"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="25dp"
                 android:gravity="right"
                 android:text="City/District:"
                 android:textColor="@color/white"
@@ -173,7 +174,7 @@
                 android:layout_alignLeft="@+id/tv_name"
                 android:layout_alignRight="@+id/tv_name"
                 android:layout_below="@+id/tv_city"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="25dp"
                 android:gravity="right"
                 android:text="Area:"
                 android:textColor="@color/white"
@@ -186,7 +187,7 @@
                 android:layout_alignLeft="@+id/tv_name"
                 android:layout_alignRight="@+id/tv_name"
                 android:layout_below="@+id/tv_area"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="25dp"
                 android:gravity="right"
                 android:text="Address:"
                 android:textColor="@color/white"
@@ -199,7 +200,7 @@
                 android:layout_alignLeft="@+id/tv_name"
                 android:layout_alignRight="@+id/tv_name"
                 android:layout_below="@+id/tv_address"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="25dp"
                 android:gravity="right"
                 android:text="Phone:"
                 android:textColor="@color/white"
@@ -240,7 +241,7 @@
                 android:textColor="@color/white"
                 android:textSize="16dp" />
 
-            <EditText
+<!--             <EditText
                 android:id="@+id/et_password"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -266,23 +267,24 @@
                 android:inputType="textPassword"
                 android:singleLine="true"
                 android:textColor="@color/white"
-                android:textSize="16dp" />
+                android:textSize="16dp" /> -->
 
-            <EditText
-                android:id="@+id/et_dob"
+            <TextView
+                android:id="@+id/tv_dob"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/tv_dob"
+                android:layout_alignBottom="@+id/tv_dob_title"
                 android:layout_alignLeft="@+id/et_name"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="10dp"
-                android:imeOptions="actionNext"
                 android:singleLine="true"
-                android:textColor="@color/white"
-                android:textSize="16dp" />
+                android:background="@color/white"
+                android:textColor="@color/red"
+                android:padding="5dp"
+                android:textSize="18dp" />
 
-            <EditText
-                android:id="@+id/et_profession"
+            <Spinner
+                android:id="@+id/s_profession"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/tv_profession"
@@ -294,8 +296,8 @@
                 android:textColor="@color/white"
                 android:textSize="16dp" />
 
-            <EditText
-                android:id="@+id/et_education"
+            <Spinner
+                android:id="@+id/s_education"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/tv_education"
@@ -307,8 +309,8 @@
                 android:textColor="@color/white"
                 android:textSize="16dp" />
 
-            <EditText
-                android:id="@+id/et_sex"
+            <Spinner
+                android:id="@+id/s_sex"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/tv_sex"
@@ -320,7 +322,7 @@
                 android:textColor="@color/white"
                 android:textSize="16dp" />
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/et_country"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -335,7 +337,7 @@
                 android:textColor="@color/white"
                 android:textSize="16dp" />
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/et_city"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -350,7 +352,7 @@
                 android:textColor="@color/white"
                 android:textSize="16dp" />
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/et_area"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -412,16 +414,18 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
+            android:onClick="onClickBack"
             android:text="Back"
             android:textColor="@color/white"
             android:textSize="20dp" />
-        
-                <Button
+
+        <Button
             android:id="@+id/b_update"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
+            android:onClick="onClickUpdate"
             android:text="Update"
             android:textColor="@color/white"
             android:textSize="20dp" />

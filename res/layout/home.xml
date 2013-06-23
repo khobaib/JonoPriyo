@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/red" >
+    android:background="@color/gray70" >
 
     <TextView
         android:id="@+id/tv_title"
@@ -12,8 +12,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
-        android:text="JonoPriyo"
-        android:textColor="@color/white"
+        android:text="jonoPriyo"
+        android:textColor="@color/red"
         android:textSize="25dp"
         android:textStyle="bold" />
 
@@ -44,7 +44,10 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginRight="10dp"
                 android:onClick="onClickNewPolls"
-                android:text="New Polls" />
+                android:text="New Polls"
+                android:textColor="@color/white"
+                android:textSize="18dp"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/b_all_polls"
@@ -53,7 +56,10 @@
                 android:layout_alignTop="@+id/b_new_polls"
                 android:layout_toRightOf="@+id/b_new_polls"
                 android:onClick="onClickAllPolls"
-                android:text="All Polls" />
+                android:text="All Polls"
+                android:textColor="@color/white"
+                android:textSize="18dp"
+                android:textStyle="bold" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -69,7 +75,10 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginRight="10dp"
                 android:onClick="onClickMyPolls"
-                android:text="My Polls" />
+                android:text="My Polls"
+                android:textColor="@color/white"
+                android:textSize="18dp"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/b_winners"
@@ -78,7 +87,10 @@
                 android:layout_alignTop="@+id/b_my_polls"
                 android:layout_toRightOf="@+id/b_my_polls"
                 android:onClick="onClickWinners"
-                android:text="Winners" />
+                android:text="Winners"
+                android:textColor="@color/white"
+                android:textSize="18dp"
+                android:textStyle="bold" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -94,7 +106,10 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginRight="10dp"
                 android:onClick="onClickProfile"
-                android:text="Profile" />
+                android:text="Profile"
+                android:textColor="@color/white"
+                android:textSize="18dp"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/b_share"
@@ -103,7 +118,10 @@
                 android:layout_alignTop="@+id/b_profile"
                 android:layout_toRightOf="@+id/b_profile"
                 android:onClick="onClickShare"
-                android:text="Share" />
+                android:text="Share"
+                android:textColor="@color/white"
+                android:textSize="18dp"
+                android:textStyle="bold" />
         </RelativeLayout>
     </LinearLayout>
 
@@ -210,7 +228,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@+id/ll4"
-        android:background="@color/white" />
+        android:background="@color/white" />
     -->
 
     <ImageView
@@ -222,8 +240,8 @@
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
         android:background="@drawable/image_back"
-        android:padding="5dp"
         android:onClick="onClickProfilePic"
+        android:padding="5dp"
         android:scaleType="fitXY"
         android:src="@drawable/profile_default" />
 

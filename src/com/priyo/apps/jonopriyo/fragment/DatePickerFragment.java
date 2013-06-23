@@ -2,6 +2,7 @@ package com.priyo.apps.jonopriyo.fragment;
 
 import java.util.Calendar;
 
+import com.priyo.apps.jonopriyo.ProfileActivity;
 import com.priyo.apps.jonopriyo.RegisterActivity;
 
 import android.app.DatePickerDialog;
@@ -15,13 +16,15 @@ public class DatePickerFragment extends DialogFragment{
     static int mYear;
     static int mMonth;
     static int mDay;
+    static String parentActivity;
     
-    public static DatePickerFragment newInstance(Calendar calTime) {
+    public static DatePickerFragment newInstance(Calendar calTime, String parent) {
         DatePickerFragment dialog = new DatePickerFragment();
 
         mYear = calTime.get(Calendar.YEAR);
         mMonth = calTime.get(Calendar.MONTH);
         mDay = calTime.get(Calendar.DAY_OF_MONTH);
+        parentActivity = parent;
         /*I dont really see the purpose of the below*/
         Bundle args = new Bundle();
         args.putString("title", "Set Date");
@@ -40,7 +43,10 @@ public class DatePickerFragment extends DialogFragment{
 //        int day = c.get(Calendar.DAY_OF_MONTH);
 
         // Create a new instance of DatePickerDialog and return it
-        return new DatePickerDialog(getActivity(), (RegisterActivity)getActivity(), mYear, mMonth, mDay);
+        if(parentActivity.equals("register"))
+            return new DatePickerDialog(getActivity(), (RegisterActivity)getActivity(), mYear, mMonth, mDay);
+        else            // "profile"
+            return new DatePickerDialog(getActivity(), (ProfileActivity)getActivity(), mYear, mMonth, mDay);
     }
 
 

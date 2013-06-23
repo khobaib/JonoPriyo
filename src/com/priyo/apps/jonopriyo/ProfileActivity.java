@@ -1,7 +1,6 @@
 package com.priyo.apps.jonopriyo;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
@@ -32,6 +31,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.priyo.apps.jonopriyo.RegisterActivity.RetrieveAreaList;
+import com.priyo.apps.jonopriyo.RegisterActivity.RetrieveCityList;
+import com.priyo.apps.jonopriyo.RegisterActivity.RetrieveCountryList;
+import com.priyo.apps.jonopriyo.RegisterActivity.RetrieveEducationList;
+import com.priyo.apps.jonopriyo.RegisterActivity.RetrieveProfessionList;
+import com.priyo.apps.jonopriyo.RegisterActivity.SendRegisterRequest;
 import com.priyo.apps.jonopriyo.fragment.DatePickerFragment;
 import com.priyo.apps.jonopriyo.model.Area;
 import com.priyo.apps.jonopriyo.model.City;
@@ -42,52 +47,51 @@ import com.priyo.apps.jonopriyo.model.RegistrationInfo;
 import com.priyo.apps.jonopriyo.model.ServerResponse;
 import com.priyo.apps.jonopriyo.parser.JsonParser;
 import com.priyo.apps.jonopriyo.utility.Constants;
+import com.priyo.apps.jonopriyo.utility.JonopriyoApplication;
 import com.priyo.apps.jonopriyo.utility.Utility;
 
-public class RegisterActivity extends FragmentActivity implements OnDateSetListener {
+public class ProfileActivity extends FragmentActivity implements OnDateSetListener {
 
-    EditText Name, Email, Password, ConfirmPassword, Address, Phone;
+    EditText Name, Email, Address, Phone;
     TextView DoB;
     Spinner sProfession, sEducation, sSex;
     AutoCompleteTextView tvCountry, tvCity, tvArea;
-    
+
     RegistrationInfo regInfo;
-    
+
     List<Country> countryList;
     List<City> cityList;
     List<Area> areaList;
     List<Education> educationList;
     List<Profession> professionList;
-    
+
     Long selectedCountryId, selectedCityId, selectedAreaId;    
     Long educationId, professionId;
     String sex;
-    
+
     JsonParser jsonParser;
+    JonopriyoApplication appInstance;
 
-    public ProgressDialog pDialog;
-
+    private ProgressDialog pDialog;
     private static final int DATE_PICKER = 1;
 
     Calendar calendar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.register);
-        
+        setContentView(R.layout.profile_settings);
+
+        appInstance = (JonopriyoApplication) getApplication();
         jsonParser = new JsonParser();
-        selectedCountryId = (long) 0;
-        selectedCityId = (long) 0;
-        selectedAreaId = (long) 0;
+
 
         calendar = Calendar.getInstance();
 
         Name = (EditText) findViewById(R.id.et_name);
         Email = (EditText) findViewById(R.id.et_email);
-        Password = (EditText) findViewById(R.id.et_password);
-        ConfirmPassword = (EditText) findViewById(R.id.et_confirm_password);
         Address = (EditText) findViewById(R.id.et_address);
         Phone = (EditText) findViewById(R.id.et_phone);
 
@@ -97,7 +101,7 @@ public class RegisterActivity extends FragmentActivity implements OnDateSetListe
             @Override
             public void onClick(View v) {
 
-                DialogFragment newFragment = new DatePickerFragment().newInstance(calendar, "register");
+                DialogFragment newFragment = new DatePickerFragment().newInstance(calendar, "profile");
                 newFragment.show(getSupportFragmentManager(), "datePicker");
             }
         });
@@ -115,7 +119,6 @@ public class RegisterActivity extends FragmentActivity implements OnDateSetListe
 
             }
         });
-//        generateSpinner(sProfession, Utility.profession_array);
 
         sEducation = (Spinner) findViewById(R.id.s_education);
         sEducation.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -130,7 +133,6 @@ public class RegisterActivity extends FragmentActivity implements OnDateSetListe
 
             }
         });
-        //        generateSpinner(Education, Utility.education_array);
 
         sSex = (Spinner) findViewById(R.id.s_sex);
         generateSpinner(sSex, Utility.sex_array);
@@ -146,7 +148,7 @@ public class RegisterActivity extends FragmentActivity implements OnDateSetListe
 
             }
         });
-        
+
 
         tvCountry = (AutoCompleteTextView) findViewById(R.id.et_country);
         tvCountry.setOnItemClickListener(new OnItemClickListener() {
@@ -202,56 +204,25 @@ public class RegisterActivity extends FragmentActivity implements OnDateSetListe
             }
         });
 
-        new RetrieveCountryList().execute();
-        new RetrieveProfessionList().execute();
-        new RetrieveEducationList().execute();
-
+        new GetProfileData().execute();
     }
 
-    @Override
-    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-        DoB.setText(String.format("%04d-%02d-%02d", year, (monthOfYear + 1), dayOfMonth));
-        calendar.set(year, monthOfYear, dayOfMonth);
-//        selectedDate = DoB.getText().toString();
+    public void onClickBack(View v){
+        finish();
+        overridePendingTransition(R.anim.prev_slide_in, R.anim.prev_slide_out);
     }
 
 
-    private void generateSpinner(Spinner spinner, String[] arrayToSpinner) {
-        ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(
-                RegisterActivity.this, android.R.layout.simple_spinner_item, arrayToSpinner);
-        spinner.setAdapter(myAdapter);
-        myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-    }
-
-    
-    public void onClickRegister(View v){
-        regInfo = new RegistrationInfo();
+    public void onClickUpdate(View v){
         String name = Name.getText().toString();
-        String email = Email.getText().toString();
-        String password = Password.getText().toString();
-        String confirmPass = ConfirmPassword.getText().toString();
         String selectedDate = DoB.getText().toString();
-        
+
         if(name == null || name.equals("")){
-            Toast.makeText(RegisterActivity.this, "Please insert your name.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ProfileActivity.this, "Please insert your name.", Toast.LENGTH_SHORT).show();
         }
-        else if(email == null || email.equals("")){
-            Toast.makeText(RegisterActivity.this, "Please insert your email.", Toast.LENGTH_SHORT).show();
-        }
-        else if(password == null || password.equals("")){
-            Toast.makeText(RegisterActivity.this, "Please select your password.", Toast.LENGTH_SHORT).show();
-        }
-        else if(!password.equals(confirmPass)){
-            Toast.makeText(RegisterActivity.this, "Password mismatch.", Toast.LENGTH_SHORT).show();
-        }
-        else if(selectedDate == null || selectedDate.equals("")){
-            Toast.makeText(RegisterActivity.this, "Please select your date of birth.", Toast.LENGTH_SHORT).show();
-        }
+
         else{
             regInfo.setName(name);
-            regInfo.setEmail(email);
-            regInfo.setPassword(password);
             regInfo.setDob(selectedDate);
             regInfo.setProfessionId(professionId);
             regInfo.setEducationId(educationId);
@@ -261,63 +232,115 @@ public class RegisterActivity extends FragmentActivity implements OnDateSetListe
             regInfo.setAreaId(selectedAreaId);
             regInfo.setAddress(Address.getText().toString());
             regInfo.setPhone(Phone.getText().toString());
-            
-            
-            new SendRegisterRequest().execute();
+
+
+            new PostProfileData().execute();
         }
     }
-    
-    
-    public class SendRegisterRequest extends AsyncTask<Void, Void, Boolean> {
+
+
+    private void generateSpinner(Spinner spinner, String[] arrayToSpinner) {
+        ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(
+                ProfileActivity.this, android.R.layout.simple_spinner_item, arrayToSpinner);
+        spinner.setAdapter(myAdapter);
+        myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+    }
+
+
+    private void initializeFields(){
+        Name.setText(regInfo.getName());
+        Email.setText(regInfo.getEmail());
+        Address.setText(regInfo.getAddress());
+        Phone.setText(regInfo.getPhone());
+
+        String date = regInfo.getDob();
+        int year = Integer.parseInt(date.substring(0, 4));
+        int month = Integer.parseInt(date.substring(5, 7)) - 1;
+        int day = Integer.parseInt(date.substring(8, 10));
+        calendar.set(year, month, day);
+        DoB.setText(String.format("%04d-%02d-%02d", year, (month + 1), day));
+
+        if(regInfo.getSex().equals("M")){
+            sSex.setSelection(0);
+            sex = "male";
+        }
+        else{
+            sSex.setSelection(1);
+            sex = "female";
+        }
+
+        selectedCountryId = regInfo.getCountryId();
+        selectedCityId = regInfo.getCityId();
+        selectedAreaId = regInfo.getAreaId();
+        educationId = regInfo.getEducationId();
+        professionId = regInfo.getProfessionId();
+
+
+        new RetrieveCountryList().execute();
+        new RetrieveCityList().execute(selectedCountryId);
+        new RetrieveAreaList().execute(selectedCityId);
+
+        new RetrieveProfessionList().execute();
+        new RetrieveEducationList().execute();
+
+    }
+
+
+    public class PostProfileData extends AsyncTask<Void, Void, Boolean> {
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            pDialog = new ProgressDialog(RegisterActivity.this);
-            pDialog.setMessage("Please wait while app registering you to the system...");
+            pDialog = new ProgressDialog(ProfileActivity.this);
+            pDialog.setMessage("Please wait while your profile is being updated...");
             pDialog.show();
         }
 
         @Override
         protected Boolean doInBackground(Void... params) {
             String rootUrl = Constants.URL_ROOT;
-            
+
             List<NameValuePair> urlParam = new ArrayList<NameValuePair>();
-            urlParam.add(new BasicNameValuePair("method", Constants.METHOD_REGISTRATION));
-            
+            urlParam.add(new BasicNameValuePair("method", Constants.METHOD_POST_PROFILE_INFO));
+
 
             try {
-                JSONObject regObj = new JSONObject();
-                regObj.put("name", regInfo.getName());
-                regObj.put("email", regInfo.getEmail());
-                regObj.put("password", regInfo.getPassword());
-                regObj.put("dob", regInfo.getDob());
-                regObj.put("profession_id", regInfo.getProfessionId());
-                regObj.put("education_id", regInfo.getEducationId());
-                regObj.put("sex", regInfo.getSex());
-                regObj.put("country_id", regInfo.getCountryId());
-                regObj.put("city_id", regInfo.getCityId());
-                regObj.put("area_id", regInfo.getAreaId());
-                regObj.put("address", regInfo.getAddress());
-                regObj.put("phone", regInfo.getPhone());
+                JSONObject profileObj = new JSONObject();
+                profileObj.put("name", regInfo.getName());
+                profileObj.put("dob", regInfo.getDob());
+                profileObj.put("profession_id", regInfo.getProfessionId());
+                profileObj.put("education_id", regInfo.getEducationId());
+                profileObj.put("sex", regInfo.getSex());
+                profileObj.put("country_id", regInfo.getCountryId());
+                profileObj.put("city_id", regInfo.getCityId());
+                profileObj.put("area_id", regInfo.getAreaId());
+                profileObj.put("address", regInfo.getAddress());
+                profileObj.put("phone", regInfo.getPhone());
                 
-                String regData = regObj.toString();
-                Log.d("<<>>", "req data = " + regData);
+                JSONObject profileInfo = new JSONObject();
+                profileInfo.put("profile_info", profileObj);
+
+                String profileData = profileInfo.toString();
+                Log.d("<<>>", "req data = " + profileData);
+
+                String token = appInstance.getAccessToken();
                 ServerResponse response = jsonParser.retrieveServerData(Constants.REQUEST_TYPE_POST, rootUrl,
-                        urlParam, regData, null);
+                        urlParam, profileData, token);
                 if(response.getStatus() == 200){
-                    JSONObject responseObj = response.getjObj();
-                    if(responseObj.has("success"))
+                    JSONObject jsonResponse = response.getjObj();
+                    String responseType = jsonResponse.getString("response");
+                    if(responseType.equals("success")){
                         return true;
-                    return false;
+                    }
+
+
                 }
-                else{
-                    return false;
-                }
-            } catch (JSONException e) {                
+            }catch (JSONException e) {                
                 e.printStackTrace();
                 return false;
             }
+            return false;
         }
 
         @Override
@@ -326,14 +349,84 @@ public class RegisterActivity extends FragmentActivity implements OnDateSetListe
             if(pDialog != null)
                 pDialog.dismiss();
             if(result){
-                alert("Registration Successful.", true);
+                alert("Profile Update successful.", true);
             }
             else{
-                alert("Registration error, please try again.", false);
+                alert("Error updating profile.", false);
             }
-//                updateUI();
+            //                updateUI();
         }        
     }
+
+
+
+    private class GetProfileData extends AsyncTask<Void, Void, Boolean> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pDialog = new ProgressDialog(ProfileActivity.this);
+            pDialog.setMessage("Retrieving profile data, please wait...");
+            pDialog.show();
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            String rootUrl = Constants.URL_ROOT;
+
+            List<NameValuePair> urlParam = new ArrayList<NameValuePair>();
+            urlParam.add(new BasicNameValuePair("method", Constants.METHOD_GET_PROFILE_INFO));
+
+            String token = appInstance.getAccessToken();
+
+            ServerResponse response = jsonParser.retrieveServerData(Constants.REQUEST_TYPE_GET, rootUrl,
+                    urlParam, null, token);
+            if(response.getStatus() == 200){
+                JSONObject jsonResponse = response.getjObj();
+                try {
+                    String responseType = jsonResponse.getString("response");
+                    if(responseType.equals("success")){
+                        Log.d(">>>><<<<", "success in retrieving reg info");
+                        JSONObject regObj = jsonResponse.getJSONObject("profile_info");
+                        regInfo = RegistrationInfo.parseRegInfo(regObj.toString());
+                        return true;
+                    }
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+
+            return false;
+        }
+
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            super.onPostExecute(result);
+            if(result){
+                initializeFields();
+                // call all asynctask
+            }
+            if(pDialog != null)
+                pDialog.dismiss();
+        }
+
+    }
+
+
+
+
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+        DoB.setText(String.format("%04d-%02d-%02d", year, (monthOfYear + 1), dayOfMonth));
+        calendar.set(year, monthOfYear, dayOfMonth);
+        //        selectedDate = DoB.getText().toString();
+
+    }
+
+
 
 
     public class RetrieveCountryList extends AsyncTask<Void, Void, Boolean> {
@@ -341,18 +434,18 @@ public class RegisterActivity extends FragmentActivity implements OnDateSetListe
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            pDialog = new ProgressDialog(RegisterActivity.this);
-            pDialog.setMessage("Retrieving data, please wait...");
-            pDialog.show();
+            //            pDialog = new ProgressDialog(ProfileActivity.this);
+            //            pDialog.setMessage("Retrieving data, please wait...");
+            //            pDialog.show();
         }
 
         @Override
         protected Boolean doInBackground(Void... params) {
             String rootUrl = Constants.URL_ROOT;
-            
+
             List<NameValuePair> urlParam = new ArrayList<NameValuePair>();
             urlParam.add(new BasicNameValuePair("method", Constants.METHOD_GET_COUNTRY));
-            
+
             ServerResponse response = jsonParser.retrieveServerData(Constants.REQUEST_TYPE_GET, rootUrl,
                     urlParam, null, null);
             if(response.getStatus() == 200){
@@ -360,48 +453,58 @@ public class RegisterActivity extends FragmentActivity implements OnDateSetListe
                 countryList = Country.parseCountryList(response.getjObj().toString());
                 return true;
             }
-                        
+
             return false;
         }
 
         @Override
         protected void onPostExecute(Boolean result) {
             super.onPostExecute(result);
-            if(pDialog != null)
-                pDialog.dismiss();
+            //            if(pDialog != null)
+            //                pDialog.dismiss();
             if(result){
                 List<String> countryNameList = new ArrayList<String>();
                 for(Country country : countryList)
                     countryNameList.add(country.getName());
-                
-                ArrayAdapter<String> countryAdapter = new ArrayAdapter<String>(RegisterActivity.this,
+
+                ArrayAdapter<String> countryAdapter = new ArrayAdapter<String>(ProfileActivity.this,
                         android.R.layout.simple_dropdown_item_1line, countryNameList);
                 tvCountry.setAdapter(countryAdapter);
+
+                for(int countryIndex = 0; countryIndex < countryList.size(); countryIndex++){
+                    //                    Log.d(">>>>>>>>><<<<<", "selected country id = " + selectedCountryId);
+                    Log.d(">>>>>>>>><<<<<", "countrylist country id = " + countryList.get(countryIndex).getId());
+                    if(selectedCountryId.equals(countryList.get(countryIndex).getId())){
+                        //                        Log.d(">>>>>>>>><<<<<", "selected country name = " + countryList.get(countryIndex).getName());
+                        tvCountry.setText(countryList.get(countryIndex).getName());
+                        break;
+                    }
+                }
             }
         }        
     }
-    
-    
-    
-    
+
+
+
+
     public class RetrieveCityList extends AsyncTask<Long, Void, Boolean> {
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            pDialog = new ProgressDialog(RegisterActivity.this);
-            pDialog.setMessage("Retrieving city list, please wait");
-            pDialog.show();
+            //            pDialog = new ProgressDialog(ProfileActivity.this);
+            //            pDialog.setMessage("Retrieving city list, please wait");
+            //            pDialog.show();
         }
 
         @Override
         protected Boolean doInBackground(Long... params) {
             String rootUrl = Constants.URL_ROOT;
-            
+
             List<NameValuePair> urlParam = new ArrayList<NameValuePair>();
             urlParam.add(new BasicNameValuePair("method", Constants.METHOD_GET_CITIES));
             urlParam.add(new BasicNameValuePair("country_id", "" + params[0]));
-            
+
             ServerResponse response = jsonParser.retrieveServerData(Constants.REQUEST_TYPE_GET, rootUrl,
                     urlParam, null, null);
             if(response.getStatus() == 200){
@@ -409,46 +512,53 @@ public class RegisterActivity extends FragmentActivity implements OnDateSetListe
                 cityList = City.parseCityList(response.getjObj().toString());
                 return true;
             }
-                        
+
             return false;
         }
 
         @Override
         protected void onPostExecute(Boolean result) {
             super.onPostExecute(result);
-            if(pDialog != null)
-                pDialog.dismiss();
+            //            if(pDialog != null)
+            //                pDialog.dismiss();
             if(result){
                 List<String> cityNameList = new ArrayList<String>();
                 for(City city : cityList)
                     cityNameList.add(city.getName());
-                
-                ArrayAdapter<String> cityAdapter = new ArrayAdapter<String>(RegisterActivity.this,
+
+                ArrayAdapter<String> cityAdapter = new ArrayAdapter<String>(ProfileActivity.this,
                         android.R.layout.simple_dropdown_item_1line, cityNameList);
                 tvCity.setAdapter(cityAdapter);
+
+                for(int cityIndex = 0; cityIndex < cityList.size(); cityIndex++){
+                    if(selectedCityId.equals(cityList.get(cityIndex).getId())){
+                        tvCity.setText(cityList.get(cityIndex).getName());
+                        break;
+                    }
+                }
             }
         }        
     }
-    
-    
+
+
     public class RetrieveAreaList extends AsyncTask<Long, Void, Boolean> {
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            pDialog = new ProgressDialog(RegisterActivity.this);
-            pDialog.setMessage("Retrieving area list, please wait");
-            pDialog.show();
+            //            pDialog = new ProgressDialog(ProfileActivity.this);
+            //            pDialog.setMessage("Retrieving area list, please wait");
+            //            pDialog.show();
         }
 
         @Override
         protected Boolean doInBackground(Long... params) {
             String rootUrl = Constants.URL_ROOT;
-            
+
             List<NameValuePair> urlParam = new ArrayList<NameValuePair>();
             urlParam.add(new BasicNameValuePair("method", Constants.METHOD_GET_AREA));
             urlParam.add(new BasicNameValuePair("city_id", "" + params[0]));
-            
+
             ServerResponse response = jsonParser.retrieveServerData(Constants.REQUEST_TYPE_GET, rootUrl,
                     urlParam, null, null);
             if(response.getStatus() == 200){
@@ -456,29 +566,36 @@ public class RegisterActivity extends FragmentActivity implements OnDateSetListe
                 areaList = Area.parseAreaList(response.getjObj().toString());
                 return true;
             }
-                        
+
             return false;
         }
 
         @Override
         protected void onPostExecute(Boolean result) {
             super.onPostExecute(result);
-            if(pDialog != null)
-                pDialog.dismiss();
+            //            if(pDialog != null)
+            //                pDialog.dismiss();
             if(result){
                 List<String> areaNameList = new ArrayList<String>();
                 for(Area area : areaList)
                     areaNameList.add(area.getName());
-                
-                ArrayAdapter<String> areaAdapter = new ArrayAdapter<String>(RegisterActivity.this,
+
+                ArrayAdapter<String> areaAdapter = new ArrayAdapter<String>(ProfileActivity.this,
                         android.R.layout.simple_dropdown_item_1line, areaNameList);
                 tvArea.setAdapter(areaAdapter);
+
+                for(int areaIndex = 0; areaIndex < areaList.size(); areaIndex++){
+                    if(selectedAreaId.equals(areaList.get(areaIndex).getId())){
+                        tvArea.setText(areaList.get(areaIndex).getName());
+                        break;
+                    }
+                }
             }
         }        
     }
-    
-    
-    
+
+
+
     public class RetrieveProfessionList extends AsyncTask<Long, Void, Boolean> {
 
         @Override
@@ -489,10 +606,10 @@ public class RegisterActivity extends FragmentActivity implements OnDateSetListe
         @Override
         protected Boolean doInBackground(Long... params) {
             String rootUrl = Constants.URL_ROOT;
-            
+
             List<NameValuePair> urlParam = new ArrayList<NameValuePair>();
             urlParam.add(new BasicNameValuePair("method", Constants.METHOD_GET_PROFESSION));
-            
+
             ServerResponse response = jsonParser.retrieveServerData(Constants.REQUEST_TYPE_GET, rootUrl,
                     urlParam, null, null);
             if(response.getStatus() == 200){
@@ -500,7 +617,7 @@ public class RegisterActivity extends FragmentActivity implements OnDateSetListe
                 professionList = Profession.parseprofessionList(response.getjObj().toString());
                 return true;
             }
-                        
+
             return false;
         }
 
@@ -513,14 +630,21 @@ public class RegisterActivity extends FragmentActivity implements OnDateSetListe
                 List<String> professionTypeList = new ArrayList<String>();
                 for(Profession profession : professionList)
                     professionTypeList.add(profession.getType());
-                
+
                 String[] strarray = professionTypeList.toArray(new String[0]);
                 generateSpinner(sProfession, strarray);
+
+                for(int professionIndex = 0; professionIndex < professionList.size(); professionIndex++){
+                    if(professionId.equals(professionList.get(professionIndex).getId())){
+                        sProfession.setSelection(professionIndex);
+                        break;
+                    }
+                }
             }
         }        
     }
-    
-    
+
+
     public class RetrieveEducationList extends AsyncTask<Long, Void, Boolean> {
 
         @Override
@@ -531,10 +655,10 @@ public class RegisterActivity extends FragmentActivity implements OnDateSetListe
         @Override
         protected Boolean doInBackground(Long... params) {
             String rootUrl = Constants.URL_ROOT;
-            
+
             List<NameValuePair> urlParam = new ArrayList<NameValuePair>();
             urlParam.add(new BasicNameValuePair("method", Constants.METHOD_GET_EDUCATION));
-            
+
             ServerResponse response = jsonParser.retrieveServerData(Constants.REQUEST_TYPE_GET, rootUrl,
                     urlParam, null, null);
             if(response.getStatus() == 200){
@@ -542,7 +666,7 @@ public class RegisterActivity extends FragmentActivity implements OnDateSetListe
                 educationList = Education.parseEducationList(response.getjObj().toString());
                 return true;
             }
-                        
+
             return false;
         }
 
@@ -555,27 +679,34 @@ public class RegisterActivity extends FragmentActivity implements OnDateSetListe
                 List<String> educationTypeList = new ArrayList<String>();
                 for(Education education : educationList)
                     educationTypeList.add(education.getType());
-                
+
                 String[] strarray = educationTypeList.toArray(new String[0]);
                 generateSpinner(sEducation, strarray);
+
+                for(int educationIndex = 0; educationIndex < educationList.size(); educationIndex++){
+                    if(educationId.equals(educationList.get(educationIndex).getId())){
+                        sEducation.setSelection(educationIndex);
+                        break;
+                    }
+                }
             }
         }        
     }
-    
+
+
     void alert(String message, final Boolean success) {
-        AlertDialog.Builder bld = new AlertDialog.Builder(RegisterActivity.this);
+        AlertDialog.Builder bld = new AlertDialog.Builder(ProfileActivity.this);
         bld.setMessage(message);
         bld.setNeutralButton("OK", new DialogInterface.OnClickListener() {
-            
+
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if(success)
                     finish();
-                
+
             }
         });
         bld.create().show();
     }
-    
-    
+
 }

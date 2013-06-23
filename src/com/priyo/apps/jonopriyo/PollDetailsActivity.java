@@ -93,22 +93,35 @@ public class PollDetailsActivity extends Activity {
         Log.d(">>>>>>??????", "rgAnswerOption length = " + rgAnswerOption.getChildCount());
         int ansCount = thisPoll.getAnswers().size();
         rbIdList = new ArrayList<Integer>();
+        
+        int myPollCheckIndex = -1;
+        
+        Log.d(">>>>>>>>>", "this poll my ans id = " + thisPoll.getMyAnsId());
         final RadioButton[] rb = new RadioButton[ansCount];
         for(int buttonIndex = 0; buttonIndex < ansCount; buttonIndex++){
             rb[buttonIndex] = new RadioButton(PollDetailsActivity.this);
-            if(fromActivity == Constants.PARENT_ACTIVITY_ALL_POLLS){
+            Log.d(">>>>>>>>>", "this ans id = " + thisPoll.getAnswers().get(buttonIndex).getId());
+            if(fromActivity == Constants.PARENT_ACTIVITY_MY_POLLS &&
+                        thisPoll.getMyAnsId().equals(thisPoll.getAnswers().get(buttonIndex).getId()))
+                myPollCheckIndex = buttonIndex;
+            
+            if(fromActivity != Constants.PARENT_ACTIVITY_NEW_POLLS){
                 Log.d(">>>>", "ALL POLLS");
-//                rb[buttonIndex].setClickable(false);
                 rb[buttonIndex].setEnabled(false);
                 rb[buttonIndex].setTextColor(getResources().getColor(R.color.gray_snow2));
             }
-            Log.d("ID ID ID", "rb -> id = " + rb[buttonIndex].getId());
+//            Log.d("ID ID ID", "rb -> id = " + rb[buttonIndex].getId());
             rgAnswerOption.addView(rb[buttonIndex]);        //the RadioButtons are added to the radioGroup instead of the layout
-            Log.d("--- ID ID ID", "rb -> id = " + rgAnswerOption.getChildAt(buttonIndex).getId());
+//            Log.d("--- ID ID ID", "rb -> id = " + rgAnswerOption.getChildAt(buttonIndex).getId());
 //            rbIdList.set(buttonIndex, rgAnswerOption.getChildAt(buttonIndex).getId());
             rbIdList.add(rgAnswerOption.getChildAt(buttonIndex).getId());
             rb[buttonIndex].setText(thisPoll.getAnswers().get(buttonIndex).getAnswer());
-        }        
+        }   
+        
+        if(myPollCheckIndex != -1){
+            rgAnswerOption.check(rgAnswerOption.getChildAt(myPollCheckIndex).getId());
+        }
+        
 
 
     }
@@ -180,7 +193,9 @@ public class PollDetailsActivity extends Activity {
                 if(response.getStatus() == 200){
                     Log.d(">>>><<<<", "success in casting vote");
                     JSONObject responsObj = response.getjObj();
-                    return true;
+                    String jsonResponse = responsObj.getString("response");
+                    if(jsonResponse.equals("success"))
+                        return true;
                 }
                 return false;
             } catch (JSONException e) {                
@@ -198,7 +213,7 @@ public class PollDetailsActivity extends Activity {
                 alert("Your vote is cast successfully.", true);
             }
             else{
-                alert("Sorry try again.", false);
+                alert("You already voted once.", false);
             }
 
         }

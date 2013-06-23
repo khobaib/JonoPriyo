@@ -1,5 +1,8 @@
 package com.priyo.apps.jonopriyo.model;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class RegistrationInfo {
     private String name;
     private String email;
@@ -31,6 +34,35 @@ public class RegistrationInfo {
         this.areaId = areaId;
         this.address = address;
         this.phone = phone;
+    }
+    
+    
+    public static RegistrationInfo parseRegInfo(String jsonStr){
+        RegistrationInfo regInfo = null;
+        
+        try {
+            JSONObject regObj = new JSONObject(jsonStr);
+            String name = regObj.getString("name");
+            String email = regObj.getString("email");
+            String dob = regObj.getString("dob");
+            Long professionId = regObj.getLong("profession_id");
+            Long educationId = regObj.getLong("education_id");
+            String sex = regObj.getString("sex");
+            Long countryId = regObj.getLong("country_id");
+            Long cityId = regObj.getLong("city_id");
+            Long areaId = regObj.getLong("area_id");
+            String address = regObj.getString("address");
+            String phone = regObj.getString("phone");
+            
+            regInfo = new RegistrationInfo(name, email, null, dob, professionId,
+                    educationId, sex, countryId, cityId, areaId, address, phone);
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        
+        
+        return regInfo;        
     }
 
     public String getName() {

@@ -32,6 +32,7 @@ import com.priyo.apps.jonopriyo.parser.JsonParser;
 import com.priyo.apps.jonopriyo.utility.Base64;
 import com.priyo.apps.jonopriyo.utility.Constants;
 import com.priyo.apps.jonopriyo.utility.JonopriyoApplication;
+import com.priyo.apps.lazylist.ImageLoader;
 
 public class UploadPicActivity extends Activity {
 
@@ -61,6 +62,12 @@ public class UploadPicActivity extends Activity {
         ProfilePic = (ImageView) findViewById(R.id.iv_profile_pic);
         Update = (Button) findViewById(R.id.b_update);
         Update.setVisibility(View.GONE);
+        
+        String imageUrl = appInstance.getProfileImageUrl();
+        ImageLoader imageLoader = new ImageLoader(UploadPicActivity.this);
+        imageLoader.DisplayImage(imageUrl, ProfilePic);
+        
+        
     }
 
 

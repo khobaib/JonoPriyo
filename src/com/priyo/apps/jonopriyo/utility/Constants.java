@@ -33,6 +33,8 @@ public class Constants {
     public static final String METHOD_UPLOAD_PROFILE_PICTURE = "upload_profile_picture";
     public static final String METHOD_GET_MY_POLLS = "get_my_polls";
     public static final String METHOD_GET_WINNERS = "get_winners";
+    public static final String METHOD_GET_PROFILE_INFO = "get_profile_info";
+    public static final String METHOD_POST_PROFILE_INFO = "post_profile_info";
     
     public static final int RESPONSE_STATUS_CODE_SUCCESS = 200;
     
