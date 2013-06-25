@@ -1,7 +1,12 @@
 package com.priyo.apps.jonopriyo;
 
+import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,11 +20,14 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.MediaStore.MediaColumns;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -33,14 +41,18 @@ import com.priyo.apps.jonopriyo.utility.Base64;
 import com.priyo.apps.jonopriyo.utility.Constants;
 import com.priyo.apps.jonopriyo.utility.JonopriyoApplication;
 import com.priyo.apps.lazylist.ImageLoader;
+import com.priyo.apps.lazylist.Utils;
 
 public class UploadPicActivity extends Activity {
 
     private Uri imageUri;
     private static final int CAMERA_REQ_CODE = 901;
+    private static final int GALLERY_REQ_CODE = 902;
 
     private ProgressDialog pDialog;
     JsonParser jsonParser;
+
+    ImageLoader imageLoader;
 
     JonopriyoApplication appInstance;
 
@@ -49,6 +61,12 @@ public class UploadPicActivity extends Activity {
 
     Bitmap bitmap;
     Bitmap scaledBmp;
+
+    private Boolean isPicassaImage;
+
+    private String selectedImagePath;
+    //ADDED
+    private String filemanagerstring;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,12 +80,12 @@ public class UploadPicActivity extends Activity {
         ProfilePic = (ImageView) findViewById(R.id.iv_profile_pic);
         Update = (Button) findViewById(R.id.b_update);
         Update.setVisibility(View.GONE);
-        
+
         String imageUrl = appInstance.getProfileImageUrl();
-        ImageLoader imageLoader = new ImageLoader(UploadPicActivity.this);
+        imageLoader = new ImageLoader(UploadPicActivity.this);
         imageLoader.DisplayImage(imageUrl, ProfilePic);
-        
-        
+
+
     }
 
 
@@ -88,7 +106,11 @@ public class UploadPicActivity extends Activity {
     }
 
     public void onClickGoToGallery(View v){
-
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        //        Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), GALLERY_REQ_CODE);
     }
 
 
@@ -124,9 +146,96 @@ public class UploadPicActivity extends Activity {
                     }
 
                     break;
+                    
+                case GALLERY_REQ_CODE:
+
+                    Uri selectedImageUri = data.getData();
+                    Log.d("URI VAL", "selectedImageUri = " + selectedImageUri.toString());
+                    selectedImagePath = getPath(selectedImageUri);
+
+                    if(selectedImagePath!=null){         // if local image
+                        System.out.println("selectedImagePath is the right one for you!");
+                        FileInputStream in;
+                        BufferedInputStream buf;
+                        try 
+                        {
+                            in = new FileInputStream(selectedImagePath);
+                            buf = new BufferedInputStream(in,1070);
+                            byte[] bMapArray= new byte[buf.available()];
+                            buf.read(bMapArray);
+                            Bitmap bMap = BitmapFactory.decodeByteArray(bMapArray, 0, bMapArray.length);
+                            scaledBmp = Bitmap.createScaledBitmap(bMap, 400, 400, true);
+                            ProfilePic.setImageBitmap(scaledBmp);
+                            Update.setVisibility(View.VISIBLE);
+                            if (in != null) 
+                                in.close();
+                            if (buf != null) 
+                                buf.close();
+                        } 
+                        catch (Exception e) {
+                            Log.e("Error reading file", e.toString());
+                        }
+                    }
+                    else{
+                        System.out.println("picasa image!");
+                        loadPicasaImageFromGallery(selectedImageUri);
+                    }
+
+                    break;
             }
         }
     }
+
+
+    private void loadPicasaImageFromGallery(final Uri uri) {
+        String[] projection = {  MediaColumns.DATA, MediaColumns.DISPLAY_NAME };
+        Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
+        if(cursor != null) {
+            cursor.moveToFirst();
+
+            int columnIndex = cursor.getColumnIndex(MediaColumns.DISPLAY_NAME);
+            if (columnIndex != -1) {
+                new Thread(new Runnable() {
+                    public void run() {
+                        try {
+                            Bitmap bitmap = android.provider.MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                            scaledBmp = Bitmap.createScaledBitmap(bitmap, 400, 400, true);
+
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    ProfilePic.setImageBitmap(scaledBmp);
+                                    Update.setVisibility(View.VISIBLE);
+                                }
+                            });
+
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                }).start();
+            }
+        }
+        cursor.close();
+
+    }
+
+
+    public String getPath(Uri uri) {
+        String[] projection = {  MediaColumns.DATA};
+        Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
+        if(cursor != null) {
+            //HERE YOU WILL GET A NULLPOINTER IF CURSOR IS NULL
+            //THIS CAN BE, IF YOU USED OI FILE MANAGER FOR PICKING THE MEDIA
+            cursor.moveToFirst();
+            int columnIndex = cursor.getColumnIndexOrThrow(MediaColumns.DATA);
+            String filePath = cursor.getString(columnIndex);
+            cursor.close();
+            return filePath;
+        }
+        else return uri.getPath();
+    }
+
 
     public void onClickUpdate(View v){
         new UploadProfilePicture().execute();
