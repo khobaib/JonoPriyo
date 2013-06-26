@@ -45,12 +45,24 @@ phone - text
 image_url - text
 
 
+
+pollCategory table
+-------------------
+id - int
+category_name - text
+
+
+
 poll table
 -------------------
 id - int
 poll_number - int
 poll_question - text
-is_new - boolean
+poll_image_url - text
+poll_category_id - int (foreign key - pollCategory(id))
+poll_release_date - text
+poll_expiry_date - text
+poll_cast_count - int
 
 pollAnswer table (one poll has multiple asnwer)
 ---------------------------------------------------------
@@ -84,3 +96,10 @@ change-list - 20-06-2013
 4. rename poll_question_id(userAnswer table) to poll_id (check above)
 5. new field in poll table - is_new
 6. new field in user table - image_url
+
+
+change-list - 26-06-2013
+------------------------
+1. poll_image_url, poll_category_id, poll_release_date, poll_expiry_date & poll_cast_count fields are added in poll table.
+2. is_new is removed from poll table. Now from release & expiry date of poll, poll is decided new or not.
+3. new table - pollCategory table

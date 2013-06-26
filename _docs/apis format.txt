@@ -12,6 +12,7 @@ a. login success
 {
 	"login":"success"
 	"token":"112ldsjslkewrwer"
+	"user_id":5
 	"image_url":"http://apps.jonopriyo.com/images/my_image.png"
 }
 
@@ -151,7 +152,7 @@ response:
 
 
 8. method=get_new_polls
-(all the polls with is_new = 1 are new polls)
+(all the polls with expiry_date>=today's_date are new polls), no need to check on release_date.
 
 request: GET
 {
@@ -163,6 +164,10 @@ response:
 		"poll_id":12
 		"poll_number":15
 		"poll_question":"Who will be the Champion?"
+		"poll_image_url":"http://apps.jonopriyo.com/poll_icons/poll15_image.png"
+		"poll_category":"Sports"
+		"poll_cast_count":242
+		"is_cast_by_me":false
 		"poll_answer":[
 			{
 				"poll_answer_id":121
@@ -178,6 +183,10 @@ response:
 		"poll_id":13
 		"poll_number":13
 		"poll_question":"Who will be the Champion?"
+		"poll_image_url":"http://apps.jonopriyo.com/poll_icons/poll13_image.png"
+		"poll_category":"Politics"
+		"poll_cast_count":245
+		"is_cast_by_me":true
 		"poll_answer":[
 			{
 				"poll_answer_id":121
@@ -248,6 +257,10 @@ response:
 		"poll_number":15
 		"poll_question":"Who will be the Champion?"
 		"is_new"=true
+		"poll_image_url":"http://apps.jonopriyo.com/poll_icons/poll15_image.png"
+		"poll_category":"Sports"
+		"poll_cast_count":242
+		"is_cast_by_me":false
 		"poll_answer":[
 			{
 				"poll_answer_id":121
@@ -264,6 +277,10 @@ response:
 		"poll_number":112
 		"poll_question":"Which device ie the best?"
 		"is_new"=false
+		"poll_image_url":"http://apps.jonopriyo.com/poll_icons/poll15_image.png"
+		"poll_category":"Sports"
+		"poll_cast_count":242
+		"is_cast_by_me":false
 		"poll_answer":[
 			{
 				"poll_answer_id":125
@@ -310,6 +327,9 @@ response:
 		"poll_number":15
 		"poll_question":"Who will be the Champion?"
 		"is_new"=false
+		"poll_image_url":"http://apps.jonopriyo.com/poll_icons/poll15_image.png"
+		"poll_category":"Sports"
+		"poll_cast_count":242
 		"poll_answer":[
 			{
 				"poll_answer_id":121
@@ -327,6 +347,9 @@ response:
 		"poll_number":112
 		"poll_question":"Which device ie the best?"
 		"is_new"=true
+		"poll_image_url":"http://apps.jonopriyo.com/poll_icons/poll15_image.png"
+		"poll_category":"Sports"
+		"poll_cast_count":242
 		"poll_answer":[
 			{
 				"poll_answer_id":125
@@ -357,6 +380,7 @@ response:
 		"poll_number":1
 		"poll_question":"Which device ie the best?"
 		"winner_name":"Pratyai"
+		"winner_user_id":4
 		"winner_image_url":"https://apps.jonopriyo.com/images/pratyai.png"
 	},
 	{
@@ -364,6 +388,7 @@ response:
 		"poll_number":2
 		"poll_question":"Who will win champion trophy?"
 		"winner_name":"Khobaib"
+		"winner_user_id":5
 		"winner_image_url":"https://apps.jonopriyo.com/images/khobaib.png"
 	}
 ]
@@ -420,6 +445,39 @@ response:
 }
 
 
+17. method=change_password  
+
+request: POST
+
+{
+	"new_password":"xyz"
+}
+
+response:
+a. successfully change the password
+{
+	"response":"success"
+}
+
+
+
+18. method=forget_password
+*** send password to email.
+
+request: GET
+{
+}
+
+response:
+{
+	"response":"success"
+}
+
+
+
+
+
+
 changelists 
 -----------
 
@@ -448,3 +506,12 @@ changelists
 ----------
 1. new api added - #15 & #16.
 2. modification of response in api #14.
+
+26-06-2013
+----------
+1. api #1 -> "user_id" is added in response.
+2. api #14 -> "winner_user_id" is added in response.
+3. api #8 & #11-> 4 new fields in response. "poll_image_url" & "poll_category" are straighforward. "poll_cast_count" -> how many votes are cast for this poll.
+	"is_cast_by_me" -> true/false; have I already cast vote for this poll?
+4. api #13 -> "poll_image_url", "poll_category" & "poll_cast_count" are added in response.
+5. new api -> #17 & #18.
