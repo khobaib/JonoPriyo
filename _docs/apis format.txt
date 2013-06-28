@@ -470,11 +470,15 @@ request: POST
 }
 
 response:
+a. email found.
 {
 	"response":"success"
 }
 
-
+b. email not found.
+{
+	"response":"email doesn't exist"
+}
 
 
 
