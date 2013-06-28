@@ -49,7 +49,7 @@ public class SplashActivity extends Activity {
         }
 
         Boolean rememberMeFlag = appInstance.isRememberMe();
-        Log.d("loggine remember me", "" + rememberMeFlag);
+        Log.d("login remember me", "" + rememberMeFlag);
         if(rememberMeFlag){
             email = appInstance.getEmail();
             password = appInstance.getPassword();

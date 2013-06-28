@@ -464,8 +464,9 @@ a. successfully change the password
 18. method=forget_password
 *** send password to email.
 
-request: GET
+request: POST
 {
+	"email":"khobaib@gmail.com"
 }
 
 response:
