@@ -520,3 +520,7 @@ changelists
 	"is_cast_by_me" -> true/false; have I already cast vote for this poll?
 4. api #13 -> "poll_image_url", "poll_category" & "poll_cast_count" are added in response.
 5. new api -> #17 & #18.
+
+28-06-2013
+----------
+1. #18 -> "email" is added in the request & response is added when email doesnt exist.
