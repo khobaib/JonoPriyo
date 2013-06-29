@@ -450,14 +450,23 @@ response:
 request: POST
 
 {
+	"current_password":"asd"
 	"new_password":"xyz"
 }
 
 response:
-a. successfully change the password
+
+a. current password doesn't match
+{
+	"response":"current_password_mismatch"
+}
+
+b. successfully change the password
 {
 	"response":"success"
 }
+
+
 
 
 
@@ -524,3 +533,7 @@ changelists
 28-06-2013
 ----------
 1. #18 -> "email" is added in the request & response is added when email doesnt exist.
+
+29-06-2013
+----------
+1. #17 -> change in request, "current_password" field is added.
