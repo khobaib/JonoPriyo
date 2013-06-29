@@ -168,6 +168,8 @@ response:
 		"poll_category":"Sports"
 		"poll_cast_count":242
 		"is_cast_by_me":false
+		"release_date":"2013-05-11"
+		"expiry_date":"2013-05-18"
 		"poll_answer":[
 			{
 				"poll_answer_id":121
@@ -187,6 +189,8 @@ response:
 		"poll_category":"Politics"
 		"poll_cast_count":245
 		"is_cast_by_me":true
+		"release_date":"2013-05-11"
+		"expiry_date":"2013-05-18"
 		"poll_answer":[
 			{
 				"poll_answer_id":121
@@ -261,6 +265,8 @@ response:
 		"poll_category":"Sports"
 		"poll_cast_count":242
 		"is_cast_by_me":false
+		"release_date":"2013-05-11"
+		"expiry_date":"2013-05-18"
 		"poll_answer":[
 			{
 				"poll_answer_id":121
@@ -281,6 +287,8 @@ response:
 		"poll_category":"Sports"
 		"poll_cast_count":242
 		"is_cast_by_me":false
+		"release_date":"2013-05-11"
+		"expiry_date":"2013-05-18"
 		"poll_answer":[
 			{
 				"poll_answer_id":125
@@ -330,6 +338,8 @@ response:
 		"poll_image_url":"http://apps.jonopriyo.com/poll_icons/poll15_image.png"
 		"poll_category":"Sports"
 		"poll_cast_count":242
+		"release_date":"2013-05-11"
+		"expiry_date":"2013-05-18"
 		"poll_answer":[
 			{
 				"poll_answer_id":121
@@ -350,6 +360,8 @@ response:
 		"poll_image_url":"http://apps.jonopriyo.com/poll_icons/poll15_image.png"
 		"poll_category":"Sports"
 		"poll_cast_count":242
+		"release_date":"2013-05-11"
+		"expiry_date":"2013-05-18"
 		"poll_answer":[
 			{
 				"poll_answer_id":125
@@ -525,15 +537,17 @@ changelists
 ----------
 1. api #1 -> "user_id" is added in response.
 2. api #14 -> "winner_user_id" is added in response.
-3. api #8 & #11-> 4 new fields in response. "poll_image_url" & "poll_category" are straighforward. "poll_cast_count" -> how many votes are cast for this poll.
+3. api #8 & #11-> 4 new fields in response. "poll_image_url" & "poll_category" are straightforward. "poll_cast_count" -> how many votes are cast for this poll.
 	"is_cast_by_me" -> true/false; have I already cast vote for this poll?
 4. api #13 -> "poll_image_url", "poll_category" & "poll_cast_count" are added in response.
 5. new api -> #17 & #18.
 
 28-06-2013
 ----------
-1. #18 -> "email" is added in the request & response is added when email doesnt exist.
+1. #18 -> "email" is added in the request & response is added when email doesn't exist.
 
 29-06-2013
 ----------
 1. #17 -> change in request, "current_password" field is added.
+2. #8, #11, #13 -> 2 fields added for every poll - "release_date" &	"expiry_date".
+
