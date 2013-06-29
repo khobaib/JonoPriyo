@@ -152,7 +152,7 @@ response:
 
 
 8. method=get_new_polls
-(all the polls with expiry_date>=today's_date are new polls), no need to check on release_date.
+(all the polls with release_date<=today'sdate & expiry_date>=today's_date are new polls)
 
 request: GET
 {
@@ -550,4 +550,4 @@ changelists
 ----------
 1. #17 -> change in request, "current_password" field is added.
 2. #8, #11, #13 -> 2 fields added for every poll - "release_date" &	"expiry_date".
-
+3. #8 condition updated for new poll.
