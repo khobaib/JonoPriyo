@@ -152,7 +152,7 @@ response:
 
 
 8. method=get_new_polls
-(all the polls with release_date<=today'sdate & expiry_date>=today's_date are new polls)
+(all the polls with release_date<=today's date & expiry_date>=today's_date are new polls)
 
 request: GET
 {
@@ -174,10 +174,12 @@ response:
 			{
 				"poll_answer_id":121
 				"poll_answer":"Australia"
+				"poll_answer_image":"here_is_full_image_path"
 			},
 			{
 				"poll_answer_id":122
 				"poll_answer":"India"
+				"poll_answer_image":"here_is_full_image_path"
 			}
 		]
 	},
@@ -195,10 +197,12 @@ response:
 			{
 				"poll_answer_id":121
 				"poll_answer":"Australia"
+				"poll_answer_image":"here_is_full_image_path"
 			},
 			{
 				"poll_answer_id":122
 				"poll_answer":"India"
+				"poll_answer_image":"here_is_full_image_path"
 			}
 		]
 	}
@@ -271,10 +275,12 @@ response:
 			{
 				"poll_answer_id":121
 				"poll_answer":"Australia"
+				"poll_answer_image":"here_is_full_image_path"
 			},
 			{
 				"poll_answer_id":122
 				"poll_answer":"India"
+				"poll_answer_image":"here_is_full_image_path"
 			}
 		]
 	},
@@ -293,10 +299,12 @@ response:
 			{
 				"poll_answer_id":125
 				"poll_answer":"Galaxy-S3"
+				"poll_answer_image":"here_is_full_image_path"
 			},
 			{
 				"poll_answer_id":126
 				"poll_answer":"iPhone-5"
+				"poll_answer_image":"here_is_full_image_path"
 			}
 		]
 	}
@@ -344,10 +352,12 @@ response:
 			{
 				"poll_answer_id":121
 				"poll_answer":"Australia"
+				"poll_answer_image":"here_is_full_image_path"
 			},
 			{
 				"poll_answer_id":122
 				"poll_answer":"India"
+				"poll_answer_image":"here_is_full_image_path"
 			}
 		]
 		"my_answer_id":122
@@ -366,10 +376,12 @@ response:
 			{
 				"poll_answer_id":125
 				"poll_answer":"Galaxy-S3"
+				"poll_answer_image":"here_is_full_image_path"
 			},
 			{
 				"poll_answer_id":126
 				"poll_answer":"iPhone-5"
+				"poll_answer_image":"here_is_full_image_path"
 			}
 		]
 		"my_answer_id":126
@@ -551,3 +563,10 @@ changelists
 1. #17 -> change in request, "current_password" field is added.
 2. #8, #11, #13 -> 2 fields added for every poll - "release_date" &	"expiry_date".
 3. #8 condition updated for new poll.
+
+
+02-07-2013
+----------
+1. #8, #11, #13 -> "poll_answer_image" field added in each poll.
+2. If I cast a vote with api #9, this should increase poll_cast_count in poll table. Currently it is not doing this.
+

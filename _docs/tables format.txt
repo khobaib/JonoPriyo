@@ -69,6 +69,7 @@ pollAnswer table (one poll has multiple asnwer)
 id - int
 poll_id - int
 poll_answer - text
+poll_answer_image - text
 
 
 userAnswer table
@@ -103,3 +104,9 @@ change-list - 26-06-2013
 1. poll_image_url, poll_category_id, poll_release_date, poll_expiry_date & poll_cast_count fields are added in poll table.
 2. is_new is removed from poll table. Now from release & expiry date of poll, poll is decided new or not.
 3. new table - pollCategory table
+
+
+change-list - 02-07-2013
+------------------------
+1. poll_answer_image is added in pollAnswer table.
+
