@@ -108,5 +108,5 @@ change-list - 26-06-2013
 
 change-list - 02-07-2013
 ------------------------
-1. poll_answer_image is added in pollAnswer table.
+1. poll_answer_image is added in pollAnswer table. (It's already added)
 
