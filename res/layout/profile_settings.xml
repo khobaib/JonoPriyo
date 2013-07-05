@@ -2,36 +2,36 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray70"
+    android:background="@color/white"
     android:descendantFocusability="beforeDescendants"
     android:focusableInTouchMode="true" >
 
-    <TextView
-        android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/lv_title"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
-        android:text="Profile Settings"
-        android:textColor="@color/red"
-        android:textSize="25dp"
-        android:textStyle="bold" />
+        android:background="@color/red"
+        android:padding="5dp" >
 
-    <View
-        android:id="@+id/v1"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@+id/tv_title"
-        android:layout_marginBottom="5dp"
-        android:background="@color/white" />
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="Profile Settings"
+            android:textColor="@color/white"
+            android:textSize="25dp"
+            android:textStyle="bold" />
+    </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/ll_bottom"
-        android:layout_below="@+id/v1" >
+        android:layout_below="@+id/lv_title" >
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -47,7 +47,7 @@
                 android:layout_marginTop="25dp"
                 android:gravity="right"
                 android:text="Name:"
-                android:textColor="@color/white"
+                android:textColor="@color/red"
                 android:textSize="18dp" />
 
             <TextView
@@ -60,7 +60,7 @@
                 android:layout_marginTop="25dp"
                 android:gravity="right"
                 android:text="Email:"
-                android:textColor="@color/white"
+                android:textColor="@color/red"
                 android:textSize="18dp" />
 
     <!--         <TextView
@@ -99,7 +99,7 @@
                 android:layout_marginTop="25dp"
                 android:gravity="right"
                 android:text="Date of Birth:"
-                android:textColor="@color/white"
+                android:textColor="@color/red"
                 android:textSize="18dp" />
 
             <TextView
@@ -112,7 +112,7 @@
                 android:layout_marginTop="25dp"
                 android:gravity="right"
                 android:text="Profession:"
-                android:textColor="@color/white"
+                android:textColor="@color/red"
                 android:textSize="18dp" />
 
             <TextView
@@ -125,7 +125,7 @@
                 android:layout_marginTop="25dp"
                 android:gravity="right"
                 android:text="Education"
-                android:textColor="@color/white"
+                android:textColor="@color/red"
                 android:textSize="18dp" />
 
             <TextView
@@ -138,7 +138,7 @@
                 android:layout_marginTop="25dp"
                 android:gravity="right"
                 android:text="Sex:"
-                android:textColor="@color/white"
+                android:textColor="@color/red"
                 android:textSize="18dp" />
 
             <TextView
@@ -151,7 +151,7 @@
                 android:layout_marginTop="25dp"
                 android:gravity="right"
                 android:text="Country:"
-                android:textColor="@color/white"
+                android:textColor="@color/red"
                 android:textSize="18dp" />
 
             <TextView
@@ -164,7 +164,7 @@
                 android:layout_marginTop="25dp"
                 android:gravity="right"
                 android:text="City/District:"
-                android:textColor="@color/white"
+                android:textColor="@color/red"
                 android:textSize="18dp" />
 
             <TextView
@@ -177,7 +177,7 @@
                 android:layout_marginTop="25dp"
                 android:gravity="right"
                 android:text="Area:"
-                android:textColor="@color/white"
+                android:textColor="@color/red"
                 android:textSize="18dp" />
 
             <TextView
@@ -190,7 +190,7 @@
                 android:layout_marginTop="25dp"
                 android:gravity="right"
                 android:text="Address:"
-                android:textColor="@color/white"
+                android:textColor="@color/red"
                 android:textSize="18dp" />
 
             <TextView
@@ -203,7 +203,7 @@
                 android:layout_marginTop="25dp"
                 android:gravity="right"
                 android:text="Phone:"
-                android:textColor="@color/white"
+                android:textColor="@color/red"
                 android:textSize="18dp" />
 
             <View
@@ -224,7 +224,7 @@
                 android:imeOptions="actionNext"
                 android:inputType="text"
                 android:singleLine="true"
-                android:textColor="@color/white"
+                android:textColor="@color/red"
                 android:textSize="16dp" />
 
             <EditText
@@ -238,7 +238,7 @@
                 android:imeOptions="actionNext"
                 android:inputType="textEmailAddress"
                 android:singleLine="true"
-                android:textColor="@color/white"
+                android:textColor="@color/red"
                 android:textSize="16dp" />
 
 <!--             <EditText
@@ -293,7 +293,7 @@
                 android:layout_marginRight="10dp"
                 android:imeOptions="actionNext"
                 android:singleLine="true"
-                android:textColor="@color/white"
+                android:textColor="@color/red"
                 android:textSize="16dp" />
 
             <Spinner
@@ -306,7 +306,7 @@
                 android:layout_marginRight="10dp"
                 android:imeOptions="actionNext"
                 android:singleLine="true"
-                android:textColor="@color/white"
+                android:textColor="@color/red"
                 android:textSize="16dp" />
 
             <Spinner
@@ -319,7 +319,7 @@
                 android:layout_marginRight="10dp"
                 android:imeOptions="actionNext"
                 android:singleLine="true"
-                android:textColor="@color/white"
+                android:textColor="@color/red"
                 android:textSize="16dp" />
 
             <AutoCompleteTextView
@@ -334,7 +334,7 @@
                 android:imeOptions="actionNext"
                 android:inputType="text"
                 android:singleLine="true"
-                android:textColor="@color/white"
+                android:textColor="@color/red"
                 android:textSize="16dp" />
 
             <AutoCompleteTextView
@@ -349,7 +349,7 @@
                 android:imeOptions="actionNext"
                 android:inputType="text"
                 android:singleLine="true"
-                android:textColor="@color/white"
+                android:textColor="@color/red"
                 android:textSize="16dp" />
 
             <AutoCompleteTextView
@@ -364,7 +364,7 @@
                 android:imeOptions="actionNext"
                 android:inputType="text"
                 android:singleLine="true"
-                android:textColor="@color/white"
+                android:textColor="@color/red"
                 android:textSize="16dp" />
 
             <EditText
@@ -378,7 +378,7 @@
                 android:imeOptions="actionNext"
                 android:inputType="text"
                 android:singleLine="true"
-                android:textColor="@color/white"
+                android:textColor="@color/red"
                 android:textSize="16dp" />
 
             <EditText
@@ -391,7 +391,7 @@
                 android:layout_marginRight="10dp"
                 android:inputType="phone"
                 android:singleLine="true"
-                android:textColor="@color/white"
+                android:textColor="@color/red"
                 android:textSize="16dp" />
 
             <!-- android:hint="start type for suggestion" -->
@@ -409,13 +409,13 @@
         android:weightSum="2" >
 
         <Button
-            android:id="@+id/b_back"
+            android:id="@+id/b_change_password"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:onClick="onClickBack"
-            android:text="Back"
+            android:onClick="onClickChangePassword"
+            android:text="Change Password"
             android:textColor="@color/white"
             android:textSize="20dp" />
 

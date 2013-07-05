@@ -11,8 +11,13 @@ public class Poll {
     private Long id;
     private Long number;
     private String question;
+    private String imageUrl;
+    private String category;
     private Boolean isNew;
     private Long myAnsId;
+    private String releaseDate;
+    private String expiryDate;
+    private Long participationCount;
     private List<PollAnswer> answers;
     
     public Poll() {       
@@ -27,12 +32,19 @@ public class Poll {
 //        this.answers = answers;
 //    }
     
-    public Poll(Long id, Long number, String question, Boolean isNew, Long myAnsId, List<PollAnswer> answers) {
+    public Poll(Long id, Long number, String question, String imageUrl, String category,
+            Boolean isNew, Long myAnsId, String releaseDate, String expiryDate, 
+            Long participationCount, List<PollAnswer> answers) {
         this.id = id;
         this.number = number;
         this.question = question;
+        this.imageUrl = imageUrl;
+        this.category = category;
         this.isNew = isNew;
         this.myAnsId = myAnsId;
+        this.releaseDate = releaseDate;
+        this.expiryDate = expiryDate;
+        this.participationCount = participationCount;
         this.answers = answers;
     }
     
@@ -72,6 +84,11 @@ public class Poll {
                 Long id = thisPoll.getLong("poll_id");
                 Long number = thisPoll.getLong("poll_number");
                 String question = thisPoll.getString("poll_question");
+                String imageUrl = thisPoll.getString("poll_image_url");
+                String category = thisPoll.getString("poll_category");
+                Long participationCount = thisPoll.getLong("poll_cast_count");
+                String releaseDate = thisPoll.getString("release_date");
+                String expiryDate = thisPoll.getString("expiry_date");
                 
                 Boolean isNew = null;
                 if(thisPoll.has("is_new"))
@@ -84,7 +101,8 @@ public class Poll {
                 JSONArray ansArray = thisPoll.getJSONArray("poll_answer");
                 List<PollAnswer> answers = PollAnswer.paresePollAnswerList(ansArray.toString());
                 
-                Poll poll = new Poll(id, number, question, isNew, myAnsId, answers);   
+                Poll poll = new Poll(id, number, question, imageUrl, category, isNew, myAnsId,
+                        releaseDate, expiryDate, participationCount, answers);   
                 pollList.add(poll);
             }
         } catch (JSONException e) {
@@ -142,7 +160,23 @@ public class Poll {
     public void setQuestion(String question) {
         this.question = question;
     }
-    
+   
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
     public Boolean getIsNew() {
         return isNew;
     }
@@ -157,6 +191,30 @@ public class Poll {
 
     public void setMyAnsId(Long myAnsId) {
         this.myAnsId = myAnsId;
+    }      
+
+    public String getReleaseDate() {
+        return releaseDate;
+    }
+
+    public void setReleaseDate(String releaseDate) {
+        this.releaseDate = releaseDate;
+    }
+
+    public String getExpiryDate() {
+        return expiryDate;
+    }
+
+    public void setExpiryDate(String expiryDate) {
+        this.expiryDate = expiryDate;
+    }
+
+    public Long getParticipationCount() {
+        return participationCount;
+    }
+
+    public void setParticipationCount(Long participationCount) {
+        this.participationCount = participationCount;
     }
 
     public List<PollAnswer> getAnswers() {

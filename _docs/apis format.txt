@@ -182,6 +182,11 @@ response:
 				"poll_answer_image":"here_is_full_image_path"
 			}
 		]
+		"poll_prize":{
+			"prize_type":"cash"
+			"prize_value":"2345"
+			"prize_url":"here_is_full_image_path"
+		}
 	},
 	{
 		"poll_id":13
@@ -205,6 +210,11 @@ response:
 				"poll_answer_image":"here_is_full_image_path"
 			}
 		]
+		"poll_prize":{
+			"prize_type":"refrigerator"
+			"prize_value":"1"
+			"prize_url":"here_is_full_image_path"
+		}
 	}
 ]
 
@@ -283,6 +293,11 @@ response:
 				"poll_answer_image":"here_is_full_image_path"
 			}
 		]
+		"poll_prize":{
+			"prize_type":"refrigerator"
+			"prize_value":"1"
+			"prize_url":"here_is_full_image_path"
+		}
 	},
 	{
 		"poll_id":13
@@ -307,6 +322,11 @@ response:
 				"poll_answer_image":"here_is_full_image_path"
 			}
 		]
+		"poll_prize":{
+			"prize_type":"refrigerator"
+			"prize_value":"1"
+			"prize_url":"here_is_full_image_path"
+		}
 	}
 ]
 
@@ -360,6 +380,11 @@ response:
 				"poll_answer_image":"here_is_full_image_path"
 			}
 		]
+		"poll_prize":{
+			"prize_type":"refrigerator"
+			"prize_value":"1"
+			"prize_url":"here_is_full_image_path"
+		}
 		"my_answer_id":122
 	},
 	{
@@ -384,6 +409,11 @@ response:
 				"poll_answer_image":"here_is_full_image_path"
 			}
 		]
+		"poll_prize":{
+			"prize_type":"refrigerator"
+			"prize_value":"1"
+			"prize_url":"here_is_full_image_path"
+		}
 		"my_answer_id":126
 	}
 ]
@@ -569,4 +599,9 @@ changelists
 ----------
 1. #8, #11, #13 -> "poll_answer_image" field added in each poll.
 2. If I cast a vote with api #9, this should increase poll_cast_count in poll table. Currently it is not doing this.
+
+
+05-07-2013
+----------
+1. #8, #11, #13 -> 	"poll_prize" object added. if prize is cash or money related, the min & max value will be the threshhold. Otherwise min & max will be same & that will be our value.
 

@@ -1,20 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@android:color/transparent" >
+
+    <ImageView
+        android:id="@+id/iv_poll_pic"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="1dp"
+        android:layout_marginTop="1dp"
+        android:padding="5dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/image_back" />
+
+    <TextView
+        android:id="@+id/tv_participation_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/iv_poll_pic"
+        android:layout_alignTop="@+id/iv_poll_pic"
+        android:layout_marginRight="3dp"
+        android:background="@drawable/badge_participation"
+        android:gravity="center"
+        android:paddingBottom="4dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingTop="4dp"
+        android:text="1122"
+        android:textColor="@color/white"
+        android:textSize="12dp" />
 
     <TextView
         android:id="@+id/tv_poll_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="10dp"
+        android:layout_alignTop="@+id/iv_poll_pic"
+        android:layout_marginRight="3dp"
         android:layout_marginTop="10dp"
+        android:layout_toRightOf="@+id/iv_poll_pic"
         android:text="Poll #2:"
         android:textColor="@color/red"
-        android:textSize="20dp"
+        android:textSize="16dp"
         android:textStyle="bold" />
 
     <TextView
@@ -23,22 +52,66 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/tv_poll_number"
-        android:layout_marginTop="3dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginRight="3dp"
         android:layout_toRightOf="@+id/tv_poll_number"
         android:ellipsize="end"
         android:maxLines="2"
         android:minLines="2"
         android:text="Champions Trophy"
-        android:textColor="@color/white"
-        android:textSize="16dp" />
+        android:textColor="@color/gray70"
+        android:textSize="15dp" />
 
-    <View
+    <!--
+         <View
         android:id="@+id/view"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_below="@+id/tv_poll_question"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="10dp" />
+    -->
+
+    <TextView
+        android:id="@+id/tv_category_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tv_poll_number"
+        android:layout_below="@+id/tv_poll_question"
+        android:text="Category:"
+        android:textColor="@color/red"
+        android:textSize="15dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/tv_category_title"
+        android:layout_marginLeft="3dp"
+        android:layout_toRightOf="@+id/tv_category_title"
+        android:text="Sports"
+        android:textColor="@color/gray70"
+        android:textSize="15dp" />
+
+    <TextView
+        android:id="@+id/tv_release_date_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tv_poll_number"
+        android:layout_below="@+id/tv_category_title"
+        android:text="Released:"
+        android:textColor="@color/red"
+        android:textSize="15dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_release_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/tv_release_date_title"
+        android:layout_marginLeft="3dp"
+        android:layout_toRightOf="@+id/tv_release_date_title"
+        android:text="2013-06-22"
+        android:textColor="@color/gray70"
+        android:textSize="15dp" />
 
 </RelativeLayout>

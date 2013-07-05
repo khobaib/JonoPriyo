@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -25,12 +26,14 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.priyo.apps.jonopriyo.LoginActivity.SendForgetPassRequest;
 import com.priyo.apps.jonopriyo.RegisterActivity.RetrieveAreaList;
 import com.priyo.apps.jonopriyo.RegisterActivity.RetrieveCityList;
 import com.priyo.apps.jonopriyo.RegisterActivity.RetrieveCountryList;
@@ -207,9 +210,38 @@ public class ProfileActivity extends FragmentActivity implements OnDateSetListen
         new GetProfileData().execute();
     }
 
-    public void onClickBack(View v){
-        finish();
-        overridePendingTransition(R.anim.prev_slide_in, R.anim.prev_slide_out);
+    public void onClickChangePassword(View v){
+
+        LayoutInflater inflater = (LayoutInflater) getLayoutInflater();
+        View textEntryView = inflater.inflate(R.layout.dialog_change_password, null);
+        final AlertDialog alert = new AlertDialog.Builder(ProfileActivity.this).create();
+        alert.setView(textEntryView, 0, 0, 0, 0);
+
+        final EditText CurrentPass = (EditText) textEntryView.findViewById(R.id.et_current_password);
+        final EditText NewPass = (EditText) textEntryView.findViewById(R.id.et_new_password);
+        final EditText ConfirmNewPass = (EditText) textEntryView.findViewById(R.id.et_confirm_new_password);
+
+
+        Button OK = (Button) textEntryView.findViewById(R.id.b_ok);
+        OK.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                String curPass = CurrentPass.getText().toString();
+                String newPass = NewPass.getText().toString();
+                String confirmNewPass = ConfirmNewPass.getText().toString();
+                alert.dismiss(); 
+                // HERE WE NEED TO ADD CHECK ON CURRENT PASS, NEED TO MODIFY API
+                if(newPass.equals(confirmNewPass))
+                    new ChangePasswordReq().execute(curPass, newPass);
+                else{
+                    Toast.makeText(ProfileActivity.this, "Confirmation mismatch.", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+        });
+
+        alert.show();
     }
 
 
@@ -287,7 +319,70 @@ public class ProfileActivity extends FragmentActivity implements OnDateSetListen
     }
 
 
-    public class PostProfileData extends AsyncTask<Void, Void, Boolean> {
+    private class ChangePasswordReq extends AsyncTask<String, Void, Boolean> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pDialog = new ProgressDialog(ProfileActivity.this);
+            pDialog.setMessage("Requesting password change, please wait...");
+            pDialog.show();
+        }
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+            String rootUrl = Constants.URL_ROOT;
+
+            List<NameValuePair> urlParam = new ArrayList<NameValuePair>();
+            urlParam.add(new BasicNameValuePair("method", Constants.METHOD_CHANGE_PASSWORD));
+
+            String token = appInstance.getAccessToken();
+
+            try {
+                JSONObject passwordObj = new JSONObject();
+                passwordObj.put("current_password", params[0]);
+                passwordObj.put("new_password", params[1]);
+                String content = passwordObj.toString();
+
+                ServerResponse response = jsonParser.retrieveServerData(Constants.REQUEST_TYPE_POST, rootUrl,
+                        urlParam, content, token);
+                if(response.getStatus() == 200){
+                    JSONObject jsonResponse = response.getjObj();
+                    try {
+                        String responseType = jsonResponse.getString("response");
+                        if(responseType.equals("success")){
+                            Log.d(">>>><<<<", "success in retrieving reg info");
+                            return true;
+                        }
+                    } catch (JSONException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }                
+            } catch (JSONException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
+
+            return false;
+        }
+
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            super.onPostExecute(result);
+            if(pDialog != null)
+                pDialog.dismiss();
+            if(result){
+                alert("Password updated.", false);
+            }
+
+        }
+
+    }
+
+
+    private class PostProfileData extends AsyncTask<Void, Void, Boolean> {
 
         @Override
         protected void onPreExecute() {
@@ -317,7 +412,7 @@ public class ProfileActivity extends FragmentActivity implements OnDateSetListen
                 profileObj.put("area_id", regInfo.getAreaId());
                 profileObj.put("address", regInfo.getAddress());
                 profileObj.put("phone", regInfo.getPhone());
-                
+
                 JSONObject profileInfo = new JSONObject();
                 profileInfo.put("profile_info", profileObj);
 

@@ -111,8 +111,10 @@ public class SplashActivity extends Activity {
                     if(login.equals("success")){
                         String token = responsObj.getString("token");
                         String imageUrl = responsObj.getString("image_url");
+                        Long userId = responsObj.getLong("user_id");
                         appInstance.setAccessToken(token);
                         appInstance.setProfileImageUrl(imageUrl);
+                        appInstance.setUserId(userId);
                         return true;
                     }
                     else{

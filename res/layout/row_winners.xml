@@ -6,12 +6,12 @@
 
     <ImageView
         android:id="@+id/iv_winner_pic"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginLeft="1dp"
+        android:layout_marginTop="1dp"
         android:padding="5dp"
         android:scaleType="fitXY"
         android:src="@drawable/image_back" />
@@ -21,15 +21,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/iv_winner_pic"
-        android:layout_marginLeft="8dp"
+        android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="10dp"
         android:layout_toRightOf="@+id/iv_winner_pic"
         android:ellipsize="end"
         android:maxLines="2"
         android:minLines="2"
         android:text="Poll#2 Who will win the champions trophy?"
-        android:textColor="@color/white"
+        android:textColor="@color/gray70"
         android:textSize="16dp" />
 
     <TextView
@@ -52,7 +52,7 @@
         android:layout_marginLeft="5dp"
         android:layout_toRightOf="@+id/tv_winner"
         android:text="Khobaib"
-        android:textColor="@color/white"
+        android:textColor="@color/gray70"
         android:textSize="16dp"
         android:textStyle="bold" />
 

@@ -57,7 +57,7 @@ public class MyPollsActivity  extends FragmentActivity implements LoaderManager.
                 Poll selectedPoll = (Poll) parent.getItemAtPosition(position);
                 appInstance.setSelectedPoll(selectedPoll);
               
-                Intent i = new Intent(MyPollsActivity.this, PollDetailsActivity.class);
+                Intent i = new Intent(MyPollsActivity.this, PastPollDetailsActivity.class);
                 i.putExtra(Constants.FROM_ACTIVITY, Constants.PARENT_ACTIVITY_MY_POLLS);
                 startActivity(i);
                 overridePendingTransition(R.anim.slide_in, R.anim.slide_out);

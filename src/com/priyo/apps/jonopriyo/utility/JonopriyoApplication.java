@@ -63,6 +63,12 @@ public class JonopriyoApplication extends Application {
         editor.commit();        
     }
     
+    public void setUserId(Long userId){
+        Editor editor = User.edit();
+        editor.putLong(Constants.USER_ID, userId);
+        editor.commit();        
+    }
+    
     public void setAccessToken(String token){
         Editor editor = User.edit();
         editor.putString(Constants.ACCESS_TOKEN, token);
@@ -95,6 +101,11 @@ public class JonopriyoApplication extends Application {
     public boolean isRememberMe(){
         Boolean rememberMeFlag = User.getBoolean(Constants.REMEMBER_ME, false);
         return rememberMeFlag;
+    }
+    
+    public Long getUserId(){
+        Long userId = User.getLong(Constants.USER_ID, 0);
+        return userId;
     }
     
     public String getAccessToken(){

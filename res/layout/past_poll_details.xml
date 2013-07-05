@@ -3,8 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white" >
-    
-        <LinearLayout
+
+    <LinearLayout
         android:id="@+id/lv_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -25,7 +25,6 @@
             android:textStyle="bold" />
     </LinearLayout>
 
-
     <TextView
         android:id="@+id/tv_poll_question"
         android:layout_width="wrap_content"
@@ -45,17 +44,27 @@
         android:layout_margin="10dp"
         android:orientation="vertical" />
 
-    <Button
+<!--     <Button
         android:id="@+id/b_submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rg_poll_answer"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:onClick="onClickSubmit"
         android:padding="15dp"
-        android:layout_centerHorizontal="true"
+        android:text="Submit"
         android:textColor="@color/white"
-        android:textSize="25dp"
-        android:text="Submit" />
+        android:textSize="25dp" /> -->
+
+    <LinearLayout
+        android:id="@+id/my_chart"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rg_poll_answer"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal" >
+    </LinearLayout>
 
 </RelativeLayout>

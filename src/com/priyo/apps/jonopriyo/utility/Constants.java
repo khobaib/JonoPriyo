@@ -11,6 +11,7 @@ public class Constants {
     
     public static final String FIRST_TIME = "first_time_run";
     public static final String ACCESS_TOKEN = "access_token";
+    public static final String USER_ID = "user_id";
     public static final String EMAIL = "email";
     public static final String PASSWORD = "password";
     public static final String REMEMBER_ME = "remember_me";
@@ -24,8 +25,7 @@ public class Constants {
     public static final String METHOD_GET_CITIES = "get_cities";
     public static final String METHOD_GET_AREA = "get_area";
     public static final String METHOD_GET_EDUCATION = "get_education";
-    public static final String METHOD_GET_PROFESSION = "get_profession";
-    
+    public static final String METHOD_GET_PROFESSION = "get_profession";    
     public static final String METHOD_GET_NEW_POLLS = "get_new_polls";
     public static final String METHOD_POST_USER_POLL = "post_user_poll";
     public static final String METHOD_GET_POLL_RESULT = "poll_result";
@@ -35,6 +35,8 @@ public class Constants {
     public static final String METHOD_GET_WINNERS = "get_winners";
     public static final String METHOD_GET_PROFILE_INFO = "get_profile_info";
     public static final String METHOD_POST_PROFILE_INFO = "post_profile_info";
+    public static final String METHOD_CHANGE_PASSWORD = "change_password";
+    public static final String METHOD_FORGET_PASSWORD = "forget_password";
     
     public static final int RESPONSE_STATUS_CODE_SUCCESS = 200;
     

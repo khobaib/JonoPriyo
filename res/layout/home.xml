@@ -2,27 +2,36 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray70" >
+    android:background="@color/white" >
 
-    <TextView
-        android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/lv_title"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
-        android:text="jonoPriyo"
-        android:textColor="@color/red"
-        android:textSize="25dp"
-        android:textStyle="bold" />
+        android:background="@color/red"
+        android:padding="5dp" >
 
-    <View
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:text="jonoPriyo"
+            android:textColor="@color/white"
+            android:textSize="25dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+    <!--
+         <View
         android:id="@+id/v1"
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_below="@+id/tv_title"
-        android:background="@color/white" />
+        android:background="@color/white" />
+    -->
 
     <LinearLayout
         android:id="@+id/llButtons"
@@ -228,7 +237,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@+id/ll4"
-        android:background="@color/white" />
+        android:background="@color/white" />
     -->
 
     <ImageView

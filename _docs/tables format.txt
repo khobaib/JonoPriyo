@@ -63,6 +63,7 @@ poll_category_id - int (foreign key - pollCategory(id))
 poll_release_date - text
 poll_expiry_date - text
 poll_cast_count - int
+poll_description - text
 
 pollAnswer table (one poll has multiple asnwer)
 ---------------------------------------------------------
@@ -88,6 +89,21 @@ poll_id - int (foreign key - poll(id))
 user_id - int (foreign key - user(id))
 
 
+pollPrize table
+---------------
+id - int
+poll_id - int (foreign key - poll(id))
+prize_type - int (foreign key - pollPrizeType(id))
+prize_min - int
+prize_max - int
+prize_icon - text
+
+
+pollPrizeType table
+-------------------
+id - int
+prize_type_name - text
+
 
 change-list - 20-06-2013
 ------------------------
@@ -110,3 +126,8 @@ change-list - 02-07-2013
 ------------------------
 1. poll_answer_image is added in pollAnswer table. (It's already added)
 
+
+change-list - 05-07-2013
+------------------------
+1. poll_description is added in poll table.
+2. new table - pollPrize table & pollPrizeType

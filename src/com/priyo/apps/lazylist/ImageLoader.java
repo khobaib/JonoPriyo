@@ -43,7 +43,7 @@ public class ImageLoader {
         executorService=Executors.newFixedThreadPool(5);
     }
     
-    final int stub_id= R.drawable.loading2;
+    final int stub_id= R.drawable.image_back;
     public void DisplayImage(String url, ImageView imageView)
     {
         imageViews.put(imageView, url);

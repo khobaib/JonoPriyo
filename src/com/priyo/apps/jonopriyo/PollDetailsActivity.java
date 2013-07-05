@@ -106,9 +106,12 @@ public class PollDetailsActivity extends Activity {
                 myPollCheckIndex = buttonIndex;
             
             if(fromActivity != Constants.PARENT_ACTIVITY_NEW_POLLS){
-                Log.d(">>>>", "ALL POLLS");
+                Log.d(">>>>", "ALL POLLS or MY POLLS");
                 rb[buttonIndex].setEnabled(false);
                 rb[buttonIndex].setTextColor(getResources().getColor(R.color.gray_snow2));
+            }
+            else{
+                rb[buttonIndex].setTextColor(getResources().getColor(R.color.red));
             }
 //            Log.d("ID ID ID", "rb -> id = " + rb[buttonIndex].getId());
             rgAnswerOption.addView(rb[buttonIndex]);        //the RadioButtons are added to the radioGroup instead of the layout

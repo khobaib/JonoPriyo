@@ -13,23 +13,30 @@ import android.widget.TextView;
 
 import com.priyo.apps.jonopriyo.R;
 import com.priyo.apps.jonopriyo.model.Poll;
+import com.priyo.apps.lazylist.ImageLoader;
 
 public class PollListAdapter extends ArrayAdapter<Poll> {
     
     private Context mContext;
     private List<Poll> mPolls;
     private LayoutInflater mInflater;
+    private ImageLoader imageLoader;
 
     public PollListAdapter(Context context, List<Poll> polls) {
         super(context, R.layout.row_polls);
         this.mContext = context;
         this.mPolls = polls;
         mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        imageLoader = new ImageLoader((Activity) mContext);
     }
     
     private static class ViewHolder {
+        ImageView PollImage;
         TextView PollNumber;
         TextView PollQuestion;
+        TextView ParticipationCount;
+        TextView Category;
+        TextView ReleaseDate;
     }
     
     
@@ -41,8 +48,12 @@ public class PollListAdapter extends ArrayAdapter<Poll> {
             convertView = mInflater.inflate(R.layout.row_polls, null);
 
             holder = new ViewHolder();
+            holder.PollImage = (ImageView)convertView.findViewById(R.id.iv_poll_pic);;
             holder.PollNumber = (TextView) convertView.findViewById(R.id.tv_poll_number);
             holder.PollQuestion = (TextView) convertView.findViewById(R.id.tv_poll_question);
+            holder.ParticipationCount = (TextView) convertView.findViewById(R.id.tv_participation_count);
+            holder.Category = (TextView) convertView.findViewById(R.id.tv_category);
+            holder.ReleaseDate = (TextView) convertView.findViewById(R.id.tv_release_date);
             
             convertView.setTag(holder);
         } else {
@@ -51,8 +62,14 @@ public class PollListAdapter extends ArrayAdapter<Poll> {
         
         Poll item = getItem(position);
         
-        holder.PollNumber.setText("Poll#" + item.getNumber());
+        String imageUrl = item.getImageUrl();
+        imageLoader.DisplayImage(imageUrl, holder.PollImage);
+        
+        holder.PollNumber.setText("Poll#:" + item.getNumber());
         holder.PollQuestion.setText(item.getQuestion());
+        holder.ParticipationCount.setText("" + item.getParticipationCount());
+        holder.Category.setText(item.getCategory());
+        holder.ReleaseDate.setText(item.getReleaseDate());
 
         return convertView;
     }    

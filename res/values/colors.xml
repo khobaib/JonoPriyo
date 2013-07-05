@@ -14,5 +14,16 @@
     <color name="android_green">#FFA4C639</color>
     <color name="honeycombish_blue">#FF58BAED</color>
     <color name="rawsienna">#ffc76114</color>
+    
+    
+    
+    <color name="crimson">#ffdc143c</color>
+    <color name="lightpink1">#ffffaeb9</color>
+    <color name="palevioletred1">#ffff82ab</color>
+    <color name="violetred1">#ffff3e96</color>
+    <color name="orchid">#ffda70d6</color>
+    <color name="violetred">#ffd02090</color>
+    <color name="plum2">#ffeeaeee</color>
+    <color name="magenta">#ffff00ff</color>
 
 </resources>

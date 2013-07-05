@@ -73,6 +73,10 @@
             android:name=".ProfileActivity"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name=".PastPollDetailsActivity"
+            android:screenOrientation="portrait" >
+        </activity>
     </application>
 
 </manifest>

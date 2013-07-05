@@ -218,9 +218,9 @@ public class RegisterActivity extends FragmentActivity implements OnDateSetListe
 
     private void generateSpinner(Spinner spinner, String[] arrayToSpinner) {
         ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(
-                RegisterActivity.this, android.R.layout.simple_spinner_item, arrayToSpinner);
+                RegisterActivity.this, R.layout.my_simple_spinner_item, arrayToSpinner);
         spinner.setAdapter(myAdapter);
-        myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        myAdapter.setDropDownViewResource(R.layout.my_simple_spinner_dropdown_item);
 
     }
 
@@ -375,7 +375,7 @@ public class RegisterActivity extends FragmentActivity implements OnDateSetListe
                     countryNameList.add(country.getName());
                 
                 ArrayAdapter<String> countryAdapter = new ArrayAdapter<String>(RegisterActivity.this,
-                        android.R.layout.simple_dropdown_item_1line, countryNameList);
+                        R.layout.my_autocomplete_text_style, countryNameList);
                 tvCountry.setAdapter(countryAdapter);
             }
         }        
@@ -424,7 +424,7 @@ public class RegisterActivity extends FragmentActivity implements OnDateSetListe
                     cityNameList.add(city.getName());
                 
                 ArrayAdapter<String> cityAdapter = new ArrayAdapter<String>(RegisterActivity.this,
-                        android.R.layout.simple_dropdown_item_1line, cityNameList);
+                        R.layout.my_autocomplete_text_style, cityNameList);
                 tvCity.setAdapter(cityAdapter);
             }
         }        
@@ -471,7 +471,7 @@ public class RegisterActivity extends FragmentActivity implements OnDateSetListe
                     areaNameList.add(area.getName());
                 
                 ArrayAdapter<String> areaAdapter = new ArrayAdapter<String>(RegisterActivity.this,
-                        android.R.layout.simple_dropdown_item_1line, areaNameList);
+                        R.layout.my_autocomplete_text_style, areaNameList);
                 tvArea.setAdapter(areaAdapter);
             }
         }        
