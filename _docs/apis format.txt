@@ -170,6 +170,7 @@ response:
 		"is_cast_by_me":false
 		"release_date":"2013-05-11"
 		"expiry_date":"2013-05-18"
+		"poll_description":"poll description"
 		"poll_answer":[
 			{
 				"poll_answer_id":121
@@ -198,6 +199,7 @@ response:
 		"is_cast_by_me":true
 		"release_date":"2013-05-11"
 		"expiry_date":"2013-05-18"
+		"poll_description":"poll description"
 		"poll_answer":[
 			{
 				"poll_answer_id":121
@@ -281,6 +283,7 @@ response:
 		"is_cast_by_me":false
 		"release_date":"2013-05-11"
 		"expiry_date":"2013-05-18"
+		"poll_description":"poll description"
 		"poll_answer":[
 			{
 				"poll_answer_id":121
@@ -310,6 +313,7 @@ response:
 		"is_cast_by_me":false
 		"release_date":"2013-05-11"
 		"expiry_date":"2013-05-18"
+		"poll_description":"poll description"
 		"poll_answer":[
 			{
 				"poll_answer_id":125
@@ -368,6 +372,7 @@ response:
 		"poll_cast_count":242
 		"release_date":"2013-05-11"
 		"expiry_date":"2013-05-18"
+		"poll_description":"poll description"
 		"poll_answer":[
 			{
 				"poll_answer_id":121
@@ -397,6 +402,7 @@ response:
 		"poll_cast_count":242
 		"release_date":"2013-05-11"
 		"expiry_date":"2013-05-18"
+		"poll_description":"poll description"
 		"poll_answer":[
 			{
 				"poll_answer_id":125
@@ -603,5 +609,6 @@ changelists
 
 05-07-2013
 ----------
-1. #8, #11, #13 -> 	"poll_prize" object added. if prize is cash or money related, the min & max value will be the threshhold. Otherwise min & max will be same & that will be our value.
+1. #8, #11, #13 -> 	"poll_prize" object added. if prize is cash or money related, the min & max value will be the threshold. Otherwise min & max will be same & that will be our value.
+2. #8, #11, #13 -> poll_description field added.
 
