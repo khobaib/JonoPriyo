@@ -10,13 +10,15 @@ import org.json.JSONObject;
 public class PollAnswer {
     private Long id;
     private String answer;
+    private String answerImage;
     
     public PollAnswer() {
     }
 
-    public PollAnswer(Long id, String answer) {
+    public PollAnswer(Long id, String answer, String answerImage) {
         this.id = id;
         this.answer = answer;
+        this.answerImage = answerImage;
     }
     
     public static List<PollAnswer> paresePollAnswerList(String jsonStr){
@@ -29,7 +31,8 @@ public class PollAnswer {
                 JSONObject thisAns = ansArray.getJSONObject(ansIndex);
                 Long id = thisAns.getLong("poll_answer_id");
                 String ans = thisAns.getString("poll_answer");
-                PollAnswer answer = new PollAnswer(id, ans);
+                String ansImage = thisAns.getString("poll_answer_image");
+                PollAnswer answer = new PollAnswer(id, ans, ansImage);
                 ansList.add(answer);
             }
         } catch (JSONException e) {
@@ -53,6 +56,14 @@ public class PollAnswer {
 
     public void setAnswer(String answer) {
         this.answer = answer;
+    }
+
+    public String getAnswerImage() {
+        return answerImage;
+    }
+
+    public void setAnswerImage(String answerImage) {
+        this.answerImage = answerImage;
     }
    
 }

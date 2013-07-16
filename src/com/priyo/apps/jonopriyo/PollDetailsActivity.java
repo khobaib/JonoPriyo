@@ -20,13 +20,16 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.priyo.apps.jonopriyo.adapter.PollAnswerListAdapter;
 import com.priyo.apps.jonopriyo.model.Poll;
+import com.priyo.apps.jonopriyo.model.PollAnswer;
 import com.priyo.apps.jonopriyo.model.ServerResponse;
 import com.priyo.apps.jonopriyo.parser.JsonParser;
 import com.priyo.apps.jonopriyo.utility.Constants;
@@ -35,117 +38,65 @@ import com.priyo.apps.jonopriyo.utility.JonopriyoApplication;
 public class PollDetailsActivity extends Activity {
     
     TextView tvPollQuestion;
-    RadioGroup rgAnswerOption;
+//    RadioGroup rgAnswerOption;
     
     Button Submit;
     
     TextView Title;
     
-    int selectedButtonIndex;
+//    static int selectedButtonIndex;
 
-    // Progress Dialog
     private ProgressDialog pDialog;
     JsonParser jsonParser;
     JonopriyoApplication appInstance;
 
     Poll thisPoll;
-    int fromActivity;
     
-    List<Integer> rbIdList;
+    List<PollAnswer> pollAnswerList;
+    ListView PollAnswerList;
+    PollAnswerListAdapter pAnsListAdapter;
+    
+//    List<Integer> rbIdList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.poll_details);     
+        setContentView(R.layout.poll_details);    
         
-        fromActivity = getIntent().getExtras().getInt(Constants.FROM_ACTIVITY);
+        jsonParser = new JsonParser();
 
         appInstance = (JonopriyoApplication) getApplication();
         thisPoll = appInstance.getSelectedPoll();
         
-        Title = (TextView) findViewById(R.id.tv_poll_title);
-//        String pollNum = "Poll #" + thisPoll.getNumber();
+        Title = (TextView) findViewById(R.id.tv_title);
         Title.setText("Poll #" + thisPoll.getNumber());
         
-        Submit = (Button) findViewById(R.id.b_submit);
-        if(fromActivity != Constants.PARENT_ACTIVITY_NEW_POLLS)
-            Submit.setVisibility(View.GONE);
-        
-        jsonParser = new JsonParser();
-        
-        
-        
-        selectedButtonIndex = -1;
-
         tvPollQuestion = (TextView) findViewById(R.id.tv_poll_question);
-        rgAnswerOption = (RadioGroup) findViewById(R.id.rg_poll_answer);
-        rgAnswerOption.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-            
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                selectedButtonIndex = getRadioButtonIndex(checkedId);
-//                Toast.makeText(PollDetailActivity.this, "checked index = " + selectedButtonIndex, Toast.LENGTH_SHORT).show();
-            }
-        });
-        
         tvPollQuestion.setText(thisPoll.getQuestion());
-        rgAnswerOption.removeAllViews();
-        Log.d(">>>>>>??????", "rgAnswerOption length = " + rgAnswerOption.getChildCount());
-        int ansCount = thisPoll.getAnswers().size();
-        rbIdList = new ArrayList<Integer>();
         
-        int myPollCheckIndex = -1;
+        PollAnswerList = (ListView) findViewById(R.id.lv_pollanswer_list);
         
-        Log.d(">>>>>>>>>", "this poll my ans id = " + thisPoll.getMyAnsId());
-        final RadioButton[] rb = new RadioButton[ansCount];
-        for(int buttonIndex = 0; buttonIndex < ansCount; buttonIndex++){
-            rb[buttonIndex] = new RadioButton(PollDetailsActivity.this);
-            Log.d(">>>>>>>>>", "this ans id = " + thisPoll.getAnswers().get(buttonIndex).getId());
-            if(fromActivity == Constants.PARENT_ACTIVITY_MY_POLLS &&
-                        thisPoll.getMyAnsId().equals(thisPoll.getAnswers().get(buttonIndex).getId()))
-                myPollCheckIndex = buttonIndex;
-            
-            if(fromActivity != Constants.PARENT_ACTIVITY_NEW_POLLS){
-                Log.d(">>>>", "ALL POLLS or MY POLLS");
-                rb[buttonIndex].setEnabled(false);
-                rb[buttonIndex].setTextColor(getResources().getColor(R.color.gray_snow2));
-            }
-            else{
-                rb[buttonIndex].setTextColor(getResources().getColor(R.color.red));
-            }
-//            Log.d("ID ID ID", "rb -> id = " + rb[buttonIndex].getId());
-            rgAnswerOption.addView(rb[buttonIndex]);        //the RadioButtons are added to the radioGroup instead of the layout
-//            Log.d("--- ID ID ID", "rb -> id = " + rgAnswerOption.getChildAt(buttonIndex).getId());
-//            rbIdList.set(buttonIndex, rgAnswerOption.getChildAt(buttonIndex).getId());
-            rbIdList.add(rgAnswerOption.getChildAt(buttonIndex).getId());
-            rb[buttonIndex].setText(thisPoll.getAnswers().get(buttonIndex).getAnswer());
-        }   
-        
-        if(myPollCheckIndex != -1){
-            rgAnswerOption.check(rgAnswerOption.getChildAt(myPollCheckIndex).getId());
+        pollAnswerList = thisPoll.getAnswers();
+        if(pollAnswerList == null || pollAnswerList.isEmpty()){
+            PollAnswerList.setAdapter(null);
+        }
+        else{
+            Log.d(">>>><<<<<", "poll answer count = " + pollAnswerList.size());
+            PollAnswerList.setAdapter(new PollAnswerListAdapter(PollDetailsActivity.this, pollAnswerList));
         }
         
-
-
+        Submit = (Button) findViewById(R.id.b_submit);
+       
     }
     
-    
-    private int getRadioButtonIndex(int checkedId){
-        for(int i = 0; i < rbIdList.size(); i++){
-            if(rbIdList.get(i) == checkedId){
-                return i;
-            }
-        }
-        return -1;   
-    }
     
     public void onClickSubmit(View v){
-        if(selectedButtonIndex == -1){
+        if(PollAnswerListAdapter.mSelectedPosition == -1){
             Toast.makeText(PollDetailsActivity.this, "Please cast your vote first.", Toast.LENGTH_SHORT).show();
         }
         else{
             Long qId = thisPoll.getId();
-            Long ansId = thisPoll.getAnswers().get(selectedButtonIndex).getId();
+            Long ansId = thisPoll.getAnswers().get(PollAnswerListAdapter.mSelectedPosition).getId();
             new CastVote().execute(qId, ansId);
         }
     }
@@ -183,7 +134,6 @@ public class PollDetailsActivity extends Activity {
 
             try {
                 JSONObject pollObj = new JSONObject();
-//                pollObj.put("user_id", 5);              // hardcoded, no need this field.
                 pollObj.put("poll_question_id", params[0]);
                 pollObj.put("poll_answer_id", params[1]);
                 String pollData = pollObj.toString();
@@ -222,72 +172,6 @@ public class PollDetailsActivity extends Activity {
         }
     }
 
-
-//    public class RetrievePollData extends AsyncTask<String, Void, Boolean> {
-//
-//        @Override
-//        protected void onPreExecute() {
-//            super.onPreExecute();
-//            pDialog = new ProgressDialog(PollDetailsActivity.this);
-//            pDialog.setMessage("Retrieving poll data, Please wait...");
-//            pDialog.show();
-//        }
-//
-//        @Override
-//        protected Boolean doInBackground(String... params) {
-//            Log.d("MARKER", "reached this point");
-//            String rootUrl = Constants.URL_ROOT;
-//
-//            List<NameValuePair> urlParam = new ArrayList<NameValuePair>();
-//            urlParam.add(new BasicNameValuePair("method", Constants.METHOD_GET_NEW_POLLS));
-//
-//            String token = appInstance.getAccessToken();
-//
-//            ServerResponse response = jsonParser.retrieveServerData(Constants.REQUEST_TYPE_GET, rootUrl,
-//                    urlParam, null, token);
-//            if(response.getStatus() == 200){
-//                Log.d(">>>><<<<", "success in login");
-//                JSONObject responsObj = response.getjObj();
-//                thisPoll = Poll.parsePoll(responsObj.toString());
-//                return true;
-//                //                String login = responsObj.getString("login");
-//            }
-//
-//            return false;
-//
-//        }
-//
-//
-//        @Override
-//        protected void onPostExecute(Boolean success) {
-//            pDialog.dismiss();
-//            if(success){
-//                tvPollQuestion.setText(thisPoll.getQuestion());
-//                rgAnswerOption.removeAllViews();
-//                Log.d(">>>>>>??????", "rgAnswerOption length = " + rgAnswerOption.getChildCount());
-//                int ansCount = thisPoll.getAnswers().size();
-//                rbIdList = new ArrayList<Integer>();
-//                final RadioButton[] rb = new RadioButton[ansCount];
-//                for(int buttonIndex = 0; buttonIndex < ansCount; buttonIndex++){
-//                    rb[buttonIndex] = new RadioButton(PollDetailsActivity.this);
-//                    Log.d("ID ID ID", "rb -> id = " + rb[buttonIndex].getId());
-//                    rgAnswerOption.addView(rb[buttonIndex]);        //the RadioButtons are added to the radioGroup instead of the layout
-//                    Log.d("--- ID ID ID", "rb -> id = " + rgAnswerOption.getChildAt(buttonIndex).getId());
-////                    rbIdList.set(buttonIndex, rgAnswerOption.getChildAt(buttonIndex).getId());
-//                    rbIdList.add(rgAnswerOption.getChildAt(buttonIndex).getId());
-//                    rb[buttonIndex].setText(thisPoll.getAnswers().get(buttonIndex).getAnswer());
-//                }
-//            }
-//            else{
-//                //                Toast.makeText(LoginActivity.this, "Login error, please try again",  Toast.LENGTH_SHORT).show();
-//            }
-//
-//        }
-//
-//
-//
-//    }
-//    
     
     void alert(String message, final Boolean success) {
         AlertDialog.Builder bld = new AlertDialog.Builder(PollDetailsActivity.this);

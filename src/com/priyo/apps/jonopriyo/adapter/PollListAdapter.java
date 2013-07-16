@@ -37,6 +37,8 @@ public class PollListAdapter extends ArrayAdapter<Poll> {
         TextView ParticipationCount;
         TextView Category;
         TextView ReleaseDate;
+        TextView PrizeValue;
+        TextView VoteCasted;
     }
     
     
@@ -48,12 +50,14 @@ public class PollListAdapter extends ArrayAdapter<Poll> {
             convertView = mInflater.inflate(R.layout.row_polls, null);
 
             holder = new ViewHolder();
-            holder.PollImage = (ImageView)convertView.findViewById(R.id.iv_poll_pic);;
+            holder.PollImage = (ImageView)convertView.findViewById(R.id.iv_poll_pic);
             holder.PollNumber = (TextView) convertView.findViewById(R.id.tv_poll_number);
             holder.PollQuestion = (TextView) convertView.findViewById(R.id.tv_poll_question);
             holder.ParticipationCount = (TextView) convertView.findViewById(R.id.tv_participation_count);
             holder.Category = (TextView) convertView.findViewById(R.id.tv_category);
             holder.ReleaseDate = (TextView) convertView.findViewById(R.id.tv_release_date);
+            holder.PrizeValue = (TextView) convertView.findViewById(R.id.tv_prize);
+            holder.VoteCasted = (TextView) convertView.findViewById(R.id.tv_voted);
             
             convertView.setTag(holder);
         } else {
@@ -65,11 +69,17 @@ public class PollListAdapter extends ArrayAdapter<Poll> {
         String imageUrl = item.getImageUrl();
         imageLoader.DisplayImage(imageUrl, holder.PollImage);
         
-        holder.PollNumber.setText("Poll#:" + item.getNumber());
+        holder.PollNumber.setText("" + item.getNumber());
         holder.PollQuestion.setText(item.getQuestion());
         holder.ParticipationCount.setText("" + item.getParticipationCount());
         holder.Category.setText(item.getCategory());
         holder.ReleaseDate.setText(item.getReleaseDate());
+        holder.PrizeValue.setText("" + item.getPollPrize().getValue());
+        
+        if(item.getIsCastByMe())
+            holder.VoteCasted.setVisibility(View.VISIBLE);
+        else
+            holder.VoteCasted.setVisibility(View.GONE);
 
         return convertView;
     }    

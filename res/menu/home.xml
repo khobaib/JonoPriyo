@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/about"
+        android:showAsAction="collapseActionView"
+        android:actionLayout="@style/SpinnerItemAppTheme"
+        android:title="About Us"/>
+    <item
+        android:id="@+id/credit"
+        android:showAsAction="collapseActionView"
+        android:title="Credit"/>
+
+</menu>

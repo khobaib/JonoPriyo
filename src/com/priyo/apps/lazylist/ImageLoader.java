@@ -25,14 +25,17 @@ import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.util.Log;
 import android.view.Display;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 public class ImageLoader {
     
     MemoryCache memoryCache=new MemoryCache();
     FileCache fileCache;
     private Activity mContext;
+    private RelativeLayout rlLoading;
     private Map<ImageView, String> imageViews=Collections.synchronizedMap(new WeakHashMap<ImageView, String>());
     ExecutorService executorService;
     Handler handler=new Handler();//handler to display images in UI thread
@@ -40,23 +43,46 @@ public class ImageLoader {
     public ImageLoader(Activity context){
     	this.mContext = context;
         fileCache=new FileCache(context);
+        this.rlLoading = null;
+        executorService=Executors.newFixedThreadPool(5);
+    }
+    
+    public ImageLoader(Activity context, RelativeLayout rlLoading){
+        this.mContext = context;
+        fileCache=new FileCache(context);
+        this.rlLoading = rlLoading;
         executorService=Executors.newFixedThreadPool(5);
     }
     
     final int stub_id= R.drawable.image_back;
-    public void DisplayImage(String url, ImageView imageView)
-    {
+    public void DisplayImage(String url, ImageView imageView){
         imageViews.put(imageView, url);
         Bitmap bitmap=memoryCache.get(url);
         if(bitmap!=null){
             imageView.setImageBitmap(resizeBitmap(bitmap));
+            if(rlLoading != null)
+                rlLoading.setVisibility(View.GONE);
         }
         else
         {
-            queuePhoto(url, imageView, 400);
+            queuePhoto(url, imageView, 250);
             imageView.setImageResource(stub_id);
         }
     }
+    
+//    public void DisplayImage(String url, ImageView imageView, RelativeLayout rlLoading){
+//        imageViews.put(imageView, url);
+//        Bitmap bitmap=memoryCache.get(url);
+//        if(bitmap!=null){
+//            imageView.setImageBitmap(resizeBitmap(bitmap));
+//            rlLoading.setVisibility(View.GONE);
+//        }
+//        else
+//        {
+//            queuePhoto(url, imageView, 250);
+//            imageView.setImageResource(stub_id);
+//        }
+//    }
     
     public void DisplaySplashImage(String url, ImageView imageView)
     {
@@ -287,10 +313,14 @@ public class ImageLoader {
         {
             if(imageViewReused(photoToLoad))
                 return;
-            if(bitmap!=null)
+            if(bitmap!=null){
                 photoToLoad.imageView.setImageBitmap(bitmap);
-            else
+            }
+            else{
                 photoToLoad.imageView.setImageResource(stub_id);
+            }
+            if(rlLoading != null)
+                rlLoading.setVisibility(View.GONE);
         }
     }
 

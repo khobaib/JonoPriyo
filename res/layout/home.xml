@@ -4,34 +4,32 @@
     android:layout_height="match_parent"
     android:background="@color/white" >
 
-    <LinearLayout
-        android:id="@+id/lv_title"
+    <RelativeLayout
+        android:id="@+id/rl_title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_alignParentTop="true"
-        android:background="@color/red"
-        android:padding="5dp" >
+        android:background="@color/red" >
 
         <TextView
             android:id="@+id/tv_title"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_centerInParent="true"
             android:text="jonoPriyo"
             android:textColor="@color/white"
             android:textSize="25dp"
             android:textStyle="bold" />
-    </LinearLayout>
-    <!--
-         <View
-        android:id="@+id/v1"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_below="@+id/tv_title"
-        android:background="@color/white" />
-    -->
+
+        <Button
+            android:id="@+id/b_menu"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:background="@drawable/button_about_us"
+            android:onClick="onClickAboutUs" />
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/llButtons"
@@ -74,7 +72,8 @@
         <RelativeLayout
             android:id="@+id/rlMiddleButtons"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" >
 
             <Button
                 android:id="@+id/b_my_polls"
@@ -105,7 +104,8 @@
         <RelativeLayout
             android:id="@+id/rlBottomButtons"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" >
 
             <Button
                 android:id="@+id/b_profile"
@@ -134,112 +134,6 @@
         </RelativeLayout>
     </LinearLayout>
 
-    <!--
-<LinearLayout
-        android:id="@+id/ll1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/v1"
-        android:orientation="vertical" >
-
-        <TextView
-            android:id="@+id/tv_this_week_poll"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:text="This Week&apos;s Poll"
-            android:textColor="@color/white"
-            android:textSize="25dp" />
-    </LinearLayout>
-
-    <View
-        android:id="@+id/v2"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@+id/ll1"
-        android:background="@color/white" />
-
-    <LinearLayout
-        android:id="@+id/ll2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/v2"
-        android:orientation="vertical" >
-
-        <TextView
-            android:id="@+id/tv_all_polls"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:text="All Polls"
-            android:textColor="@color/white"
-            android:textSize="25dp" />
-    </LinearLayout>
-
-    <View
-        android:id="@+id/v3"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@+id/ll2"
-        android:background="@color/white" />
-
-    <LinearLayout
-        android:id="@+id/ll3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/v3"
-        android:orientation="vertical" >
-
-        <TextView
-            android:id="@+id/tv_profile_settings"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:text="Profile Settings"
-            android:textColor="@color/white"
-            android:textSize="25dp" />
-    </LinearLayout>
-
-    <View
-        android:id="@+id/v4"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@+id/ll3"
-        android:background="@color/white" />
-
-    <LinearLayout
-        android:id="@+id/ll4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/v4"
-        android:orientation="vertical" >
-
-        <TextView
-            android:id="@+id/tv_facebook_share"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:text="Facebook Share"
-            android:textColor="@color/white"
-            android:textSize="25dp" />
-    </LinearLayout>
-
-    <View
-        android:id="@+id/v5"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@+id/ll4"
-        android:background="@color/white" />
-    -->
-
     <ImageView
         android:id="@+id/iv_profile_pic"
         android:layout_width="70dp"
@@ -253,5 +147,23 @@
         android:padding="5dp"
         android:scaleType="fitXY"
         android:src="@drawable/profile_default" />
+
+    <RelativeLayout
+        android:id="@+id/loading_Panel"
+        style="@style/GenericProgressBackground"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignLeft="@+id/iv_profile_pic"
+        android:layout_alignTop="@+id/iv_profile_pic" >
+
+        <ProgressBar style="@style/GenericProgressIndicator" />
+    </RelativeLayout>
+
+    <Spinner
+        android:id="@+id/s_menu"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_alignBottom="@+id/rl_title"
+        android:layout_alignParentRight="true" />
 
 </RelativeLayout>

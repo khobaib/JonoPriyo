@@ -17,6 +17,9 @@ public class Constants {
     public static final String REMEMBER_ME = "remember_me";
     public static final String PROFILE_PIC_URL = "profile_pic_url";
     
+    public static final int FLAG_WINNER_ONLY_ME = 1;
+    public static final int FLAG_WINNER_ALL = 2;
+    
     public static final String URL_ROOT = "http://apps.priyo.com/jonopriyo/api-v3.php";
     
     public static final String METHOD_LOGIN = "user_login";
@@ -44,6 +47,23 @@ public class Constants {
     public static final int PARENT_ACTIVITY_NEW_POLLS = 101;
     public static final int PARENT_ACTIVITY_ALL_POLLS = 102;
     public static final int PARENT_ACTIVITY_MY_POLLS = 103;
+    
+    /**
+     * Base URL of the Demo Server (such as http://my_host:8080/gcm-demo)
+     */
+    public static final String SERVER_URL = "http://apps.priyo.com/jonopriyo/gcm/register.php";
+
+    /**
+     * Google API project id registered to use GCM.
+     */
+    public static final String SENDER_ID = "528409180961";
+ 
+    /**
+     * Intent used to display a message in the screen.
+     */
+    public static final String DISPLAY_MESSAGE_ACTION ="com.priyo.apps.jonopriyo.DISPLAY_MESSAGE";
+ 
+    public static final String EXTRA_MESSAGE = "message";
 
     
     public static final File APP_DIRECTORY =

@@ -4,9 +4,6 @@ import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,13 +32,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bugsense.trace.BugSenseHandler;
 import com.priyo.apps.jonopriyo.model.ServerResponse;
 import com.priyo.apps.jonopriyo.parser.JsonParser;
 import com.priyo.apps.jonopriyo.utility.Base64;
 import com.priyo.apps.jonopriyo.utility.Constants;
 import com.priyo.apps.jonopriyo.utility.JonopriyoApplication;
 import com.priyo.apps.lazylist.ImageLoader;
-import com.priyo.apps.lazylist.Utils;
 
 public class UploadPicActivity extends Activity {
 
@@ -62,16 +59,17 @@ public class UploadPicActivity extends Activity {
     Bitmap bitmap;
     Bitmap scaledBmp;
 
-    private Boolean isPicassaImage;
+//    private Boolean isPicassaImage;
 
     private String selectedImagePath;
     //ADDED
-    private String filemanagerstring;
+//    private String filemanagerstring;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
+        BugSenseHandler.initAndStartSession(UploadPicActivity.this, "e8ecd3f1");
         setContentView(R.layout.upload_pic);
 
         appInstance = (JonopriyoApplication) getApplication();
@@ -84,8 +82,6 @@ public class UploadPicActivity extends Activity {
         String imageUrl = appInstance.getProfileImageUrl();
         imageLoader = new ImageLoader(UploadPicActivity.this);
         imageLoader.DisplayImage(imageUrl, ProfilePic);
-
-
     }
 
 
@@ -134,7 +130,7 @@ public class UploadPicActivity extends Activity {
                             bitmap.recycle();
                         bitmap = android.provider.MediaStore.Images.Media.getBitmap(cr, imageUri);
                         Log.d("BITMAP SIZE", "bitmap size = " + bitmap.getByteCount());
-                        scaledBmp = Bitmap.createScaledBitmap(bitmap, 400, 400, true);
+                        scaledBmp = Bitmap.createScaledBitmap(bitmap, 200, 200, true);
                         Log.d("scaled BITMAP SIZE", "bitmap size = " + scaledBmp.getByteCount());
 
                         ProfilePic.setImageBitmap(scaledBmp);
@@ -164,7 +160,7 @@ public class UploadPicActivity extends Activity {
                             byte[] bMapArray= new byte[buf.available()];
                             buf.read(bMapArray);
                             Bitmap bMap = BitmapFactory.decodeByteArray(bMapArray, 0, bMapArray.length);
-                            scaledBmp = Bitmap.createScaledBitmap(bMap, 400, 400, true);
+                            scaledBmp = Bitmap.createScaledBitmap(bMap, 200, 200, true);
                             ProfilePic.setImageBitmap(scaledBmp);
                             Update.setVisibility(View.VISIBLE);
                             if (in != null) 
@@ -199,7 +195,7 @@ public class UploadPicActivity extends Activity {
                     public void run() {
                         try {
                             Bitmap bitmap = android.provider.MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-                            scaledBmp = Bitmap.createScaledBitmap(bitmap, 400, 400, true);
+                            scaledBmp = Bitmap.createScaledBitmap(bitmap, 200, 200, true);
 
                             runOnUiThread(new Runnable() {
                                 @Override
@@ -247,10 +243,19 @@ public class UploadPicActivity extends Activity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if ((keyCode == KeyEvent.KEYCODE_BACK)) { // Back key pressed
             finish();
-            overridePendingTransition(R.anim.prev_slide_in, R.anim.prev_slide_out);
+            BugSenseHandler.closeSession(UploadPicActivity.this);
+            overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+    
+    
+    
+    @Override
+    protected void onStop() {
+        super.onStop();
+        BugSenseHandler.closeSession(UploadPicActivity.this);
     }
 
 

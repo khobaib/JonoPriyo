@@ -11,21 +11,27 @@ public class Winner {
     private Long pollId;
     private Long pollNumber;
     private String pollQuestion;
+    private Long winnerUserId;
     private String winnerName;
     private String winnerPicUrl;
     
     public Winner() {
     }
-
-    public Winner(Long pollId, Long pollNumber, String pollQuestion, String winnerName, String winnerPicUrl) {
+    
+    
+    public Winner(Long pollId, Long pollNumber, String pollQuestion, Long winnerUserId, String winnerName,
+            String winnerPicUrl) {
         this.pollId = pollId;
         this.pollNumber = pollNumber;
         this.pollQuestion = pollQuestion;
+        this.winnerUserId = winnerUserId;
         this.winnerName = winnerName;
         this.winnerPicUrl = winnerPicUrl;
     }
-    
-    
+
+
+
+
     public static List<Winner> parseWinnerList(String jsonStr){
         List<Winner> winnerList = new ArrayList<Winner>();
         
@@ -38,9 +44,10 @@ public class Winner {
                 Long pollId = thisWinner.getLong("poll_id");
                 Long pollNumber = thisWinner.getLong("poll_number");
                 String pollQuestion = thisWinner.getString("poll_question");
+                Long winnerUserId = thisWinner.getLong("winner_user_id");
                 String winnerName = thisWinner.getString("winner_name");
                 String winnerPicUrl = thisWinner.getString("winner_image_url");
-                Winner winner = new Winner(pollId, pollNumber, pollQuestion, winnerName, winnerPicUrl);
+                Winner winner = new Winner(pollId, pollNumber, pollQuestion, winnerUserId, winnerName, winnerPicUrl);
                 winnerList.add(winner);
             }
         } catch (JSONException e) {
@@ -73,7 +80,17 @@ public class Winner {
 
     public void setPollQuestion(String pollQuestion) {
         this.pollQuestion = pollQuestion;
+    }       
+
+    public Long getWinnerUserId() {
+        return winnerUserId;
     }
+
+
+    public void setWinnerUserId(Long winnerUserId) {
+        this.winnerUserId = winnerUserId;
+    }
+
 
     public String getWinnerName() {
         return winnerName;

@@ -9,8 +9,8 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
@@ -33,13 +33,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.priyo.apps.jonopriyo.LoginActivity.SendForgetPassRequest;
-import com.priyo.apps.jonopriyo.RegisterActivity.RetrieveAreaList;
-import com.priyo.apps.jonopriyo.RegisterActivity.RetrieveCityList;
-import com.priyo.apps.jonopriyo.RegisterActivity.RetrieveCountryList;
-import com.priyo.apps.jonopriyo.RegisterActivity.RetrieveEducationList;
-import com.priyo.apps.jonopriyo.RegisterActivity.RetrieveProfessionList;
-import com.priyo.apps.jonopriyo.RegisterActivity.SendRegisterRequest;
 import com.priyo.apps.jonopriyo.fragment.DatePickerFragment;
 import com.priyo.apps.jonopriyo.model.Area;
 import com.priyo.apps.jonopriyo.model.City;
@@ -55,8 +48,8 @@ import com.priyo.apps.jonopriyo.utility.Utility;
 
 public class ProfileActivity extends FragmentActivity implements OnDateSetListener {
 
-    EditText Name, Email, Address, Phone;
-    TextView DoB;
+    EditText Name, Address, Phone;
+    TextView DoB, Email;
     Spinner sProfession, sEducation, sSex;
     AutoCompleteTextView tvCountry, tvCity, tvArea;
 
@@ -92,22 +85,16 @@ public class ProfileActivity extends FragmentActivity implements OnDateSetListen
 
 
         calendar = Calendar.getInstance();
+        pDialog = new ProgressDialog(ProfileActivity.this);
+        
+        new GetProfileData().execute();
 
         Name = (EditText) findViewById(R.id.et_name);
-        Email = (EditText) findViewById(R.id.et_email);
+        Email = (TextView) findViewById(R.id.tv_email);
         Address = (EditText) findViewById(R.id.et_address);
         Phone = (EditText) findViewById(R.id.et_phone);
 
         DoB = (TextView) findViewById(R.id.tv_dob);
-        DoB.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                DialogFragment newFragment = new DatePickerFragment().newInstance(calendar, "profile");
-                newFragment.show(getSupportFragmentManager(), "datePicker");
-            }
-        });
 
         sProfession = (Spinner) findViewById(R.id.s_profession);
         sProfession.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -207,7 +194,12 @@ public class ProfileActivity extends FragmentActivity implements OnDateSetListen
             }
         });
 
-        new GetProfileData().execute();
+
+    }
+    
+    public void onClickCalendar(View v){
+        DialogFragment newFragment = new DatePickerFragment().newInstance(calendar, "profile");
+        newFragment.show(getSupportFragmentManager(), "datePicker");
     }
 
     public void onClickChangePassword(View v){
@@ -273,9 +265,9 @@ public class ProfileActivity extends FragmentActivity implements OnDateSetListen
 
     private void generateSpinner(Spinner spinner, String[] arrayToSpinner) {
         ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(
-                ProfileActivity.this, android.R.layout.simple_spinner_item, arrayToSpinner);
+                ProfileActivity.this, R.layout.my_simple_spinner_item, arrayToSpinner);
         spinner.setAdapter(myAdapter);
-        myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        myAdapter.setDropDownViewResource(R.layout.my_simple_spinner_dropdown_item);
 
     }
 
@@ -325,7 +317,7 @@ public class ProfileActivity extends FragmentActivity implements OnDateSetListen
         protected void onPreExecute() {
             super.onPreExecute();
             pDialog = new ProgressDialog(ProfileActivity.this);
-            pDialog.setMessage("Requesting password change, please wait...");
+            pDialog.setMessage("Loading...");
             pDialog.show();
         }
 
@@ -371,7 +363,7 @@ public class ProfileActivity extends FragmentActivity implements OnDateSetListen
         @Override
         protected void onPostExecute(Boolean result) {
             super.onPostExecute(result);
-            if(pDialog != null)
+            if(pDialog.isShowing())
                 pDialog.dismiss();
             if(result){
                 alert("Password updated.", false);
@@ -387,8 +379,7 @@ public class ProfileActivity extends FragmentActivity implements OnDateSetListen
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            pDialog = new ProgressDialog(ProfileActivity.this);
-            pDialog.setMessage("Please wait while your profile is being updated...");
+            pDialog.setMessage("Loading...");
             pDialog.show();
         }
 
@@ -441,7 +432,7 @@ public class ProfileActivity extends FragmentActivity implements OnDateSetListen
         @Override
         protected void onPostExecute(Boolean result) {
             super.onPostExecute(result);
-            if(pDialog != null)
+            if(pDialog.isShowing())
                 pDialog.dismiss();
             if(result){
                 alert("Profile Update successful.", true);
@@ -460,8 +451,8 @@ public class ProfileActivity extends FragmentActivity implements OnDateSetListen
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            pDialog = new ProgressDialog(ProfileActivity.this);
-            pDialog.setMessage("Retrieving profile data, please wait...");
+            
+            pDialog.setMessage("Loading...");
             pDialog.show();
         }
 
@@ -503,7 +494,7 @@ public class ProfileActivity extends FragmentActivity implements OnDateSetListen
                 initializeFields();
                 // call all asynctask
             }
-            if(pDialog != null)
+            if(pDialog.isShowing())
                 pDialog.dismiss();
         }
 
@@ -555,22 +546,18 @@ public class ProfileActivity extends FragmentActivity implements OnDateSetListen
         @Override
         protected void onPostExecute(Boolean result) {
             super.onPostExecute(result);
-            //            if(pDialog != null)
-            //                pDialog.dismiss();
             if(result){
                 List<String> countryNameList = new ArrayList<String>();
                 for(Country country : countryList)
                     countryNameList.add(country.getName());
 
                 ArrayAdapter<String> countryAdapter = new ArrayAdapter<String>(ProfileActivity.this,
-                        android.R.layout.simple_dropdown_item_1line, countryNameList);
+                        R.layout.my_autocomplete_text_style, countryNameList);
                 tvCountry.setAdapter(countryAdapter);
 
                 for(int countryIndex = 0; countryIndex < countryList.size(); countryIndex++){
-                    //                    Log.d(">>>>>>>>><<<<<", "selected country id = " + selectedCountryId);
-                    Log.d(">>>>>>>>><<<<<", "countrylist country id = " + countryList.get(countryIndex).getId());
+
                     if(selectedCountryId.equals(countryList.get(countryIndex).getId())){
-                        //                        Log.d(">>>>>>>>><<<<<", "selected country name = " + countryList.get(countryIndex).getName());
                         tvCountry.setText(countryList.get(countryIndex).getName());
                         break;
                     }
@@ -587,9 +574,6 @@ public class ProfileActivity extends FragmentActivity implements OnDateSetListen
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            //            pDialog = new ProgressDialog(ProfileActivity.this);
-            //            pDialog.setMessage("Retrieving city list, please wait");
-            //            pDialog.show();
         }
 
         @Override
@@ -614,15 +598,13 @@ public class ProfileActivity extends FragmentActivity implements OnDateSetListen
         @Override
         protected void onPostExecute(Boolean result) {
             super.onPostExecute(result);
-            //            if(pDialog != null)
-            //                pDialog.dismiss();
             if(result){
                 List<String> cityNameList = new ArrayList<String>();
                 for(City city : cityList)
                     cityNameList.add(city.getName());
 
                 ArrayAdapter<String> cityAdapter = new ArrayAdapter<String>(ProfileActivity.this,
-                        android.R.layout.simple_dropdown_item_1line, cityNameList);
+                        R.layout.my_autocomplete_text_style, cityNameList);
                 tvCity.setAdapter(cityAdapter);
 
                 for(int cityIndex = 0; cityIndex < cityList.size(); cityIndex++){
@@ -641,9 +623,6 @@ public class ProfileActivity extends FragmentActivity implements OnDateSetListen
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            //            pDialog = new ProgressDialog(ProfileActivity.this);
-            //            pDialog.setMessage("Retrieving area list, please wait");
-            //            pDialog.show();
         }
 
         @Override
@@ -668,15 +647,13 @@ public class ProfileActivity extends FragmentActivity implements OnDateSetListen
         @Override
         protected void onPostExecute(Boolean result) {
             super.onPostExecute(result);
-            //            if(pDialog != null)
-            //                pDialog.dismiss();
             if(result){
                 List<String> areaNameList = new ArrayList<String>();
                 for(Area area : areaList)
                     areaNameList.add(area.getName());
 
                 ArrayAdapter<String> areaAdapter = new ArrayAdapter<String>(ProfileActivity.this,
-                        android.R.layout.simple_dropdown_item_1line, areaNameList);
+                        R.layout.my_autocomplete_text_style, areaNameList);
                 tvArea.setAdapter(areaAdapter);
 
                 for(int areaIndex = 0; areaIndex < areaList.size(); areaIndex++){
@@ -719,7 +696,7 @@ public class ProfileActivity extends FragmentActivity implements OnDateSetListen
         @Override
         protected void onPostExecute(Boolean result) {
             super.onPostExecute(result);
-            if(pDialog != null)
+            if(pDialog.isShowing())
                 pDialog.dismiss();
             if(result){
                 List<String> professionTypeList = new ArrayList<String>();
@@ -768,7 +745,7 @@ public class ProfileActivity extends FragmentActivity implements OnDateSetListen
         @Override
         protected void onPostExecute(Boolean result) {
             super.onPostExecute(result);
-            if(pDialog != null)
+            if(pDialog.isShowing())
                 pDialog.dismiss();
             if(result){
                 List<String> educationTypeList = new ArrayList<String>();

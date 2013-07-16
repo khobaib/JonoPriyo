@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent" >
+
+    <ImageView
+        android:id="@+id/iv_pollanswer_pic"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="1dp"
+        android:layout_marginTop="1dp"
+        android:padding="5dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/image_back" />
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_below="@+id/iv_pollanswer_pic"
+        android:layout_marginTop="8dp" />
+
+    <TextView
+        android:id="@+id/tv_poll_answer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/iv_pollanswer_pic"
+        android:layout_toLeftOf="@+id/rb_answer"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:text="poll answer"
+        android:textColor="@color/red"
+        android:textSize="16dp" />
+
+    <RadioButton
+        android:id="@+id/rb_answer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
+        android:text="" />
+
+</RelativeLayout>

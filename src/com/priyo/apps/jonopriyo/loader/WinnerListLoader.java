@@ -57,7 +57,7 @@ public class WinnerListLoader extends AsyncTaskLoader<List<Winner>> {
         return null;
     }
     
-    
+
     @Override
     public void deliverResult(List<Winner> winners) {
         if (isReset()) {

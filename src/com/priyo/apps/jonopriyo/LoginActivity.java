@@ -55,6 +55,8 @@ public class LoginActivity extends Activity {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
+        
+        pDialog = new ProgressDialog(LoginActivity.this);
 
         appInstance = (JonopriyoApplication) getApplication();
         //        Boolean rememberMeFlag = appInstance.isRememberMe();
@@ -145,8 +147,7 @@ public class LoginActivity extends Activity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            pDialog = new ProgressDialog(LoginActivity.this);
-            pDialog.setMessage("Request forgetting password...");
+            pDialog.setMessage("Loading...");
             pDialog.setIndeterminate(true);
             pDialog.setCancelable(true);
             pDialog.show();
@@ -182,7 +183,8 @@ public class LoginActivity extends Activity {
         
         @Override
         protected void onPostExecute(String result) {
-            pDialog.dismiss();
+            if(pDialog.isShowing())
+                pDialog.dismiss();
             if(result.equals("success")){
                 alert("Your password is sent to your email adderess.");
             }
@@ -207,8 +209,7 @@ public class LoginActivity extends Activity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            pDialog = new ProgressDialog(LoginActivity.this);
-            pDialog.setMessage("Signing in, Please wait...");
+            pDialog.setMessage("Loading...");
             pDialog.setIndeterminate(true);
             pDialog.setCancelable(true);
             pDialog.show();
@@ -241,8 +242,10 @@ public class LoginActivity extends Activity {
                             appInstance.setRememberMe(false);
                         String token = responsObj.getString("token");
                         String imageUrl = responsObj.getString("image_url");
+                        Long userId = responsObj.getLong("user_id");
                         appInstance.setAccessToken(token);
                         appInstance.setProfileImageUrl(imageUrl);
+                        appInstance.setUserId(userId);
                         return true;
                     }
                     else{
@@ -261,7 +264,8 @@ public class LoginActivity extends Activity {
 
         @Override
         protected void onPostExecute(Boolean success) {
-            pDialog.dismiss();
+            if(pDialog.isShowing())
+                pDialog.dismiss();
             if(success){
                 if(RememberMe.isChecked()){
                     appInstance.setRememberMe(true);
@@ -271,7 +275,7 @@ public class LoginActivity extends Activity {
                 finish();
             }
             else{
-                alert("Login error, please try again");
+                alert("Login error, please try again.");
                 Password.setText("");
                 //                Toast.makeText(LoginActivity.this, "Login error, please try again",  Toast.LENGTH_SHORT).show();
             }

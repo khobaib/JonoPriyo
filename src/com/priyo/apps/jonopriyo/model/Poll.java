@@ -7,6 +7,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.util.Log;
+
 public class Poll {
     private Long id;
     private Long number;
@@ -19,22 +21,16 @@ public class Poll {
     private String expiryDate;
     private Long participationCount;
     private List<PollAnswer> answers;
-    
+    private Boolean isCastByMe;
+    private String description;
+    private PollPrize pollPrize;
+
     public Poll() {       
     }
 
-//    public Poll(Long id, Long number, String question, Boolean isNew, List<PollAnswer> answers) {
-//        this.id = id;
-//        this.number = number;
-//        this.question = question;
-//        this.isNew = isNew;
-//        this.myAnsId = (long) -1;
-//        this.answers = answers;
-//    }
-    
     public Poll(Long id, Long number, String question, String imageUrl, String category,
             Boolean isNew, Long myAnsId, String releaseDate, String expiryDate, 
-            Long participationCount, List<PollAnswer> answers) {
+            Long participationCount, List<PollAnswer> answers, Boolean isCastByMe, String description, PollPrize pollPrize) {
         this.id = id;
         this.number = number;
         this.question = question;
@@ -46,36 +42,39 @@ public class Poll {
         this.expiryDate = expiryDate;
         this.participationCount = participationCount;
         this.answers = answers;
+        this.isCastByMe = isCastByMe;
+        this.description = description;
+        this.pollPrize = pollPrize;
     }
-    
-//    public static Poll parsePoll(String jsonStr){
-//        Poll poll = null;
-//        
-//        try {
-//            JSONObject pollObj = new JSONObject(jsonStr);
-//            Long id = pollObj.getLong("poll_id");
-//            Long number = pollObj.getLong("poll_number");
-//            String question = pollObj.getString("poll_question");
-//            Boolean isNew = pollObj.getBoolean("is_new");
-//            
-//            Long myAnsId = null;
-//            if(pollObj.has("my_answer_id"))
-//                myAnsId = pollObj.getLong("my_answer_id");
-//            
-//            JSONArray ansArray = pollObj.getJSONArray("poll_answer");
-//            List<PollAnswer> answers = PollAnswer.paresePollAnswerList(ansArray.toString());
-//            
-//            poll = new Poll(id, number, question, isNew, myAnsId, answers);
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//        return poll;
-//    }
-    
-    
+
+    //    public static Poll parsePoll(String jsonStr){
+    //        Poll poll = null;
+    //        
+    //        try {
+    //            JSONObject pollObj = new JSONObject(jsonStr);
+    //            Long id = pollObj.getLong("poll_id");
+    //            Long number = pollObj.getLong("poll_number");
+    //            String question = pollObj.getString("poll_question");
+    //            Boolean isNew = pollObj.getBoolean("is_new");
+    //            
+    //            Long myAnsId = null;
+    //            if(pollObj.has("my_answer_id"))
+    //                myAnsId = pollObj.getLong("my_answer_id");
+    //            
+    //            JSONArray ansArray = pollObj.getJSONArray("poll_answer");
+    //            List<PollAnswer> answers = PollAnswer.paresePollAnswerList(ansArray.toString());
+    //            
+    //            poll = new Poll(id, number, question, isNew, myAnsId, answers);
+    //        } catch (JSONException e) {
+    //            e.printStackTrace();
+    //        }
+    //        return poll;
+    //    }
+
+
     public static List<Poll> parsePollList(String jsonStr){
         List<Poll> pollList = new ArrayList<Poll>();
-        
+
         try {
             JSONArray pollArray = new JSONArray(jsonStr);
             int numOfPoll = pollArray.length();
@@ -89,53 +88,61 @@ public class Poll {
                 Long participationCount = thisPoll.getLong("poll_cast_count");
                 String releaseDate = thisPoll.getString("release_date");
                 String expiryDate = thisPoll.getString("expiry_date");
-                
-                Boolean isNew = null;
-                if(thisPoll.has("is_new"))
-                    isNew = thisPoll.getBoolean("is_new");
-                
-                Long myAnsId = null;
-                if(thisPoll.has("my_answer_id"))
-                    myAnsId = thisPoll.getLong("my_answer_id");
-                
+
+
+                Boolean isNew = thisPoll.optBoolean("is_new");
+
+                Long myAnsId = thisPoll.optLong("my_answer_id");
+
                 JSONArray ansArray = thisPoll.getJSONArray("poll_answer");
                 List<PollAnswer> answers = PollAnswer.paresePollAnswerList(ansArray.toString());
-                
+
+                Boolean isCastByme = thisPoll.optBoolean("is_cast_by_me");
+                String description = thisPoll.optString("poll_description");
+
+                //                JSONArray prizeObj = thisPoll.optJSONArray("poll_prize");
+                JSONObject prizeObj = thisPoll.optJSONObject("poll_prize");
+                //                Log.d("PRIZE", "prize obj = " + prizeObj.toString());
+
+                //                PollPrize pollPrize= new PollPrize();
+                //                if(prizeObj != null)
+                PollPrize pollPrize = PollPrize.parsePrize(prizeObj.toString());
+
                 Poll poll = new Poll(id, number, question, imageUrl, category, isNew, myAnsId,
-                        releaseDate, expiryDate, participationCount, answers);   
+                        releaseDate, expiryDate, participationCount, answers, isCastByme, description, pollPrize);   
                 pollList.add(poll);
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-                
+
         return pollList;
     }
-    
-    
-//    public static Poll parseMyPolls(String jsonStr){
-//        Poll poll = null;
-//        
-//        try {
-//            JSONObject pollObj = new JSONObject(jsonStr);
-//            Long id = pollObj.getLong("poll_id");
-//            Long number = pollObj.getLong("poll_number");
-//            String question = pollObj.getString("poll_question");
-//            Boolean isNew = pollObj.getBoolean("is_new");
-//            Long myAnsId = pollObj.getLong("my_answer_id");
-//            
-//            JSONArray ansArray = pollObj.getJSONArray("poll_answer");
-//            List<PollAnswer> answers = PollAnswer.paresePollAnswerList(ansArray.toString());
-//            
-//            poll = new Poll(id, number, question, isNew, myAnsId, answers);
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//        return poll;
-//    }
-    
-    
-    
+
+
+    //    public static Poll parseMyPolls(String jsonStr){
+    //        Poll poll = null;
+    //        
+    //        try {
+    //            JSONObject pollObj = new JSONObject(jsonStr);
+    //            Long id = pollObj.getLong("poll_id");
+    //            Long number = pollObj.getLong("poll_number");
+    //            String question = pollObj.getString("poll_question");
+    //            Boolean isNew = pollObj.getBoolean("is_new");
+    //            Long myAnsId = pollObj.getLong("my_answer_id");
+    //            
+    //            JSONArray ansArray = pollObj.getJSONArray("poll_answer");
+    //            List<PollAnswer> answers = PollAnswer.paresePollAnswerList(ansArray.toString());
+    //            
+    //            poll = new Poll(id, number, question, isNew, myAnsId, answers);
+    //        } catch (JSONException e) {
+    //            e.printStackTrace();
+    //        }
+    //        return poll;
+    //    }
+
+
+
 
     public Long getId() {
         return id;
@@ -160,7 +167,7 @@ public class Poll {
     public void setQuestion(String question) {
         this.question = question;
     }
-   
+
     public String getImageUrl() {
         return imageUrl;
     }
@@ -223,5 +230,29 @@ public class Poll {
 
     public void setAnswers(List<PollAnswer> answers) {
         this.answers = answers;
-    }   
+    }
+
+    public Boolean getIsCastByMe() {
+        return isCastByMe;
+    }
+
+    public void setIsCastByMe(Boolean isCastByMe) {
+        this.isCastByMe = isCastByMe;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public PollPrize getPollPrize() {
+        return pollPrize;
+    }
+
+    public void setPollPrize(PollPrize pollPrize) {
+        this.pollPrize = pollPrize;
+    }       
 }

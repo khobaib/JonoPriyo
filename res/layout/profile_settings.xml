@@ -6,32 +6,38 @@
     android:descendantFocusability="beforeDescendants"
     android:focusableInTouchMode="true" >
 
-    <LinearLayout
-        android:id="@+id/lv_title"
+    <RelativeLayout
+        android:id="@+id/rl_title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_alignParentTop="true"
-        android:background="@color/red"
-        android:padding="5dp" >
+        android:background="@color/red" >
 
         <TextView
             android:id="@+id/tv_title"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
+            android:layout_centerInParent="true"
             android:text="Profile Settings"
             android:textColor="@color/white"
             android:textSize="25dp"
             android:textStyle="bold" />
-    </LinearLayout>
+
+        <Button
+            android:id="@+id/b_menu"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:background="@drawable/button_change_pass"
+            android:onClick="onClickChangePassword" />
+    </RelativeLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/ll_bottom"
-        android:layout_below="@+id/lv_title" >
+        android:layout_above="@+id/b_update"
+        android:layout_below="@+id/rl_title" >
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -51,7 +57,7 @@
                 android:textSize="18dp" />
 
             <TextView
-                android:id="@+id/tv_email"
+                android:id="@+id/tv_email_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@+id/tv_name"
@@ -63,7 +69,8 @@
                 android:textColor="@color/red"
                 android:textSize="18dp" />
 
-    <!--         <TextView
+            <!--
+                 <TextView
                 android:id="@+id/tv_password"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -87,7 +94,8 @@
                 android:gravity="right"
                 android:text="Confirm Password:"
                 android:textColor="@color/white"
-                android:textSize="16dp" /> -->
+                android:textSize="16dp" />
+            -->
 
             <TextView
                 android:id="@+id/tv_dob_title"
@@ -95,7 +103,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@+id/tv_name"
                 android:layout_alignRight="@+id/tv_name"
-                android:layout_below="@+id/tv_email"
+                android:layout_below="@+id/tv_email_title"
                 android:layout_marginTop="25dp"
                 android:gravity="right"
                 android:text="Date of Birth:"
@@ -227,21 +235,21 @@
                 android:textColor="@color/red"
                 android:textSize="16dp" />
 
-            <EditText
-                android:id="@+id/et_email"
+            <TextView
+                android:id="@+id/tv_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/tv_email"
+                android:layout_alignBottom="@+id/tv_email_title"
                 android:layout_alignLeft="@+id/et_name"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="10dp"
-                android:imeOptions="actionNext"
-                android:inputType="textEmailAddress"
                 android:singleLine="true"
-                android:textColor="@color/red"
-                android:textSize="16dp" />
+                android:textColor="@color/black"
+                android:textSize="16dp"
+                android:textStyle="bold" />
 
-<!--             <EditText
+            <!--
+                 <EditText
                 android:id="@+id/et_password"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -267,9 +275,12 @@
                 android:inputType="textPassword"
                 android:singleLine="true"
                 android:textColor="@color/white"
-                android:textSize="16dp" /> -->
+                android:textSize="16dp" />
+            -->
 
-            <TextView
+
+            <!--
+                 <TextView
                 android:id="@+id/tv_dob"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -277,11 +288,36 @@
                 android:layout_alignLeft="@+id/et_name"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="10dp"
-                android:singleLine="true"
                 android:background="@color/white"
-                android:textColor="@color/red"
                 android:padding="5dp"
+                android:singleLine="true"
+                android:textColor="@color/red"
                 android:textSize="18dp" />
+            -->
+
+            <TextView
+                android:id="@+id/tv_dob"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/tv_dob_title"
+                android:layout_alignLeft="@+id/et_name"
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@+id/b_calendar"
+                android:background="@color/gray70_transparent_back"
+                android:padding="5dp"
+                android:singleLine="true"
+                android:textColor="@color/red"
+                android:textSize="18dp" />
+
+            <Button
+                android:id="@+id/b_calendar"
+                android:layout_width="46dp"
+                android:layout_height="42dp"
+                android:layout_alignBottom="@+id/tv_dob_title"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/button_calendar"
+                android:onClick="onClickCalendar" />
 
             <Spinner
                 android:id="@+id/s_profession"
@@ -291,9 +327,7 @@
                 android:layout_alignLeft="@+id/et_name"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="10dp"
-                android:imeOptions="actionNext"
                 android:singleLine="true"
-                android:textColor="@color/red"
                 android:textSize="16dp" />
 
             <Spinner
@@ -304,9 +338,7 @@
                 android:layout_alignLeft="@+id/et_name"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="10dp"
-                android:imeOptions="actionNext"
                 android:singleLine="true"
-                android:textColor="@color/red"
                 android:textSize="16dp" />
 
             <Spinner
@@ -317,9 +349,7 @@
                 android:layout_alignLeft="@+id/et_name"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="10dp"
-                android:imeOptions="actionNext"
                 android:singleLine="true"
-                android:textColor="@color/red"
                 android:textSize="16dp" />
 
             <AutoCompleteTextView
@@ -330,10 +360,6 @@
                 android:layout_alignLeft="@+id/et_name"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="10dp"
-                android:hint="type for suggestion"
-                android:imeOptions="actionNext"
-                android:inputType="text"
-                android:singleLine="true"
                 android:textColor="@color/red"
                 android:textSize="16dp" />
 
@@ -345,10 +371,6 @@
                 android:layout_alignLeft="@+id/et_name"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="10dp"
-                android:hint="type for suggestion"
-                android:imeOptions="actionNext"
-                android:inputType="text"
-                android:singleLine="true"
                 android:textColor="@color/red"
                 android:textSize="16dp" />
 
@@ -360,10 +382,6 @@
                 android:layout_alignLeft="@+id/et_name"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="10dp"
-                android:hint="type for suggestion"
-                android:imeOptions="actionNext"
-                android:inputType="text"
-                android:singleLine="true"
                 android:textColor="@color/red"
                 android:textSize="16dp" />
 
@@ -393,42 +411,22 @@
                 android:singleLine="true"
                 android:textColor="@color/red"
                 android:textSize="16dp" />
-
-            <!-- android:hint="start type for suggestion" -->
         </RelativeLayout>
     </ScrollView>
 
-    <LinearLayout
-        android:id="@+id/ll_bottom"
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/b_update"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
-        android:orientation="horizontal"
+        android:onClick="onClickUpdate"
         android:padding="15dp"
-        android:weightSum="2" >
-
-        <Button
-            android:id="@+id/b_change_password"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:onClick="onClickChangePassword"
-            android:text="Change Password"
-            android:textColor="@color/white"
-            android:textSize="20dp" />
-
-        <Button
-            android:id="@+id/b_update"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:onClick="onClickUpdate"
-            android:text="Update"
-            android:textColor="@color/white"
-            android:textSize="20dp" />
-    </LinearLayout>
+        android:text="Update"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        android:textStyle="bold" />
 
 </RelativeLayout>

@@ -1,5 +1,6 @@
 package com.priyo.apps.jonopriyo;
 
+import java.util.Collections;
 import java.util.List;
 
 import android.app.AlertDialog;
@@ -12,15 +13,23 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.TextView;
 
+import com.priyo.apps.jonopriyo.adapter.NothingSelectedSpinnerAdapter;
 import com.priyo.apps.jonopriyo.adapter.PollListAdapter;
 import com.priyo.apps.jonopriyo.loader.PollListLoader;
 import com.priyo.apps.jonopriyo.model.Poll;
 import com.priyo.apps.jonopriyo.utility.Constants;
 import com.priyo.apps.jonopriyo.utility.JonopriyoApplication;
+import com.priyo.apps.jonopriyo.utility.PollCategoryComparator;
+import com.priyo.apps.jonopriyo.utility.PollNumberComparator;
+import com.priyo.apps.jonopriyo.utility.PollPrizeValueComparator;
+import com.priyo.apps.jonopriyo.utility.PollReleaseDateComparator;
 import com.priyo.apps.jonopriyo.utility.Utility;
 
 public class AllPollsActivity extends FragmentActivity implements LoaderManager.LoaderCallbacks<List<Poll>>{
@@ -35,6 +44,11 @@ public class AllPollsActivity extends FragmentActivity implements LoaderManager.
     ListView PollList;
     TextView Title;
     
+    List<Poll> pollList;
+    
+    final String[] sortParams = {"sort by Poll Number", "sort by Category", "sort by Release Date", "sort by prize value"};
+    Spinner sSort;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +56,8 @@ public class AllPollsActivity extends FragmentActivity implements LoaderManager.
         
         Title = (TextView) findViewById(R.id.tv_title);
         Title.setText("All Polls");
+        
+        pollList = null;
         
         appInstance = (JonopriyoApplication) getApplication();
         appToken = appInstance.getAccessToken();
@@ -65,6 +81,45 @@ public class AllPollsActivity extends FragmentActivity implements LoaderManager.
         });
         
         
+        sSort = (Spinner) findViewById(R.id.s_sort);
+        ArrayAdapter<String> sAdapter= new ArrayAdapter<String>(this, R.layout.my_simple_dialog_item, sortParams);
+        sSort.setAdapter(new NothingSelectedSpinnerAdapter(sAdapter, R.layout.spinner_row_nothing_selected,                         
+                AllPollsActivity.this));
+
+        sSort.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View v, int pos, long id) {
+                switch(pos){
+                    case 1:
+                        Collections.sort(pollList, new PollNumberComparator());
+                        mPollListAdapter.setData(pollList);
+                        break;
+                    case 2:
+                        Collections.sort(pollList, new PollCategoryComparator());
+                        mPollListAdapter.setData(pollList);
+                        break;
+                    case 3:
+                        Collections.sort(pollList, new PollReleaseDateComparator());
+                        mPollListAdapter.setData(pollList);
+                        break;
+                    case 4:
+                        Collections.sort(pollList, new PollPrizeValueComparator());
+                        mPollListAdapter.setData(pollList);
+                        break;
+
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                // TODO Auto-generated method stub
+
+            }
+        });
+        
+        
     }
     
     @Override
@@ -77,6 +132,10 @@ public class AllPollsActivity extends FragmentActivity implements LoaderManager.
         } else {
             alert("Please check your internet connection.");
         }
+    }
+    
+    public void onClickSort(View v){
+        sSort.performClick();
     }
     
     @Override
@@ -104,6 +163,8 @@ public class AllPollsActivity extends FragmentActivity implements LoaderManager.
 
     @Override
     public void onLoadFinished(Loader<List<Poll>> loader, List<Poll> pollList) {
+        this.pollList = pollList;
+        Collections.sort(pollList, new PollNumberComparator());
         mPollListAdapter.setData(pollList);
         
     }
