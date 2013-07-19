@@ -1,3 +1,5 @@
+URL_ROOT = "http://apps.priyo.com/jonopriyo/api-v3.php"
+
 1. method=user_login
 
 request: POST
@@ -441,6 +443,11 @@ response:
 		"poll_question":"Which device ie the best?"
 		"winner_name":"Pratyai"
 		"winner_user_id":4
+		"country":"Bangladesh"
+		"city":"Dhaka"
+		"area":"Gulshan"
+		"prize_type":"cash"
+		"prize_value":12002
 		"winner_image_url":"https://apps.jonopriyo.com/images/pratyai.png"
 	},
 	{
@@ -449,6 +456,11 @@ response:
 		"poll_question":"Who will win champion trophy?"
 		"winner_name":"Khobaib"
 		"winner_user_id":5
+		"country":"Bangladesh"
+		"city":"Dhaka"
+		"area":"Gulshan"
+		"prize_type":"cash"
+		"prize_value":12002
 		"winner_image_url":"https://apps.jonopriyo.com/images/khobaib.png"
 	}
 ]
@@ -550,6 +562,42 @@ b. email not found.
 }
 
 
+19. method=get_latest_poll
+
+request: GET
+{
+}
+
+response:
+"latest_poll":{
+	"poll_id":12
+	"poll_number":15
+	"poll_question":"Who will be the Champion?"
+	"poll_image_url":"http://apps.jonopriyo.com/poll_icons/poll15_image.png"
+	"poll_category":"Sports"
+	"poll_cast_count":242
+	"is_cast_by_me":false
+	"release_date":"2013-05-11"
+	"expiry_date":"2013-05-18"
+	"poll_description":"poll description"
+	"poll_answer":[
+		{
+			"poll_answer_id":121
+			"poll_answer":"Australia"
+			"poll_answer_image":"here_is_full_image_path"
+		},
+		{
+			"poll_answer_id":122
+			"poll_answer":"India"
+			"poll_answer_image":"here_is_full_image_path"
+		}
+	]
+	"poll_prize":{
+		"prize_type":"cash"
+		"prize_value":"2345"
+		"prize_url":"here_is_full_image_path"
+	}
+}
 
 
 changelists 
@@ -611,4 +659,9 @@ changelists
 ----------
 1. #8, #11, #13 -> 	"poll_prize" object added. if prize is cash or money related, the min & max value will be the threshold. Otherwise min & max will be same & that will be our value.
 2. #8, #11, #13 -> poll_description field added.
+
+19-07-2013
+----------
+1. #14 -> "country", "city", "area", "prize_type" & "prize_value" field added in winner object.
+2. #19 -> new API -> latest poll, only the latest(most recent single) poll will be retrieved.
 
