@@ -563,40 +563,85 @@ b. email not found.
 
 
 19. method=get_latest_poll
+*** latest poll condition ->
+	a. release_date <= today
+	b. expiry_date >= today
+	c. today - release_date is minimum
 
 request: GET
 {
 }
 
 response:
-"latest_poll":{
-	"poll_id":12
-	"poll_number":15
-	"poll_question":"Who will be the Champion?"
-	"poll_image_url":"http://apps.jonopriyo.com/poll_icons/poll15_image.png"
-	"poll_category":"Sports"
-	"poll_cast_count":242
-	"is_cast_by_me":false
-	"release_date":"2013-05-11"
-	"expiry_date":"2013-05-18"
-	"poll_description":"poll description"
-	"poll_answer":[
-		{
-			"poll_answer_id":121
-			"poll_answer":"Australia"
-			"poll_answer_image":"here_is_full_image_path"
-		},
-		{
-			"poll_answer_id":122
-			"poll_answer":"India"
-			"poll_answer_image":"here_is_full_image_path"
+{
+	"latest_poll":{
+		"poll_id":12
+		"poll_number":15
+		"poll_question":"Who will be the Champion?"
+		"poll_image_url":"http://apps.jonopriyo.com/poll_icons/poll15_image.png"
+		"poll_category":"Sports"
+		"poll_cast_count":242
+		"is_new"=false
+		"is_cast_by_me":false
+		"release_date":"2013-05-11"
+		"expiry_date":"2013-05-18"
+		"poll_description":"poll description"
+		"poll_answer":[
+			{
+				"poll_answer_id":121
+				"poll_answer":"Australia"
+				"poll_answer_image":"here_is_full_image_path"
+			},
+			{
+				"poll_answer_id":122
+				"poll_answer":"India"
+				"poll_answer_image":"here_is_full_image_path"
+			}
+		]
+		"poll_prize":{
+			"prize_type":"cash"
+			"prize_value":"2345"
+			"prize_url":"here_is_full_image_path"
 		}
-	]
-	"poll_prize":{
-		"prize_type":"cash"
-		"prize_value":"2345"
-		"prize_url":"here_is_full_image_path"
 	}
+}
+
+
+
+20. method=get_last_poll_winner
+*** last_poll condition ->
+	a. the poll which is closed(expired).
+	b. today - expiry_date is minimum.
+	c. the poll which has a winner.
+So in case we have a poll closed but the winner isn't selected, we will check the 2nd last poll & keep going backward
+until we find a poll with a winner. If there's no such poll with a winner in DB, check response case - b.
+
+request: GET
+{
+}
+
+response:
+a. if winner found for at-least one previous poll -
+{
+	"response":"success"
+	"last_poll_winner":{
+		"poll_id":1
+		"poll_number":1
+		"poll_question":"Which device ie the best?"
+		"winner_name":"Pratyai"
+		"winner_user_id":4
+		"country":"Bangladesh"
+		"city":"Dhaka"
+		"area":"Gulshan"
+		"prize_type":"cash"
+		"prize_value":12002
+		"winner_image_url":"https://apps.jonopriyo.com/images/pratyai.png"
+	}
+}
+
+b. no poll with winner found -
+{
+	"response":"no_winner"
 }
 
 
@@ -664,4 +709,10 @@ changelists
 ----------
 1. #14 -> "country", "city", "area", "prize_type" & "prize_value" field added in winner object.
 2. #19 -> new API -> latest poll, only the latest(most recent single) poll will be retrieved.
+
+20-07-2013
+----------
+1. #19 -> new field added - "is_new"
+2. #20 -> new API -> get_last_poll_winner; this returns a single winner if found. Check api for details.
+
 
