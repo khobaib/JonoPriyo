@@ -1,4 +1,6 @@
 URL_ROOT = "http://apps.priyo.com/jonopriyo/api-v3.php"
+*** Important - expiry_date is the date after last day when the poll is valid, NOT the last day when the poll is valid.
+
 
 1. method=user_login
 
@@ -141,7 +143,7 @@ request: GET
 }
 
 response:
-"educatiton":[
+"education":[
 	{
 		"id":13
 		"type":"Student"
@@ -565,7 +567,7 @@ b. email not found.
 19. method=get_latest_poll
 *** latest poll condition ->
 	a. release_date <= today
-	b. expiry_date >= today
+	b. expiry_date > today
 	c. today - release_date is minimum
 	d. if no poll is open, then return the poll that meets a & c.(is_new=false)
 
@@ -646,6 +648,47 @@ b. no poll with winner found -
 }
 
 
+21.method=get_poll_from_poll_id&poll_id=12
+
+request: GET
+{
+}
+
+response:
+{
+	"poll_data":{
+		"poll_id":12
+		"poll_number":15
+		"poll_question":"Who will be the Champion?"
+		"is_new"=true
+		"poll_image_url":"http://apps.jonopriyo.com/poll_icons/poll15_image.png"
+		"poll_category":"Sports"
+		"poll_cast_count":242
+		"is_cast_by_me":false
+		"release_date":"2013-05-11"
+		"expiry_date":"2013-05-18"
+		"poll_description":"poll description"
+		"poll_answer":[
+			{
+				"poll_answer_id":121
+				"poll_answer":"Australia"
+				"poll_answer_image":"here_is_full_image_path"
+			},
+			{
+				"poll_answer_id":122
+				"poll_answer":"India"
+				"poll_answer_image":"here_is_full_image_path"
+			}
+		]
+		"poll_prize":{
+			"prize_type":"refrigerator"
+			"prize_value":"1"
+			"prize_url":"here_is_full_image_path"
+		}
+	}
+}
+
+
 changelists 
 -----------
 
@@ -715,5 +758,5 @@ changelists
 ----------
 1. #19 -> new field added - "is_new", condition changes in API #19. 
 2. #20 -> new API -> get_last_poll_winner; this returns a single winner if found. Check api for details.
-
+3. #21 -> new API -> get_poll_from_poll_id.
 
