@@ -567,7 +567,7 @@ b. email not found.
 	a. release_date <= today
 	b. expiry_date >= today
 	c. today - release_date is minimum
-	d. if no poll is open, then return the poll that meets a & c.
+	d. if no poll is open, then return the poll that meets a & c.(is_new=false)
 
 request: GET
 {
@@ -713,7 +713,7 @@ changelists
 
 20-07-2013
 ----------
-1. #19 -> new field added - "is_new"
+1. #19 -> new field added - "is_new", condition changes in API #19. 
 2. #20 -> new API -> get_last_poll_winner; this returns a single winner if found. Check api for details.
 
 
