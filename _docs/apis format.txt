@@ -567,6 +567,7 @@ b. email not found.
 	a. release_date <= today
 	b. expiry_date >= today
 	c. today - release_date is minimum
+	d. if no poll is open, then return the poll that meets a & c.
 
 request: GET
 {
