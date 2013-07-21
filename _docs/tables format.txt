@@ -96,13 +96,13 @@ poll_id - int (foreign key - poll(id))
 prize_type - int (foreign key - pollPrizeType(id))
 prize_min - int
 prize_max - int
-prize_icon - text
 
 
 pollPrizeType table
 -------------------
 id - int
 prize_type_name - text
+prize_icon - text
 
 
 change-list - 20-06-2013
@@ -131,3 +131,8 @@ change-list - 05-07-2013
 ------------------------
 1. poll_description is added in poll table.
 2. new table - pollPrize table & pollPrizeType
+
+20130721
+--------
+prize_icon shifted from pollPrize to pollPrizeType.
+

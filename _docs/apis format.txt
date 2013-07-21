@@ -48,12 +48,12 @@ response:
 
 a. success
 {
-	"success"
+	"response":"success"
 }
 
 b. duplicate email
 {
-	"email already exists"
+	"response":"email already exists"
 }
 
 
@@ -442,7 +442,7 @@ response:
 	{
 		"poll_id":1
 		"poll_number":1
-		"poll_question":"Which device ie the best?"
+		"poll_question":"Which device is the best?"
 		"winner_name":"Pratyai"
 		"winner_user_id":4
 		"country":"Bangladesh"
@@ -689,6 +689,38 @@ response:
 }
 
 
+
+22.method=get_winner_from_poll_id&poll_id=12
+
+request: GET
+{
+}
+
+response:
+a. winner found for this poll
+{
+	"response":"success"
+	"winner":{
+		"poll_id":1
+		"poll_number":1
+		"poll_question":"Which device is the best?"
+		"winner_name":"Pratyai"
+		"winner_user_id":4
+		"country":"Bangladesh"
+		"city":"Dhaka"
+		"area":"Gulshan"
+		"prize_type":"cash"
+		"prize_value":12002
+		"winner_image_url":"https://apps.jonopriyo.com/images/pratyai.png"
+	}
+}
+
+b. no winner found
+{
+	"response":"no_winner"
+}
+
+
 changelists 
 -----------
 
@@ -759,4 +791,9 @@ changelists
 1. #19 -> new field added - "is_new", condition changes in API #19. 
 2. #20 -> new API -> get_last_poll_winner; this returns a single winner if found. Check api for details.
 3. #21 -> new API -> get_poll_from_poll_id.
+
+21-07-2013
+-----------
+1. #22 -> new API -> get_winner_from_poll_id
+2. response format changed for api #2 -> registration api.
 
