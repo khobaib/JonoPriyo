@@ -14,7 +14,23 @@
         android:layout_marginTop="1dp"
         android:padding="5dp"
         android:scaleType="fitXY"
-        android:src="@drawable/image_back" />
+        android:background="@drawable/image_back" />
+
+    <TextView
+        android:id="@+id/tv_poll_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/iv_winner_pic"
+        android:layout_alignTop="@+id/iv_winner_pic"
+        android:background="@drawable/badge_poll_number"
+        android:gravity="center"
+        android:paddingBottom="4dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingTop="4dp"
+        android:text="112"
+        android:textColor="@color/white"
+        android:textSize="14dp" />
 
     <TextView
         android:id="@+id/tv_poll"
@@ -23,14 +39,27 @@
         android:layout_alignTop="@+id/iv_winner_pic"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="3dp"
         android:layout_toRightOf="@+id/iv_winner_pic"
         android:ellipsize="end"
         android:maxLines="2"
         android:minLines="2"
-        android:text="Poll#2 Who will win the champions trophy?"
-        android:textColor="@color/gray70"
-        android:textSize="16dp" />
+        android:text="Who will win the champions trophy?"
+        android:textColor="@color/black"
+        android:textSize="15dp" />
+
+    <!-- <TextView
+        android:id="@+id/tv_prize"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/tv_poll"
+        android:gravity="center"
+        android:rotation="-20"
+        android:text="Won 12000 cash"
+        android:textColor="@color/red"
+        android:textSize="15dp"
+        android:textStyle="bold" /> -->
 
     <TextView
         android:id="@+id/tv_winner"
@@ -38,10 +67,9 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/tv_poll"
         android:layout_below="@+id/tv_poll"
-        android:layout_marginTop="10dp"
         android:text="Winner:"
-        android:textColor="@color/red"
-        android:textSize="18dp"
+        android:textColor="@color/black"
+        android:textSize="14dp"
         android:textStyle="bold" />
 
     <TextView
@@ -49,17 +77,56 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/tv_winner"
-        android:layout_marginLeft="5dp"
+        android:layout_marginLeft="1dp"
         android:layout_toRightOf="@+id/tv_winner"
+        android:ellipsize="end"
+        android:singleLine="true"
         android:text="Khobaib"
-        android:textColor="@color/gray70"
-        android:textSize="16dp"
+        android:textColor="@color/red"
+        android:textSize="14dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_winner_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tv_winner"
+        android:layout_below="@+id/tv_winner"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:text="Gulshan, Dhaka, Bangladesh"
+        android:textColor="@color/black"
+        android:textSize="14dp" />
+    
+        <TextView
+        android:id="@+id/tv_prize_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tv_poll"
+        android:layout_below="@+id/tv_winner_address"
+        android:text="Prize:"
+        android:textColor="@color/black"
+        android:textSize="14dp"
+        android:textStyle="bold" />
+        
+            <TextView
+        android:id="@+id/tv_prize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/tv_prize_title"
+        android:layout_marginLeft="1dp"
+        android:layout_toRightOf="@+id/tv_prize_title"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:text="12000"
+        android:textColor="@color/red"
+        android:textSize="14dp"
         android:textStyle="bold" />
 
     <View
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_below="@+id/iv_winner_pic"
+        android:layout_below="@+id/tv_prize_title"
         android:layout_marginTop="8dp" />
 
 </RelativeLayout>

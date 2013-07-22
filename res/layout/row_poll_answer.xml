@@ -6,21 +6,38 @@
 
     <ImageView
         android:id="@+id/iv_pollanswer_pic"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:layout_marginLeft="1dp"
         android:layout_marginTop="1dp"
+        android:background="@drawable/image_back"
         android:padding="5dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/image_back" />
+        android:scaleType="fitXY" />
 
     <View
+        android:id="@+id/v_bottom"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_below="@+id/iv_pollanswer_pic"
-        android:layout_marginTop="8dp" />
+        android:layout_marginTop="5dp" />
+
+<!--     <View
+        android:id="@+id/v_left"
+        android:layout_width="1dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/v_bottom"
+        android:layout_alignParentLeft="true"
+        android:background="@color/red" />
+
+    <View
+        android:id="@+id/v_right"
+        android:layout_width="1dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/v_bottom"
+        android:layout_alignParentRight="true"
+        android:background="@color/red"/> -->
 
     <TextView
         android:id="@+id/tv_poll_answer"
@@ -28,8 +45,8 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@+id/iv_pollanswer_pic"
         android:layout_toLeftOf="@+id/rb_answer"
+        android:layout_toRightOf="@+id/iv_pollanswer_pic"
         android:ellipsize="end"
         android:maxLines="2"
         android:text="poll answer"
@@ -42,8 +59,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_marginRight="5dp"
         android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:text="" />
 
 </RelativeLayout>

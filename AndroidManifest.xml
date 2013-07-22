@@ -75,7 +75,7 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".PollDetailsActivity"
+            android:name=".NewPollDetailsActivity"
             android:screenOrientation="portrait" >
         </activity>
         <activity
@@ -91,7 +91,7 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".PastPollDetailsActivity"
+            android:name=".AllPollsDetailsActivity"
             android:screenOrientation="portrait" >
         </activity>
         <activity

@@ -27,7 +27,7 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.priyo.apps.jonopriyo.adapter.PollAnswerListAdapter;
+import com.priyo.apps.jonopriyo.adapter.NewPollAnswerListAdapter;
 import com.priyo.apps.jonopriyo.model.Poll;
 import com.priyo.apps.jonopriyo.model.PollAnswer;
 import com.priyo.apps.jonopriyo.model.ServerResponse;
@@ -35,73 +35,97 @@ import com.priyo.apps.jonopriyo.parser.JsonParser;
 import com.priyo.apps.jonopriyo.utility.Constants;
 import com.priyo.apps.jonopriyo.utility.JonopriyoApplication;
 
-public class PollDetailsActivity extends Activity {
-    
-    TextView tvPollQuestion;
-//    RadioGroup rgAnswerOption;
-    
-    Button Submit;
-    
-    TextView Title;
-    
-//    static int selectedButtonIndex;
+public class NewPollDetailsActivity extends Activity {
+
+    private static final int VOTE_NOW = 1;
+    private static final int CHECK_RESULT = 2;
+
+    TextView tvPollQuestion, Title, ParticipationCount, PollCondition, ExpiryDate;    
+    Button ResultOrVote;
+
+    int flagResultOrVote;
 
     private ProgressDialog pDialog;
     JsonParser jsonParser;
     JonopriyoApplication appInstance;
 
     Poll thisPoll;
-    
+
     List<PollAnswer> pollAnswerList;
     ListView PollAnswerList;
-    PollAnswerListAdapter pAnsListAdapter;
-    
-//    List<Integer> rbIdList;
+    NewPollAnswerListAdapter pAnsListAdapter;
+
+    //    List<Integer> rbIdList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.poll_details);    
-        
+        setContentView(R.layout.new_poll_details);    
+
         jsonParser = new JsonParser();
+        pDialog = new ProgressDialog(NewPollDetailsActivity.this);
 
         appInstance = (JonopriyoApplication) getApplication();
         thisPoll = appInstance.getSelectedPoll();
-        
+
         Title = (TextView) findViewById(R.id.tv_title);
         Title.setText("Poll #" + thisPoll.getNumber());
+
+        ParticipationCount = (TextView) findViewById(R.id.tv_participation_count);
+        ParticipationCount.setText("" + thisPoll.getParticipationCount());
         
+        ExpiryDate = (TextView) findViewById(R.id.tv_expiry_date); 
+        ExpiryDate.setText(thisPoll.getExpiryDate());
+
+        ResultOrVote = (Button) findViewById(R.id.b_result_or_vote);
+        PollCondition = (TextView) findViewById(R.id.tv_poll_condition);
+
+        if(!thisPoll.getIsCastByMe()){
+            PollCondition.setText("Poll is open -");
+            ResultOrVote.setText("Submit your vote");
+            flagResultOrVote = VOTE_NOW;
+        }
+        else{
+            PollCondition.setText("You already voted -");
+            ResultOrVote.setText("Check result"); 
+            flagResultOrVote = CHECK_RESULT;
+        }
+
         tvPollQuestion = (TextView) findViewById(R.id.tv_poll_question);
         tvPollQuestion.setText(thisPoll.getQuestion());
-        
+
         PollAnswerList = (ListView) findViewById(R.id.lv_pollanswer_list);
-        
+
         pollAnswerList = thisPoll.getAnswers();
         if(pollAnswerList == null || pollAnswerList.isEmpty()){
             PollAnswerList.setAdapter(null);
         }
         else{
             Log.d(">>>><<<<<", "poll answer count = " + pollAnswerList.size());
-            PollAnswerList.setAdapter(new PollAnswerListAdapter(PollDetailsActivity.this, pollAnswerList));
-        }
-        
-        Submit = (Button) findViewById(R.id.b_submit);
-       
+            PollAnswerList.setAdapter(new NewPollAnswerListAdapter(NewPollDetailsActivity.this, pollAnswerList));
+        }       
+
     }
-    
-    
-    public void onClickSubmit(View v){
-        if(PollAnswerListAdapter.mSelectedPosition == -1){
-            Toast.makeText(PollDetailsActivity.this, "Please cast your vote first.", Toast.LENGTH_SHORT).show();
+
+
+    public void onClickResultOrVote(View v){
+        if(NewPollAnswerListAdapter.mSelectedPosition == -1){
+            Toast.makeText(NewPollDetailsActivity.this, "Please choose an option first.", Toast.LENGTH_SHORT).show();
         }
         else{
-            Long qId = thisPoll.getId();
-            Long ansId = thisPoll.getAnswers().get(PollAnswerListAdapter.mSelectedPosition).getId();
-            new CastVote().execute(qId, ansId);
+            if(flagResultOrVote == VOTE_NOW){
+                Long qId = thisPoll.getId();
+                Long ansId = thisPoll.getAnswers().get(NewPollAnswerListAdapter.mSelectedPosition).getId();
+                new CastVote().execute(qId, ansId);
+            }
+            else{
+                startActivity(new Intent(NewPollDetailsActivity.this, PollResultActivity.class));
+            }
+
         }
     }
-    
-    
+
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if ((keyCode == KeyEvent.KEYCODE_BACK)) { // Back key pressed
@@ -111,14 +135,13 @@ public class PollDetailsActivity extends Activity {
         }
         return super.onKeyDown(keyCode, event);
     }
-    
-    
+
+
     public class CastVote extends AsyncTask<Long, Void, Boolean> {
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            pDialog = new ProgressDialog(PollDetailsActivity.this);
             pDialog.setMessage("Casting your vote, Please wait...");
             pDialog.show();
         }
@@ -130,7 +153,7 @@ public class PollDetailsActivity extends Activity {
 
             List<NameValuePair> urlParam = new ArrayList<NameValuePair>();
             urlParam.add(new BasicNameValuePair("method", Constants.METHOD_POST_USER_POLL));
-            
+
 
             try {
                 JSONObject pollObj = new JSONObject();
@@ -138,7 +161,7 @@ public class PollDetailsActivity extends Activity {
                 pollObj.put("poll_answer_id", params[1]);
                 String pollData = pollObj.toString();
                 Log.d("sending poll data", pollData);
-                
+
                 String token = appInstance.getAccessToken();
 
                 ServerResponse response = jsonParser.retrieveServerData(Constants.REQUEST_TYPE_POST, rootUrl,
@@ -161,7 +184,8 @@ public class PollDetailsActivity extends Activity {
 
         @Override
         protected void onPostExecute(Boolean success) {
-            pDialog.dismiss();
+            if(pDialog.isShowing())
+                pDialog.dismiss();
             if(success){
                 alert("Your vote is cast successfully.", true);
             }
@@ -172,19 +196,19 @@ public class PollDetailsActivity extends Activity {
         }
     }
 
-    
+
     void alert(String message, final Boolean success) {
-        AlertDialog.Builder bld = new AlertDialog.Builder(PollDetailsActivity.this);
+        AlertDialog.Builder bld = new AlertDialog.Builder(NewPollDetailsActivity.this);
         bld.setMessage(message);
         bld.setNeutralButton("OK", new DialogInterface.OnClickListener() {
-            
+
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if(success){
-                    startActivity(new Intent(PollDetailsActivity.this, PollResultActivity.class));
+                    startActivity(new Intent(NewPollDetailsActivity.this, PollResultActivity.class));
                     finish();
                 }
-                
+
             }
         });
         bld.create().show();

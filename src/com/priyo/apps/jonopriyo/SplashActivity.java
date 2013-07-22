@@ -127,7 +127,6 @@ public class SplashActivity extends Activity {
                 e.printStackTrace();
                 return false;
             }
-
         }
 
 
@@ -140,14 +139,9 @@ public class SplashActivity extends Activity {
             }
             else{
                 alert("Login error, please try again");                
-
-                //                Toast.makeText(LoginActivity.this, "Login error, please try again",  Toast.LENGTH_SHORT).show();
             }
 
         }
-
-
-
     }
 
     void alert(String message) {

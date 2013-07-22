@@ -17,20 +17,20 @@ import com.priyo.apps.jonopriyo.R;
 import com.priyo.apps.jonopriyo.model.PollAnswer;
 import com.priyo.apps.lazylist.ImageLoader;
 
-public class PastPollAnswerListAdapter extends ArrayAdapter<PollAnswer> {
+public class AllPollsAnswerListAdapter extends ArrayAdapter<PollAnswer> {
 
     private Context mContext;
-    private List<PollAnswer> mPollAnswers;
+//    private List<PollAnswer> mPollAnswers;
     private LayoutInflater mInflater;
     private ImageLoader imageLoader;
     
 //    private RadioButton mSelectedRB;
 //    private int mSelectedPosition;
     
-    public PastPollAnswerListAdapter(Context context, List<PollAnswer> pollAnswers) {
+    public AllPollsAnswerListAdapter(Context context, List<PollAnswer> pollAnswers) {
         super(context, R.layout.row_poll_answer, pollAnswers);
         this.mContext = context;
-        this.mPollAnswers = pollAnswers;
+//        this.mPollAnswers = pollAnswers;
         mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         imageLoader = new ImageLoader((Activity) mContext);
 //        mSelectedRB = null;
@@ -43,10 +43,10 @@ public class PastPollAnswerListAdapter extends ArrayAdapter<PollAnswer> {
         RadioButton rbAnswer;
     }
     
-    @Override
-    public boolean areAllItemsEnabled() {
-        return false;
-    }
+//    @Override
+//    public boolean areAllItemsEnabled() {
+//        return false;
+//    }
     
     @Override
     public boolean isEnabled(int position) {

@@ -13,22 +13,57 @@ public class Winner {
     private String pollQuestion;
     private Long winnerUserId;
     private String winnerName;
+    private String country;
+    private String city;
+    private String area;
+    private String prizeType;
+    private Long prizeValue;
     private String winnerPicUrl;
     
     public Winner() {
     }
-    
-    
+
     public Winner(Long pollId, Long pollNumber, String pollQuestion, Long winnerUserId, String winnerName,
-            String winnerPicUrl) {
+            String country, String city, String area, String prizeType, Long prizeValue, String winnerPicUrl) {
+        super();
         this.pollId = pollId;
         this.pollNumber = pollNumber;
         this.pollQuestion = pollQuestion;
         this.winnerUserId = winnerUserId;
         this.winnerName = winnerName;
+        this.country = country;
+        this.city = city;
+        this.area = area;
+        this.prizeType = prizeType;
+        this.prizeValue = prizeValue;
         this.winnerPicUrl = winnerPicUrl;
     }
 
+    public static Winner parseWinner(JSONObject winnerObj){
+        Winner winner = new Winner();
+        
+        try {
+            Long pollId = winnerObj.getLong("poll_id");
+            Long pollNumber = winnerObj.getLong("poll_number");
+            String pollQuestion = winnerObj.getString("poll_question");
+            Long winnerUserId = winnerObj.getLong("winner_user_id");
+            String winnerName = winnerObj.getString("winner_name");
+            String country = winnerObj.getString("country");
+            String city = winnerObj.getString("city");
+            String area = winnerObj.getString("area");
+            String prizeType = winnerObj.getString("prize_type");
+            Long prizeValue = winnerObj.getLong("prize_value");
+            String winnerPicUrl = winnerObj.getString("winner_image_url");
+            
+            winner = new Winner(pollId, pollNumber, pollQuestion, winnerUserId, winnerName, country,
+                    city, area, prizeType, prizeValue, winnerPicUrl);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        
+        
+        return winner;
+    }
 
 
 
@@ -40,14 +75,7 @@ public class Winner {
             int numOfWinner = winnerArray.length();
             for(int winnerIndex = 0; winnerIndex < numOfWinner; winnerIndex++){
                 JSONObject thisWinner = winnerArray.getJSONObject(winnerIndex);
-                
-                Long pollId = thisWinner.getLong("poll_id");
-                Long pollNumber = thisWinner.getLong("poll_number");
-                String pollQuestion = thisWinner.getString("poll_question");
-                Long winnerUserId = thisWinner.getLong("winner_user_id");
-                String winnerName = thisWinner.getString("winner_name");
-                String winnerPicUrl = thisWinner.getString("winner_image_url");
-                Winner winner = new Winner(pollId, pollNumber, pollQuestion, winnerUserId, winnerName, winnerPicUrl);
+                Winner winner = parseWinner(thisWinner);
                 winnerList.add(winner);
             }
         } catch (JSONException e) {
@@ -100,12 +128,56 @@ public class Winner {
         this.winnerName = winnerName;
     }
 
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    public String getPrizeType() {
+        return prizeType;
+    }
+
+    public void setPrizeType(String prizeType) {
+        this.prizeType = prizeType;
+    }
+
+    public Long getPrizeValue() {
+        return prizeValue;
+    }
+
+    public void setPrizeValue(Long prizeValue) {
+        this.prizeValue = prizeValue;
+    }
+
     public String getWinnerPicUrl() {
         return winnerPicUrl;
     }
 
     public void setWinnerPicUrl(String winnerPicUrl) {
         this.winnerPicUrl = winnerPicUrl;
+    }
+    
+    public String getAddress(){
+        return area + ", " + city + ", " + country;
     }
 
 }

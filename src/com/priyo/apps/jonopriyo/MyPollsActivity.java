@@ -60,7 +60,7 @@ public class MyPollsActivity  extends FragmentActivity implements LoaderManager.
         appInstance = (JonopriyoApplication) getApplication();
         appToken = appInstance.getAccessToken();
         
-        mPollListAdapter = new PollListAdapter(MyPollsActivity.this, null);
+        mPollListAdapter = new PollListAdapter(MyPollsActivity.this, null, Constants.PARENT_ACTIVITY_MY_POLLS);
         
         PollList = (ListView) findViewById(R.id.lv_poll_list);
         PollList.setAdapter(mPollListAdapter);
@@ -71,7 +71,7 @@ public class MyPollsActivity  extends FragmentActivity implements LoaderManager.
                 Poll selectedPoll = (Poll) parent.getItemAtPosition(position);
                 appInstance.setSelectedPoll(selectedPoll);
               
-                Intent i = new Intent(MyPollsActivity.this, PastPollDetailsActivity.class);
+                Intent i = new Intent(MyPollsActivity.this, AllPollsDetailsActivity.class);
                 i.putExtra(Constants.FROM_ACTIVITY, Constants.PARENT_ACTIVITY_MY_POLLS);
                 startActivity(i);
                 overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
@@ -154,7 +154,7 @@ public class MyPollsActivity  extends FragmentActivity implements LoaderManager.
     @Override
     public void onLoadFinished(Loader<List<Poll>> loader, List<Poll> pollList) {
         this.pollList = pollList;
-        Collections.sort(pollList, new PollNumberComparator());
+        Collections.sort(pollList, new PollReleaseDateComparator());
         mPollListAdapter.setData(pollList);
         
     }

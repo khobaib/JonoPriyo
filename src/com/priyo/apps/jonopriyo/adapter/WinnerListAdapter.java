@@ -33,8 +33,11 @@ public class WinnerListAdapter extends ArrayAdapter<Winner>{
     
     private static class ViewHolder {
         TextView PollQuestion;
+        TextView PollNumber;
         TextView PollWinner;
+        TextView WinnerAddress;
         ImageView WinnerPic;
+        TextView PrizeVal;
     }
     
     
@@ -47,8 +50,11 @@ public class WinnerListAdapter extends ArrayAdapter<Winner>{
 
             holder = new ViewHolder();
             holder.PollQuestion = (TextView) convertView.findViewById(R.id.tv_poll);
+            holder.PollNumber = (TextView) convertView.findViewById(R.id.tv_poll_number);
             holder.PollWinner = (TextView) convertView.findViewById(R.id.tv_winner_name);
+            holder.WinnerAddress = (TextView) convertView.findViewById(R.id.tv_winner_address);
             holder.WinnerPic = (ImageView) convertView.findViewById(R.id.iv_winner_pic);
+            holder.PrizeVal = (TextView) convertView.findViewById(R.id.tv_prize);
             
             convertView.setTag(holder);
         } else {
@@ -57,8 +63,11 @@ public class WinnerListAdapter extends ArrayAdapter<Winner>{
         
         Winner item = getItem(position);
         
-        holder.PollQuestion.setText("Poll#" + item.getPollNumber() + ": " + item.getPollQuestion());
+        holder.PollQuestion.setText(item.getPollQuestion());
+        holder.PollNumber.setText("" + item.getPollNumber());
         holder.PollWinner.setText(item.getWinnerName());
+        holder.WinnerAddress.setText(item.getAddress());
+        holder.PrizeVal.setText("Won " + item.getPrizeValue() + " " + item.getPrizeType());
         
         String imageUrl = item.getWinnerPicUrl();
         imageLoader.DisplayImage(imageUrl, holder.WinnerPic);

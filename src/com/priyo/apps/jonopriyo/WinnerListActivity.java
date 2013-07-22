@@ -3,8 +3,15 @@ package com.priyo.apps.jonopriyo;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.LoaderManager;
@@ -20,7 +27,10 @@ import android.widget.TextView;
 
 import com.priyo.apps.jonopriyo.adapter.WinnerListAdapter;
 import com.priyo.apps.jonopriyo.loader.WinnerListLoader;
+import com.priyo.apps.jonopriyo.model.Poll;
+import com.priyo.apps.jonopriyo.model.ServerResponse;
 import com.priyo.apps.jonopriyo.model.Winner;
+import com.priyo.apps.jonopriyo.parser.JsonParser;
 import com.priyo.apps.jonopriyo.utility.Constants;
 import com.priyo.apps.jonopriyo.utility.JonopriyoApplication;
 import com.priyo.apps.jonopriyo.utility.Utility;
@@ -30,9 +40,12 @@ public class WinnerListActivity extends FragmentActivity implements LoaderManage
     private static final int LOADER_ID = 1;
 
     JonopriyoApplication appInstance;
+    JsonParser jsonParser;
     private ProgressDialog pDialog;
     String appToken;
     long userId;
+
+    Poll winnersPoll;
 
     List<Winner> winnerList;
 
@@ -48,11 +61,15 @@ public class WinnerListActivity extends FragmentActivity implements LoaderManage
         super.onCreate(savedInstanceState);
         setContentView(R.layout.winner_list);
 
+        pDialog = new ProgressDialog(WinnerListActivity.this);
+
         appInstance = (JonopriyoApplication) getApplication();
         appToken = appInstance.getAccessToken();
         userId = appInstance.getUserId();
         flagWinnerType = Constants.FLAG_WINNER_ALL;
         winnerList = null;
+
+        jsonParser = new JsonParser();
 
         mWinnerListAdapter = new WinnerListAdapter(WinnerListActivity.this, null);
 
@@ -62,6 +79,8 @@ public class WinnerListActivity extends FragmentActivity implements LoaderManage
 
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                Winner thisWinner = (Winner) parent.getItemAtPosition(position);
+                new RetrievePollById().execute(thisWinner.getPollId());
                 //                Poll selectedPoll = (Poll) parent.getItemAtPosition(position);
                 //                appInstance.setSelectedPoll(selectedPoll);
                 //              
@@ -134,7 +153,6 @@ public class WinnerListActivity extends FragmentActivity implements LoaderManage
 
     @Override
     public Loader<List<Winner>> onCreateLoader(int id, Bundle args) {
-        pDialog = new ProgressDialog(WinnerListActivity.this);
         pDialog.setMessage("Loading...");
         pDialog.show();
         return new WinnerListLoader(WinnerListActivity.this, appToken);
@@ -152,6 +170,55 @@ public class WinnerListActivity extends FragmentActivity implements LoaderManage
     public void onLoaderReset(Loader<List<Winner>> arg0) {
         mWinnerListAdapter.setData(null);
 
+    }
+
+
+    private class RetrievePollById extends AsyncTask<Long, Void, Boolean> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            winnersPoll = null;
+            pDialog.setMessage("Loading...");
+            pDialog.show();
+        }
+
+        @Override
+        protected Boolean doInBackground(Long... params) {
+            String rootUrl = Constants.URL_ROOT;
+
+            List<NameValuePair> urlParam = new ArrayList<NameValuePair>();
+            urlParam.add(new BasicNameValuePair("method", Constants.METHOD_GET_POLL_FROM_POLL_ID));
+            urlParam.add(new BasicNameValuePair("poll_id", "" + params[0]));
+
+            ServerResponse response = jsonParser.retrieveServerData(Constants.REQUEST_TYPE_GET, rootUrl,
+                    urlParam, null, appToken);
+            if(response.getStatus() == 200){
+                JSONObject jsonResponse = response.getjObj();
+                try {
+                    JSONObject pollObj = jsonResponse.getJSONObject("poll_data");
+                    winnersPoll = Poll.parsePoll(pollObj);
+                    return true;
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            } 
+            return false;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            super.onPostExecute(result);
+            if(pDialog.isShowing())
+                pDialog.dismiss();
+            if(result){
+                appInstance.setSelectedPoll(winnersPoll);
+                Intent i = new Intent(WinnerListActivity.this, AllPollsDetailsActivity.class);
+                startActivity(i);
+                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+            }
+        }
     }
 
 }

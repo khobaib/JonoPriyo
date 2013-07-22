@@ -12,6 +12,6 @@ public class PollReleaseDateComparator implements Comparator<Poll> {
 
     @Override
     public int compare(Poll pollA, Poll pollB) {
-        return (pollA.getReleaseDate().compareTo(pollB.getReleaseDate()));
+        return -(pollA.getReleaseDate().compareTo(pollB.getReleaseDate()));
     }
 }
