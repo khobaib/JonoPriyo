@@ -41,7 +41,7 @@ public class PollResultActivity extends Activity {
     private DefaultRenderer mRenderer = new DefaultRenderer();
     private GraphicalView mChartView;
     
-    TextView PollQuestion, ParticipationCount;
+    TextView PollQuestion, ParticipationCount, PollNumber;
 
     private ProgressDialog pDialog;
     JsonParser jsonParser;
@@ -61,6 +61,7 @@ public class PollResultActivity extends Activity {
         
         PollQuestion = (TextView) findViewById(R.id.tv_poll_question);
         ParticipationCount = (TextView) findViewById(R.id.tv_participation_count);
+        PollNumber = (TextView) findViewById(R.id.tv_poll_number);
 
         appInstance = (JonopriyoApplication) getApplication();
         thisPoll = appInstance.getSelectedPoll();
@@ -71,6 +72,7 @@ public class PollResultActivity extends Activity {
 
     private void createChart(){
         
+        PollNumber.setText("Poll #" + thisPoll.getNumber());
         PollQuestion.setText(thisPoll.getQuestion());
         ParticipationCount.setText(thisPoll.getParticipationCount() + " people participated.");
         

@@ -67,7 +67,7 @@ public class HomeActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.new_home);   
+        setContentView(R.layout.home);   
 
         appInstance = (JonopriyoApplication) getApplication();
         jsonParser = new JsonParser();
@@ -299,7 +299,7 @@ public class HomeActivity extends Activity {
                 imageLoader.DisplayImage(latestPoll.getImageUrl(), LatestPollImage);
                 
                 LatestPollTitle.setText(latestPoll.getQuestion());
-                LatestPollParticipation.setText("Participation count: " + latestPoll.getParticipationCount());
+                LatestPollParticipation.setText(latestPoll.getParticipationCount() + " people participated.");
 
             }
             else{    
@@ -368,6 +368,7 @@ public class HomeActivity extends Activity {
                 
                 LastWinnerName.setText(lastWinner.getWinnerName());
                 LastWinnerAddress.setText(lastWinner.getAddress());
+                LastWinnerPoll.setText(lastWinner.getPollQuestion());
             }
             else{    
                 LastWinnerPoll.setVisibility(View.VISIBLE);

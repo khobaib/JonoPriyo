@@ -9,7 +9,7 @@
     <item>
         <bitmap
             android:gravity="fill"
-            android:src="@drawable/sort" />
+            android:src="@drawable/sort_by" />
     </item>
 
 </layer-list>

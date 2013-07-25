@@ -3,6 +3,6 @@
 
     <item android:drawable="@drawable/ic_sort_pressed" android:state_pressed="true"></item>
     <item android:drawable="@drawable/ic_sort_pressed" android:state_focused="true"></item>
-    <item android:drawable="@drawable/sort"></item>
+    <item android:drawable="@drawable/sort_by"></item>
 
 </selector>

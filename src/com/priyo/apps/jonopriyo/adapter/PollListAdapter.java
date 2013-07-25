@@ -20,6 +20,7 @@ import com.priyo.apps.jonopriyo.R;
 import com.priyo.apps.jonopriyo.model.Poll;
 import com.priyo.apps.jonopriyo.utility.Constants;
 import com.priyo.apps.jonopriyo.utility.JonopriyoApplication;
+import com.priyo.apps.jonopriyo.utility.Utility;
 import com.priyo.apps.lazylist.ImageLoader;
 
 public class PollListAdapter extends ArrayAdapter<Poll> {
@@ -103,7 +104,7 @@ public class PollListAdapter extends ArrayAdapter<Poll> {
         holder.PollQuestion.setText(item.getQuestion());
         holder.ParticipationCount.setText("" + item.getParticipationCount());
         holder.Category.setText(item.getCategory() + ",");
-        holder.ReleaseDate.setText(item.getReleaseDate());
+        holder.ReleaseDate.setText(Utility.parseDate(item.getReleaseDate()));
         holder.PrizeValue.setText(item.getPollPrize().getValue() + " " + item.getPollPrize().getType());
         
         if(listType == Constants.PARENT_ACTIVITY_MY_POLLS){

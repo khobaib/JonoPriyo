@@ -27,7 +27,7 @@
             android:layout_height="50dp"
             android:layout_alignParentRight="true"
             android:layout_centerInParent="true"
-            android:background="@drawable/button_winner"
+            android:background="@drawable/ab_winner"
             android:onClick="onClickWinner"
             android:padding="3dp"
             android:text="My Wins"

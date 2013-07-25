@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Environment;
+import android.util.Log;
 
 public class Utility {
 
@@ -52,6 +53,21 @@ public class Utility {
     public static boolean SdIsPresent() {
         return Environment.getExternalStorageState().equals(
                 Environment.MEDIA_MOUNTED);
+    }
+    
+    /*
+     * dateFromDb -> yyyy-mm-dd
+     * we want to show in the format dd (month_name) year
+     */
+    public static String parseDate(String dateFromDb){
+        String year = dateFromDb.substring(0, 4);
+        int month = Integer.parseInt(dateFromDb.substring(5, 7));
+        String day = dateFromDb.substring(8, 10);
+        Log.d(">>>>>>>>", "year = " + year + " month = " + month + " day = " + day);
+        String dateToShow = dateFromDb;
+        if(month > 0 && month <=12)
+            dateToShow = day + " " + month_name[month-1] + " " + year;
+        return dateToShow;
     }
 
 

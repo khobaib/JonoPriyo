@@ -34,6 +34,7 @@ import com.priyo.apps.jonopriyo.model.ServerResponse;
 import com.priyo.apps.jonopriyo.parser.JsonParser;
 import com.priyo.apps.jonopriyo.utility.Constants;
 import com.priyo.apps.jonopriyo.utility.JonopriyoApplication;
+import com.priyo.apps.jonopriyo.utility.Utility;
 
 public class NewPollDetailsActivity extends Activity {
 
@@ -75,7 +76,7 @@ public class NewPollDetailsActivity extends Activity {
         ParticipationCount.setText("" + thisPoll.getParticipationCount());
         
         ExpiryDate = (TextView) findViewById(R.id.tv_expiry_date); 
-        ExpiryDate.setText(thisPoll.getExpiryDate());
+        ExpiryDate.setText(Utility.parseDate(thisPoll.getExpiryDate()));
 
         ResultOrVote = (Button) findViewById(R.id.b_result_or_vote);
         PollCondition = (TextView) findViewById(R.id.tv_poll_condition);
