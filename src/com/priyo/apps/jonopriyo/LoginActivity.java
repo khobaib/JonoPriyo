@@ -55,7 +55,7 @@ public class LoginActivity extends Activity {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
-        
+
         pDialog = new ProgressDialog(LoginActivity.this);
 
         appInstance = (JonopriyoApplication) getApplication();
@@ -71,14 +71,14 @@ public class LoginActivity extends Activity {
 
         Email = (EditText) findViewById(R.id.et_email);
         Password = (EditText) findViewById(R.id.et_password);	
-        
+
         ForgetPassword = (TextView) findViewById(R.id.tv_click_here);
         ForgetPassword.setOnClickListener(new OnClickListener() {
-            
+
             @Override
             public void onClick(View v) {
                 onClickForgetPassword();
-                
+
             }
         });
 
@@ -89,11 +89,11 @@ public class LoginActivity extends Activity {
             public void onClick(View v) {
                 if(((CheckBox)v).isChecked()){
                     Log.d(TAG, "Remember Me checked");
-//                    appInstance.setRememberMe(true);
+                    //                    appInstance.setRememberMe(true);
                 }
                 else{
                     Log.d(TAG, "Remember Me unchecked");
-//                    appInstance.setRememberMe(false);
+                    //                    appInstance.setRememberMe(false);
                 }               
             }
         });
@@ -102,7 +102,7 @@ public class LoginActivity extends Activity {
     public void onClickLogin(View v){
         email = Email.getText().toString().trim();
         password = Password.getText().toString().trim();
-        
+
         if(email == null || email.equals(""))
             Toast.makeText(LoginActivity.this, "Please enter email address.", Toast.LENGTH_SHORT).show();
         else if(password == null || password.equals(""))
@@ -113,19 +113,19 @@ public class LoginActivity extends Activity {
     }
 
     public void onClickRegister(View v){
-        startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+        startActivity(new Intent(LoginActivity.this, RegistrationNewActivity.class));
     }
 
     public void onClickForgetPassword(){
-                
+
         LayoutInflater inflater = (LayoutInflater) getLayoutInflater();
         View textEntryView = inflater.inflate(R.layout.dialog_forget_password, null);
         final AlertDialog alert = new AlertDialog.Builder(LoginActivity.this).create();
         alert.setView(textEntryView, 0, 0, 0, 0);
-                
+
         final EditText EmailAddress = (EditText) textEntryView.findViewById(R.id.et_email);
-        
-        
+
+
         Button OK = (Button) textEntryView.findViewById(R.id.b_ok);
         OK.setOnClickListener(new OnClickListener() {
 
@@ -137,13 +137,13 @@ public class LoginActivity extends Activity {
             }
 
         });
-        
+
         alert.show();
     }
-    
-    
+
+
     public class SendForgetPassRequest extends AsyncTask<String, Void, String> {
-        
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -159,7 +159,7 @@ public class LoginActivity extends Activity {
 
             List<NameValuePair> urlParam = new ArrayList<NameValuePair>();
             urlParam.add(new BasicNameValuePair("method", Constants.METHOD_FORGET_PASSWORD));
-            
+
             try {
                 JSONObject emailObj = new JSONObject();
                 emailObj.put("email", params[0]);
@@ -179,8 +179,8 @@ public class LoginActivity extends Activity {
                 return "false";
             }
         }
-        
-        
+
+
         @Override
         protected void onPostExecute(String result) {
             if(pDialog.isShowing())
@@ -196,12 +196,12 @@ public class LoginActivity extends Activity {
             }
 
         }
-        
+
     }
-    
-    
-    
-    
+
+
+
+
 
 
     public class LoadCredentials extends AsyncTask<Void, Void, Boolean> {
@@ -271,7 +271,13 @@ public class LoginActivity extends Activity {
                     appInstance.setRememberMe(true);
                     appInstance.setCredentials(email, password);
                 }
-                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                if(appInstance.isFirstTimeLoggedIn()){
+                    startActivity(new Intent(LoginActivity.this, LoginFirstTimeActivity.class));
+                }
+                else{
+                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                }
+                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
                 finish();
             }
             else{

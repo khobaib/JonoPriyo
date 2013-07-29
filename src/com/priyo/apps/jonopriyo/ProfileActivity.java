@@ -18,7 +18,9 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -33,6 +35,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.priyo.apps.jonopriyo.db.JonopriyoDatabase;
 import com.priyo.apps.jonopriyo.fragment.DatePickerFragment;
 import com.priyo.apps.jonopriyo.model.Area;
 import com.priyo.apps.jonopriyo.model.City;
@@ -73,6 +76,9 @@ public class ProfileActivity extends FragmentActivity implements OnDateSetListen
 
     Calendar calendar;
 
+//    boolean sProfessionSelectable, sEducationSelectable;
+    boolean sProfessionTouchable, sEducationTouchable;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +92,7 @@ public class ProfileActivity extends FragmentActivity implements OnDateSetListen
 
         calendar = Calendar.getInstance();
         pDialog = new ProgressDialog(ProfileActivity.this);
-        
+
         new GetProfileData().execute();
 
         Name = (EditText) findViewById(R.id.et_name);
@@ -96,11 +102,39 @@ public class ProfileActivity extends FragmentActivity implements OnDateSetListen
 
         DoB = (TextView) findViewById(R.id.tv_dob);
 
+//        sProfessionSelectable = false;
+//        sEducationSelectable = false;
+        sProfessionTouchable = false;
+        sEducationTouchable = false;
+
+        JonopriyoDatabase dbInstance = new JonopriyoDatabase(ProfileActivity.this);
+        dbInstance.open();
+        professionList = dbInstance.retrieveProfessionList();
+        educationList = dbInstance.retrieveEducationList();
+        dbInstance.close();
+
         sProfession = (Spinner) findViewById(R.id.s_profession);
+        sProfession.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(!sProfessionTouchable){
+                    Log.d("/////", "profession list retrieving");
+                    sProfessionTouchable = true;
+                    new RetrieveProfessionList().execute();
+                    return false;
+                }
+                else{
+                    return true;
+                }
+            }
+        });
+
         sProfession.setOnItemSelectedListener(new OnItemSelectedListener() {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
+                Log.d("/////", "profession selectable");
                 professionId = professionList.get(position).getId();
             }
 
@@ -111,6 +145,22 @@ public class ProfileActivity extends FragmentActivity implements OnDateSetListen
         });
 
         sEducation = (Spinner) findViewById(R.id.s_education);
+        sEducation.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(!sEducationTouchable){
+                    Log.d("/////", "education list retrieving");
+                    sEducationTouchable = true;
+                    new RetrieveEducationList().execute();
+                    return false;
+                }
+                else{
+                    return true;
+                }
+            }
+        });
+
         sEducation.setOnItemSelectedListener(new OnItemSelectedListener() {
 
             @Override
@@ -194,13 +244,25 @@ public class ProfileActivity extends FragmentActivity implements OnDateSetListen
             }
         });
 
-
     }
-    
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) { // Back key pressed
+            finish();
+            overridePendingTransition(R.anim.prev_slide_in, R.anim.prev_slide_out);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+
     public void onClickCalendar(View v){
         DialogFragment newFragment = new DatePickerFragment().newInstance(calendar, "profile");
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }
+
 
     public void onClickChangePassword(View v){
 
@@ -305,8 +367,36 @@ public class ProfileActivity extends FragmentActivity implements OnDateSetListen
         new RetrieveCityList().execute(selectedCountryId);
         new RetrieveAreaList().execute(selectedCityId);
 
-        new RetrieveProfessionList().execute();
-        new RetrieveEducationList().execute();
+        List<String> educationTypeList = new ArrayList<String>();
+        for(Education education : educationList)
+            educationTypeList.add(education.getType());
+
+        String[] eArray = educationTypeList.toArray(new String[0]);
+        generateSpinner(sEducation, eArray);
+
+        for(int educationIndex = 0; educationIndex < educationList.size(); educationIndex++){
+            if(educationId.equals(educationList.get(educationIndex).getId())){
+                sEducation.setSelection(educationIndex);
+                break;
+            }
+        }
+
+        List<String> professionTypeList = new ArrayList<String>();
+        for(Profession profession : professionList)
+            professionTypeList.add(profession.getType());
+
+        String[] pArray = professionTypeList.toArray(new String[0]);
+        generateSpinner(sProfession, pArray);
+
+        for(int professionIndex = 0; professionIndex < professionList.size(); professionIndex++){
+            if(professionId.equals(professionList.get(professionIndex).getId())){
+                sProfession.setSelection(professionIndex);
+                break;
+            }
+        }
+
+        //        new RetrieveProfessionList().execute();
+        //        new RetrieveEducationList().execute();
 
     }
 
@@ -451,7 +541,7 @@ public class ProfileActivity extends FragmentActivity implements OnDateSetListen
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            
+
             pDialog.setMessage("Loading...");
             pDialog.show();
         }
@@ -673,6 +763,7 @@ public class ProfileActivity extends FragmentActivity implements OnDateSetListen
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            pDialog.show();
         }
 
         @Override
@@ -702,6 +793,13 @@ public class ProfileActivity extends FragmentActivity implements OnDateSetListen
                 List<String> professionTypeList = new ArrayList<String>();
                 for(Profession profession : professionList)
                     professionTypeList.add(profession.getType());
+                
+                JonopriyoDatabase dbInstance = new JonopriyoDatabase(ProfileActivity.this);
+                dbInstance.open();
+                for(Profession profession : professionList){
+                    dbInstance.insertOrUpdateProfession(profession);
+                }
+                dbInstance.close();
 
                 String[] strarray = professionTypeList.toArray(new String[0]);
                 generateSpinner(sProfession, strarray);
@@ -712,6 +810,8 @@ public class ProfileActivity extends FragmentActivity implements OnDateSetListen
                         break;
                     }
                 }
+                sProfessionTouchable = false;
+                sProfession.performClick();
             }
         }        
     }
@@ -722,6 +822,7 @@ public class ProfileActivity extends FragmentActivity implements OnDateSetListen
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            pDialog.show();
         }
 
         @Override
@@ -751,6 +852,13 @@ public class ProfileActivity extends FragmentActivity implements OnDateSetListen
                 List<String> educationTypeList = new ArrayList<String>();
                 for(Education education : educationList)
                     educationTypeList.add(education.getType());
+                
+                JonopriyoDatabase dbInstance = new JonopriyoDatabase(ProfileActivity.this);
+                dbInstance.open();
+                for(Education education : educationList){
+                    dbInstance.insertOrUpdateEducation(education);
+                }
+                dbInstance.close();
 
                 String[] strarray = educationTypeList.toArray(new String[0]);
                 generateSpinner(sEducation, strarray);
@@ -761,6 +869,8 @@ public class ProfileActivity extends FragmentActivity implements OnDateSetListen
                         break;
                     }
                 }
+                sEducationTouchable = false;
+                sEducation.performClick();
             }
         }        
     }
@@ -773,8 +883,10 @@ public class ProfileActivity extends FragmentActivity implements OnDateSetListen
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if(success)
+                if(success){
                     finish();
+                    overridePendingTransition(R.anim.prev_slide_in, R.anim.prev_slide_out);
+                }
 
             }
         });

@@ -1,6 +1,7 @@
 package com.priyo.apps.jonopriyo;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.http.NameValuePair;
@@ -9,10 +10,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,16 +25,28 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.FacebookRequestError;
+import com.facebook.HttpMethod;
+import com.facebook.Request;
+import com.facebook.RequestAsyncTask;
+import com.facebook.Response;
+import com.facebook.Session;
+import com.facebook.Session.StatusCallback;
+import com.facebook.SessionDefaultAudience;
+import com.facebook.SessionLoginBehavior;
+import com.facebook.SessionState;
+import com.facebook.internal.SessionTracker;
+import com.facebook.model.GraphObject;
 import com.google.android.gcm.GCMRegistrar;
 import com.priyo.apps.jonopriyo.gcm.ServerUtilities;
 import com.priyo.apps.jonopriyo.model.Poll;
 import com.priyo.apps.jonopriyo.model.ServerResponse;
 import com.priyo.apps.jonopriyo.model.Winner;
 import com.priyo.apps.jonopriyo.parser.JsonParser;
+import com.priyo.apps.jonopriyo.uni2bijoyconverer.BijoyFontUtil;
 import com.priyo.apps.jonopriyo.utility.Constants;
 import com.priyo.apps.jonopriyo.utility.JonopriyoApplication;
 import com.priyo.apps.jonopriyo.utility.Utility;
@@ -41,28 +58,44 @@ import com.priyo.apps.lazylist.ImageLoader;
 
 public class HomeActivity extends Activity {
 
+    private static final String TAG = HomeActivity.class.getSimpleName();
+
     JonopriyoApplication appInstance;
     JsonParser jsonParser;
+    ProgressDialog pDialog;
     Long userId;
+    
+    Session mCurrentSession;
+
+    Typeface tf;
+    BijoyFontUtil tfUtil;
+    
+    private static final List<String> PERMISSIONS = Arrays.asList("publish_actions");
+    private static final String PENDING_PUBLISH_KEY = "pendingPublishReauthorization";
+    private boolean pendingPublishReauthorization = false;
+    
+    Button AllPolls, MyPolls, Feedback;
+    TextView Title, NewPollHeader, LatestWinnerHeader;
 
     Poll latestPoll;
     ImageView LatestPollImage;
     TextView LatestPollTitle, LatestPollParticipation;
     Button LatestPollVoteNow;
     ProgressBar LatestPollLoading;
-    
+
     Winner lastWinner;
     ImageView LastWinnerPic;
     TextView LastWinnerName, LastWinnerAddress, LastWinnerPoll, WInnerTitle;
     ProgressBar LastWinnerLoading;
 
     ImageView ProfilePic;    
-    RelativeLayout rlLoading;    
+    ProgressBar ppLoding;
+    //    RelativeLayout rlLoading;    
 
     // Asyntask
     AsyncTask<Void, Void, Void> mRegisterTask;
 
-    final String[] menuItems = {"About us"};
+    //    final String[] menuItems = {"About us"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,27 +104,34 @@ public class HomeActivity extends Activity {
 
         appInstance = (JonopriyoApplication) getApplication();
         jsonParser = new JsonParser();
+        pDialog = new ProgressDialog(HomeActivity.this);
+        
+        tf = Typeface.createFromAsset(getAssets(), "font/suttony.ttf");
+        tfUtil = new BijoyFontUtil();
+                                
+        Log.d(">>>>????????", "first time logged in? =" + appInstance.isFirstTimeLoggedIn());
 
         userId = appInstance.getUserId();
 
         ProfilePic = (ImageView) findViewById(R.id.iv_profile_pic);
+        ppLoding = (ProgressBar) findViewById(R.id.pb_progress_pp);
 
-        rlLoading = (RelativeLayout) findViewById(R.id.loading_Panel);
+        //        rlLoading = (RelativeLayout) findViewById(R.id.loading_Panel);
 
         LatestPollImage = (ImageView) findViewById(R.id.iv_latest_poll_image);
         LatestPollTitle = (TextView) findViewById(R.id.tv_latest_poll_title);
         LatestPollParticipation = (TextView) findViewById(R.id.tv_latest_poll_participation);
         LatestPollVoteNow = (Button) findViewById(R.id.b_vote_now);
         LatestPollLoading = (ProgressBar) findViewById(R.id.pb_progress_poll);
-        
+
         LastWinnerPic = (ImageView) findViewById(R.id.iv_last_winner_pic);
         LastWinnerPoll = (TextView) findViewById(R.id.tv_last_poll_title);
         WInnerTitle = (TextView) findViewById(R.id.tv_last_winner_title);
         LastWinnerName = (TextView) findViewById(R.id.tv_last_winner_name);
         LastWinnerAddress = (TextView) findViewById(R.id.tv_last_winner_address);
         LastWinnerLoading = (ProgressBar) findViewById(R.id.pb_progress_winner);
-
-
+        
+        changeStaticTextToBangla();
 
         if(Utility.hasInternet(HomeActivity.this)){
 
@@ -149,6 +189,41 @@ public class HomeActivity extends Activity {
     }
 
 
+    private void changeStaticTextToBangla() {
+        AllPolls = (Button) findViewById(R.id.b_all_polls);
+        MyPolls = (Button) findViewById(R.id.b_my_polls);
+        Feedback = (Button) findViewById(R.id.b_feedback);
+        AllPolls.setTypeface(tf);
+        MyPolls.setTypeface(tf);
+        Feedback.setTypeface(tf);
+        
+        AllPolls.setText(tfUtil.convertUnicode2BijoyString("জরিপসমূহ"));
+        MyPolls.setText(tfUtil.convertUnicode2BijoyString("আমার জরিপ"));
+        Feedback.setText(tfUtil.convertUnicode2BijoyString("মতামত"));
+        
+        Title = (TextView) findViewById(R.id.tv_title);
+        NewPollHeader = (TextView) findViewById(R.id.tv_latest_poll_heading);
+        LatestWinnerHeader = (TextView) findViewById(R.id.tv_last_winner_heading);
+        Title.setTypeface(tf);
+        NewPollHeader.setTypeface(tf);
+        LatestWinnerHeader.setTypeface(tf);
+        
+        Title.setText(tfUtil.convertUnicode2BijoyString("জনপ্রিয়"));
+        NewPollHeader.setText(tfUtil.convertUnicode2BijoyString("নতুন জরিপ"));
+        LatestWinnerHeader.setText(tfUtil.convertUnicode2BijoyString("সর্বশেষ বিজয়ী"));
+        
+        WInnerTitle.setTypeface(tf);
+        WInnerTitle.setText(tfUtil.convertUnicode2BijoyString("বিজয়ী"));
+        
+        LatestPollVoteNow.setTypeface(tf);
+        LatestPollVoteNow.setText(tfUtil.convertUnicode2BijoyString("ভোট দিন"));
+        
+        LatestPollParticipation.setTypeface(tf);
+//        LatestPollParticipation.setText(tfUtil.convertUnicode2BijoyString(""));
+        
+    }
+
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -161,7 +236,7 @@ public class HomeActivity extends Activity {
         LatestPollParticipation.setVisibility(View.GONE);
         LatestPollVoteNow.setVisibility(View.GONE);
         LatestPollLoading.setVisibility(View.VISIBLE);
-        
+
         LastWinnerPic.setVisibility(View.GONE);
         LastWinnerPoll.setVisibility(View.GONE);
         WInnerTitle.setVisibility(View.GONE);
@@ -175,9 +250,9 @@ public class HomeActivity extends Activity {
             new RetrieveLastWinner().execute();
 
             if(imageUrl != null && !imageUrl.equals("")){
-                rlLoading.setVisibility(View.VISIBLE);
+                ppLoding.setVisibility(View.VISIBLE);
                 Log.d("<<<<<>>>>", "rlLoading visible now");
-                ImageLoader imageLoader = new ImageLoader(HomeActivity.this, rlLoading);
+                ImageLoader imageLoader = new ImageLoader(HomeActivity.this, ppLoding);
                 imageLoader.DisplayImage(imageUrl, ProfilePic);
 
             }
@@ -206,19 +281,24 @@ public class HomeActivity extends Activity {
         startActivity(new Intent(HomeActivity.this, MyPollsActivity.class));
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
     }
+    
+    public void onClickFeedback(View v){
+        startActivity(new Intent(HomeActivity.this, FeedbackActivity.class));
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+    }
 
     public void onClickWinners(View v){
         startActivity(new Intent(HomeActivity.this, WinnerListActivity.class));
-        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
     }
 
     public void onClickProfile(View v){
         startActivity(new Intent(HomeActivity.this, ProfileActivity.class));
-        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
     }
 
     public void onClickShare(View v){
-
+        publishStory();
     }
 
     public void onClickProfilePic(View v){
@@ -248,6 +328,11 @@ public class HomeActivity extends Activity {
             overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
         }
     }
+
+
+
+
+
 
 
     private class RetrieveLatestPoll extends AsyncTask<Void, Void, Boolean> {
@@ -288,18 +373,18 @@ public class HomeActivity extends Activity {
 
         @Override
         protected void onPostExecute(Boolean success) {
-            
+
             if(success){
                 LatestPollImage.setVisibility(View.VISIBLE);
                 LatestPollTitle.setVisibility(View.VISIBLE);
                 LatestPollParticipation.setVisibility(View.VISIBLE);
                 LatestPollVoteNow.setVisibility(View.VISIBLE);
-                
+
                 ImageLoader imageLoader = new ImageLoader(HomeActivity.this);
                 imageLoader.DisplayImage(latestPoll.getImageUrl(), LatestPollImage);
-                
+
                 LatestPollTitle.setText(latestPoll.getQuestion());
-                LatestPollParticipation.setText(latestPoll.getParticipationCount() + " people participated.");
+                LatestPollParticipation.setText(latestPoll.getParticipationCount() + " জন অংশগ্রহন করেছে");
 
             }
             else{    
@@ -310,11 +395,17 @@ public class HomeActivity extends Activity {
 
         }
     }
-    
-    
-    
+
+
+
+
+
+
+
+
+
     private class RetrieveLastWinner extends AsyncTask<Void, Void, Boolean> {
-        
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -354,18 +445,18 @@ public class HomeActivity extends Activity {
 
         @Override
         protected void onPostExecute(Boolean success) {
-            
+
             if(success){
                 LastWinnerPic.setVisibility(View.VISIBLE);
                 LastWinnerName.setVisibility(View.VISIBLE);
                 LastWinnerAddress.setVisibility(View.VISIBLE);
                 LastWinnerPoll.setVisibility(View.VISIBLE);
                 WInnerTitle.setVisibility(View.VISIBLE);
-                
-                
+
+
                 ImageLoader imageLoader = new ImageLoader(HomeActivity.this);
                 imageLoader.DisplayImage(lastWinner.getWinnerPicUrl(), LastWinnerPic);
-                
+
                 LastWinnerName.setText(lastWinner.getWinnerName());
                 LastWinnerAddress.setText(lastWinner.getAddress());
                 LastWinnerPoll.setText(lastWinner.getPollQuestion());
@@ -423,5 +514,195 @@ public class HomeActivity extends Activity {
     }
 
 
+
+    void alert(String message, final Boolean success) {
+        AlertDialog.Builder bld = new AlertDialog.Builder(HomeActivity.this);
+        bld.setMessage(message);
+        bld.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if(!success)
+                    finish();
+
+            }
+        });
+        bld.create().show();
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        final Session activeSession = Session.getActiveSession();
+        activeSession.onActivityResult(HomeActivity.this, requestCode, resultCode, data);
+//        Log.d(TAG, "requestCode " + requestCode);
+//        Log.d(TAG, "resultCode " + resultCode);
+//
+//        if (data != null) {
+//            Log.d(TAG, "data " + data.getDataString());
+//        }
+//        Log.d(TAG, "activeSession " + activeSession.getAccessToken());
+//        Log.d(TAG, "activeSession " + activeSession.getState());
+//
+        Log.d(TAG, "IN onActivityResult");
+//        publishStory();
+        if(mCurrentSession.isOpened()){
+            Log.d(TAG, "mCurrentSession opened");
+            
+            pDialog.setMessage("Sharing the app in FB");
+            pDialog.show();
+            
+            Bundle postParams = new Bundle();
+//            postParams.putString("name", "জনপ্রিয়");
+            postParams.putString("name", "jonpPriyo");
+            postParams.putString("caption", "Download & vote.");
+            postParams.putString("description", "First polling app in BGD.");
+            postParams.putString("link", "http://apps.priyo.com/jonopriyo/index.php");
+//            postParams.putString("picture", "https://raw.github.com/fbsamples/ios-3.x-howtos/master/Images/iossdk_logo.png");
+
+            Request.Callback callback= new Request.Callback() {
+                public void onCompleted(Response response) {                    
+                    String postId = null;
+                    
+                    if(pDialog.isShowing())
+                        pDialog.dismiss();
+                    
+                    if(response != null){
+                        Log.d(TAG, "response not null");
+                        GraphObject graphObject = response.getGraphObject();
+                        if(graphObject != null){
+                            Log.d(TAG, "graphObject not null");
+                            JSONObject graphResponse = response.getGraphObject().getInnerJSONObject();
+
+                            try {
+                                alert("Successfully Posted to facebook.", true);
+                                postId = graphResponse.getString("id");
+                            } catch (JSONException e) {
+                                Log.i(">>>>><<", "JSON error "+ e.getMessage());
+                            }
+                        }
+                    }
+
+                    FacebookRequestError error = response.getError();
+                    if (error != null) {
+                        Log.d(TAG, error.getErrorMessage());
+                        Toast.makeText(HomeActivity.this, error.getErrorMessage(), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Log.d(TAG, postId);
+                    }
+                }
+            };
+
+            Request request = new Request(mCurrentSession, "me/feed", postParams, 
+                    HttpMethod.POST, callback);
+
+            RequestAsyncTask task = new RequestAsyncTask(request);
+            task.execute();
+        }
+    }
+
+    private void publishStory() {
+
+        
+
+        final SessionTracker mSessionTracker = new SessionTracker(HomeActivity.this, new StatusCallback() {
+            @Override
+            public void call(Session session, SessionState state, Exception exception) {
+                Log.d(">>>>>>>>>>", "inside StatusCallback");
+            }
+        }, null, false);
+
+        final String applicationId = com.facebook.internal.Utility.getMetadataApplicationId(HomeActivity.this);
+        mCurrentSession = mSessionTracker.getSession();
+
+        if ((mCurrentSession == null) || mCurrentSession.getState().isClosed()) {
+            Log.d("?????", "current session = null or closed");
+            mSessionTracker.setSession(null);
+            final Session session = new Session.Builder(getBaseContext()).setApplicationId(applicationId).build();
+            Session.setActiveSession(session);
+            mCurrentSession = session;
+        }
+
+        if (!mCurrentSession.isOpened()) {
+            Log.d("??????????", "current session = not opened");
+            Session.OpenRequest openRequest = null;
+            openRequest = new Session.OpenRequest(HomeActivity.this);
+
+            if (openRequest != null) {
+                Log.d(">>>>>>>>", "openRequest not null");
+                                openRequest.setDefaultAudience(SessionDefaultAudience.FRIENDS);
+                openRequest.setPermissions(Arrays.asList("publish_actions"));
+                                openRequest.setLoginBehavior(SessionLoginBehavior.SSO_WITH_FALLBACK);
+
+
+                mCurrentSession.openForPublish(openRequest);
+            }
+        }
+        //        Session session = Session.getActiveSession();
+//        else{
+        if (mCurrentSession != null){
+            Log.d(TAG, "trying to restablish permission");
+            // Check for publish permissions    
+//                        List<String> permissions = mCurrentSession.getPermissions();
+//                        if (!Utility.isSubsetOf(PERMISSIONS, permissions)) {
+//                            pendingPublishReauthorization = true;
+//                            Session.NewPermissionsRequest newPermissionsRequest = new Session
+//                                    .NewPermissionsRequest(this, PERMISSIONS);
+//                            mCurrentSession.requestNewPublishPermissions(newPermissionsRequest);
+//                            return;
+//                        }
+            
+            pDialog.setMessage("Sharing the app in FB");
+            pDialog.show();
+
+            Bundle postParams = new Bundle();
+            postParams.putString("name", "jonoPriyo");
+            postParams.putString("caption", "Download & vote.");
+            postParams.putString("description", "First polling app in BGD.");
+            postParams.putString("link", "http://apps.priyo.com/jonopriyo/index.php");
+//            postParams.putString("picture", "https://raw.github.com/fbsamples/ios-3.x-howtos/master/Images/iossdk_logo.png");
+
+            Request.Callback callback= new Request.Callback() {
+                public void onCompleted(Response response) {
+                    String postId = null;
+                    if(pDialog.isShowing())
+                        pDialog.dismiss();
+                    
+                    if(response != null){
+                        Log.d(TAG, "response not null");
+                        GraphObject graphObject = response.getGraphObject();
+                        if(graphObject != null){
+                            Log.d(TAG, "graphObject not null");
+                            JSONObject graphResponse = response.getGraphObject().getInnerJSONObject();
+
+                            try {
+                                alert("Successfully Posted to facebook.", true);
+                                postId = graphResponse.getString("id");
+                            } catch (JSONException e) {
+                                Log.i(">>>>><<", "JSON error "+ e.getMessage());
+                            }
+                        }
+                    }
+
+                    FacebookRequestError error = response.getError();
+                    if (error != null) {
+                        Log.d(TAG, error.getErrorMessage());
+                        Toast.makeText(HomeActivity.this, error.getErrorMessage(), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Log.d(TAG, postId);
+                    }                    
+                }
+            };
+
+            Request request = new Request(mCurrentSession, "me/feed", postParams, 
+                    HttpMethod.POST, callback);
+
+            RequestAsyncTask task = new RequestAsyncTask(request);
+            task.execute();
+        }
+
+    }
 
 }

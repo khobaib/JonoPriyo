@@ -28,6 +28,7 @@ import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
 public class ImageLoader {
@@ -35,7 +36,7 @@ public class ImageLoader {
     MemoryCache memoryCache=new MemoryCache();
     FileCache fileCache;
     private Activity mContext;
-    private RelativeLayout rlLoading;
+    private ProgressBar ppLoading;
     private Map<ImageView, String> imageViews=Collections.synchronizedMap(new WeakHashMap<ImageView, String>());
     ExecutorService executorService;
     Handler handler=new Handler();//handler to display images in UI thread
@@ -43,14 +44,14 @@ public class ImageLoader {
     public ImageLoader(Activity context){
     	this.mContext = context;
         fileCache=new FileCache(context);
-        this.rlLoading = null;
+        this.ppLoading = null;
         executorService=Executors.newFixedThreadPool(5);
     }
     
-    public ImageLoader(Activity context, RelativeLayout rlLoading){
+    public ImageLoader(Activity context, ProgressBar ppLoading){
         this.mContext = context;
         fileCache=new FileCache(context);
-        this.rlLoading = rlLoading;
+        this.ppLoading = ppLoading;
         executorService=Executors.newFixedThreadPool(5);
     }
     
@@ -60,8 +61,8 @@ public class ImageLoader {
         Bitmap bitmap=memoryCache.get(url);
         if(bitmap!=null){
             imageView.setImageBitmap(resizeBitmap(bitmap));
-            if(rlLoading != null)
-                rlLoading.setVisibility(View.GONE);
+            if(ppLoading != null)
+                ppLoading.setVisibility(View.GONE);
         }
         else
         {
@@ -319,8 +320,8 @@ public class ImageLoader {
             else{
                 photoToLoad.imageView.setImageResource(stub_id);
             }
-            if(rlLoading != null)
-                rlLoading.setVisibility(View.GONE);
+            if(ppLoading != null)
+                ppLoading.setVisibility(View.GONE);
         }
     }
 

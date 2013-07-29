@@ -72,10 +72,9 @@ public class RegisterActivity extends FragmentActivity implements OnDateSetListe
     String sex;
 
     JsonParser jsonParser;
-
     public ProgressDialog pDialog;
 
-    private static final int DATE_PICKER = 1;
+//    private static final int DATE_PICKER = 1;
 
     String[] devplatforms =
         {
@@ -299,7 +298,7 @@ public class RegisterActivity extends FragmentActivity implements OnDateSetListe
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            pDialog = new ProgressDialog(RegisterActivity.this);
+//            pDialog = new ProgressDialog(RegisterActivity.this);
             pDialog.setMessage("Please wait while app registering you to the system...");
             pDialog.show();
         }

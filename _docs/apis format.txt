@@ -734,6 +734,20 @@ b. no winner found
 }
 
 
+
+23.method=post_feedback
+
+request: POST
+{
+	"feedback":"texts"
+}
+
+response:
+{
+	"response":"success" or "error"
+}
+
+
 changelists 
 -----------
 
@@ -814,3 +828,6 @@ changelists
 ----------
 1. #2 -> divided into 2 api -> 2a & 2b.
 
+29-07-2013
+----------
+1. #23 -> new api -> post_feedback

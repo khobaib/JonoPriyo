@@ -10,6 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:layout_margin="20dp"
         android:background="@drawable/background_login" >
 
         <RelativeLayout
@@ -33,17 +34,25 @@
                 android:layout_toRightOf="@+id/iv_app_logo"
                 android:text="jonoPriyo"
                 android:textColor="@color/red"
-                android:textSize="25dp"
+                android:textSize="20dp"
                 android:textStyle="bold" />
         </RelativeLayout>
+
+        <View
+            android:id="@+id/view1"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_below="@+id/rl_app_desc"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/portfolio_cover_line" />
 
         <EditText
             android:id="@+id/et_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/rl_app_desc"
+            android:layout_below="@+id/view1"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:ems="10"
             android:hint="Email Address"
             android:inputType="textEmailAddress"

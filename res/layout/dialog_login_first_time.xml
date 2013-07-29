@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_dialog" >
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="Registration"
+        android:textColor="@color/red"
+        android:textSize="25dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_sex"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/tv_title"
+        android:layout_marginTop="40dp"
+        android:gravity="right"
+        android:text="Gender:"
+        android:textColor="@color/white"
+        android:textSize="18dp" />
+
+    <Spinner
+        android:id="@+id/s_sex"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignBottom="@+id/tv_sex"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="10dp"
+        android:layout_toRightOf="@+id/tv_sex"
+        android:singleLine="true"
+        android:textSize="16dp" />
+
+    <TextView
+        android:id="@+id/tv_dob_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tv_sex"
+        android:layout_alignRight="@+id/tv_sex"
+        android:layout_below="@+id/tv_sex"
+        android:layout_marginTop="25dp"
+        android:gravity="right"
+        android:text="Date of Birth:"
+        android:textColor="@color/white"
+        android:textSize="18dp" />
+
+    <TextView
+        android:id="@+id/tv_dob"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/tv_dob_title"
+        android:layout_alignLeft="@+id/s_sex"
+        android:layout_marginRight="10dp"
+        android:layout_toLeftOf="@+id/b_calendar"
+        android:background="@color/gray70_transparent_back"
+        android:padding="5dp"
+        android:singleLine="true"
+        android:textColor="@color/red"
+        android:textSize="18dp" />
+
+    <Button
+        android:id="@+id/b_calendar"
+        android:layout_width="46dp"
+        android:layout_height="42dp"
+        android:layout_alignBottom="@+id/tv_dob_title"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/button_calendar" />
+
+    <TextView
+        android:id="@+id/tv_profession"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tv_sex"
+        android:layout_alignRight="@+id/tv_sex"
+        android:layout_below="@+id/tv_dob_title"
+        android:layout_marginTop="25dp"
+        android:gravity="right"
+        android:text="Profession:"
+        android:textColor="@color/white"
+        android:textSize="18dp" />
+
+    <Spinner
+        android:id="@+id/s_profession"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignBottom="@+id/tv_profession"
+        android:layout_alignLeft="@+id/s_sex"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:singleLine="true"
+        android:textSize="16dp" />
+
+    <TextView
+        android:id="@+id/tv_education"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tv_sex"
+        android:layout_alignRight="@+id/tv_sex"
+        android:layout_below="@+id/tv_profession"
+        android:layout_marginTop="25dp"
+        android:gravity="right"
+        android:text="Education"
+        android:textColor="@color/white"
+        android:textSize="18dp" />
+
+    <Spinner
+        android:id="@+id/s_education"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignBottom="@+id/tv_education"
+        android:layout_alignLeft="@+id/s_sex"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:singleLine="true"
+        android:textSize="16dp" />
+
+    <Button
+        android:id="@+id/b_go"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_education"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="30dp"
+        android:padding="15dp"
+        android:text="Go"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
+</RelativeLayout>

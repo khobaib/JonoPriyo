@@ -44,25 +44,17 @@ public class JsonParser {
         Log.d(TAG, "in retrieveServerData method");
 
         int status = 0;
-
-//        String editTokenVal = null;
         StringBuilder sb = null;
-        //        if (appToken != null) {
-        //            sb = new StringBuilder();
-        //            sb.append("token:\"" + appToken);
-        //            editTokenVal = sb.toString();
-        //            Log.d(TAG, "string token in header = " + editTokenVal);
-        //        }
 
         if (urlParams != null) {
             String paramString = URLEncodedUtils.format(urlParams, "utf-8");
             url += "?" + paramString;
-            Log.d(TAG, "GET url = " + url);
         }
+        Log.d(TAG, "final url = " + url);
+        Log.d(TAG, "final content = " + content);
+        Log.d(TAG, "app token = " + appToken);
 
-        // Making HTTP request
         try {
-            // request method is GET
             DefaultHttpClient httpClient = new DefaultHttpClient();
             HttpResponse httpResponse = null;
 
@@ -73,7 +65,6 @@ public class JsonParser {
                 if (appToken != null){
                     httpGet.setHeader("token", appToken);
                 }
-                //                    httpGet.setHeader("Authorization", editTokenVal);
 
                 httpResponse = httpClient.execute(httpGet);
 
@@ -84,7 +75,6 @@ public class JsonParser {
                 if (appToken != null){
                     httpPost.setHeader("token", appToken);
                 }
-                //                    httpPost.setHeader("Authorization", editTokenVal);
 
                 StringEntity se = new StringEntity(content);
                 se.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
@@ -143,7 +133,7 @@ public class JsonParser {
 
         String editTokenVal = null;
         StringBuilder sb = null;
-        
+
         if (urlParams != null) {
             String paramString = URLEncodedUtils.format(urlParams, "utf-8");
             url += "?" + paramString;
@@ -155,17 +145,17 @@ public class JsonParser {
         try {
             // request method is GET
             DefaultHttpClient httpClient = new DefaultHttpClient();
-//            HttpResponse httpResponse = null;
+            //            HttpResponse httpResponse = null;
 
             HttpPost httpPost = new HttpPost(url);
-//            httpPost.setHeader("Content-Type", "application/json");
+            //            httpPost.setHeader("Content-Type", "application/json");
             httpPost.setHeader("Accept", "application/json");
             if (appToken != null){
                 httpPost.setHeader("token", appToken);
             }
             //                    httpPost.setHeader("Authorization", editTokenVal);
 
-//            httpPost.setEntity(new UrlEncodedFormEntity(content.toString()));
+            //            httpPost.setEntity(new UrlEncodedFormEntity(content.toString()));
             StringEntity se = new StringEntity(content);
             se.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
             httpPost.setEntity(se);

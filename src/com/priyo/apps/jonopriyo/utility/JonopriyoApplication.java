@@ -50,6 +50,12 @@ public class JonopriyoApplication extends Application {
         editor.commit();        
     }
     
+    public void setFirstTimeLoggedIn(Boolean firstTimeFlag){
+        Editor editor = User.edit();
+        editor.putBoolean(Constants.FIRST_TIME_LOGGED_IN, firstTimeFlag);
+        editor.commit();        
+    }
+    
     public void setCredentials(String email, String password){
         Editor editor = User.edit();
         editor.putString(Constants.EMAIL, email);
@@ -85,6 +91,11 @@ public class JonopriyoApplication extends Application {
 
     public boolean isFirstTime(){
         Boolean firstTimeFlag = User.getBoolean(Constants.FIRST_TIME, true);
+        return firstTimeFlag;
+    }
+    
+    public boolean isFirstTimeLoggedIn(){
+        Boolean firstTimeFlag = User.getBoolean(Constants.FIRST_TIME_LOGGED_IN, true);
         return firstTimeFlag;
     }
     

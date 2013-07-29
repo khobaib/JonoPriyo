@@ -1,6 +1,7 @@
 package com.priyo.apps.jonopriyo.utility;
 
 import java.io.File;
+import java.util.Collection;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,31 +13,25 @@ import android.util.Log;
 public class Utility {
 
     public static final String[] month_name = {
-        "January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December"
+        "JAN", "FEB", "MAR", "APR", "MAY", "JUN",
+        "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"
+    };
+    
+    
+    public static final String[] PHONE_NUMBER_PREFIX= {
+      "017", "015", "016", "018", "019", "011"  
     };
 
-    public static final String[] profession_array = {
-        "student", "teacher", "govt employee", "private service"
-    };
-
-    public static final String[] education_array = {
-        "student", "S.Sc.", "H.Sc.", "B.Sc", "M.Sc.", "PhD"
-    };
+//    public static final String[] profession_array = {
+//        "student", "teacher", "govt employee", "private service"
+//    };
+//
+//    public static final String[] education_array = {
+//        "student", "S.Sc.", "H.Sc.", "B.Sc", "M.Sc.", "PhD"
+//    };
 
     public static final String[] sex_array = {"male", "female"};
 
-    //    public static final String[] country_list = {
-    //      "USA", "Bangladesh", "Belgium", "Barmuda", "Barbados", "Belarus"  
-    //    };
-    //    
-    //    public static final String[] city_list = {
-    //        "Abuja", "Abu dhabi", "Abrams", "Ace", "Acland", "Dhaka"
-    //    };
-    //    
-    //    public static final String[] area_list = {
-    //        "Gulshan", "New-market", "BUET", "Dhanmondi"
-    //    };
 
 
     public static boolean createDirectory() {
@@ -68,6 +63,16 @@ public class Utility {
         if(month > 0 && month <=12)
             dateToShow = day + " " + month_name[month-1] + " " + year;
         return dateToShow;
+    }
+    
+    
+    public static boolean isSubsetOf(Collection<String> subset, Collection<String> superset) {
+        for (String string : subset) {
+            if (!superset.contains(string)) {
+                return false;
+            }
+        }
+        return true;
     }
 
 

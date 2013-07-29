@@ -105,6 +105,16 @@ prize_type_name - text
 prize_icon - text
 
 
+feedback table
+--------------
+id - int
+user_id - int (foreign key - user(id))
+feedback - text
+feedback_creation_time - text
+
+
+
+
 change-list - 20-06-2013
 ------------------------
 1. new table - winner table
@@ -136,3 +146,7 @@ change-list - 05-07-2013
 --------
 prize_icon shifted from pollPrize to pollPrizeType.
 
+
+20130729
+--------
+new table added - feedback

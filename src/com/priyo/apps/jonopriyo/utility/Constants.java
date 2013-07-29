@@ -8,8 +8,11 @@ public class Constants {
     
     public static final int REQUEST_TYPE_GET = 1;
     public static final int REQUEST_TYPE_POST = 2;
+    public static final int REQUEST_TYPE_PUT = 3;
+    public static final int REQUEST_TYPE_DELETE = 4;
     
     public static final String FIRST_TIME = "first_time_run";
+    public static final String FIRST_TIME_LOGGED_IN = "first_time_logged_in";
     public static final String ACCESS_TOKEN = "access_token";
     public static final String USER_ID = "user_id";
     public static final String EMAIL = "email";
@@ -24,6 +27,8 @@ public class Constants {
     
     public static final String METHOD_LOGIN = "user_login";
     public static final String METHOD_REGISTRATION = "registration";
+    public static final String METHOD_REGISTRATION_BASIC = "registration_basic";
+    public static final String METHOD_REGISTRATION_AFTER_LOGIN = "registration_after_login";
     public static final String METHOD_GET_COUNTRY = "get_countries";
     public static final String METHOD_GET_CITIES = "get_cities";
     public static final String METHOD_GET_AREA = "get_area";

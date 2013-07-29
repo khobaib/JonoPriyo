@@ -25,5 +25,7 @@
     <string name="options_register">Register</string>
     <string name="options_unregister">Unregister</string>
     <string name="title_winner">Winner-</string>
+<!--     <string name="facebookApiKey">281433105331755</string> -->
+        <string name="facebookApiKey">504293992948881</string>
 
 </resources>

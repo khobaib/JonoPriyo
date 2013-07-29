@@ -27,7 +27,6 @@ import android.view.Menu;
 
 public class SplashActivity extends Activity {
 
-    // Progress Dialog
     private ProgressDialog pDialog;
     JsonParser jsonParser;
 
@@ -41,6 +40,7 @@ public class SplashActivity extends Activity {
 
         appInstance = (JonopriyoApplication) getApplication();
         jsonParser = new JsonParser();
+        pDialog = new ProgressDialog(SplashActivity.this);
         
         Boolean isFirstTime = appInstance.isFirstTime();
         if(isFirstTime){
@@ -53,7 +53,7 @@ public class SplashActivity extends Activity {
         if(rememberMeFlag){
             email = appInstance.getEmail();
             password = appInstance.getPassword();
-            new LoadCredentials().execute();
+            new Login().execute();
         } 
 
         else{
@@ -76,12 +76,11 @@ public class SplashActivity extends Activity {
 
     }
 
-    private class LoadCredentials extends AsyncTask<Void, Void, Boolean> {
+    private class Login extends AsyncTask<Void, Void, Boolean> {
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            pDialog = new ProgressDialog(SplashActivity.this);
             pDialog.setMessage("Signing in, Please wait...");
             pDialog.setIndeterminate(true);
             pDialog.setCancelable(true);

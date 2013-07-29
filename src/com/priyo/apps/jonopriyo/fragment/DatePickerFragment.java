@@ -2,6 +2,7 @@ package com.priyo.apps.jonopriyo.fragment;
 
 import java.util.Calendar;
 
+import com.priyo.apps.jonopriyo.LoginFirstTimeActivity;
 import com.priyo.apps.jonopriyo.ProfileActivity;
 import com.priyo.apps.jonopriyo.RegisterActivity;
 
@@ -43,8 +44,8 @@ public class DatePickerFragment extends DialogFragment{
 //        int day = c.get(Calendar.DAY_OF_MONTH);
 
         // Create a new instance of DatePickerDialog and return it
-        if(parentActivity.equals("register"))
-            return new DatePickerDialog(getActivity(), (RegisterActivity)getActivity(), mYear, mMonth, mDay);
+        if(parentActivity.equals("first_login"))
+            return new DatePickerDialog(getActivity(), (LoginFirstTimeActivity)getActivity(), mYear, mMonth, mDay);
         else            // "profile"
             return new DatePickerDialog(getActivity(), (ProfileActivity)getActivity(), mYear, mMonth, mDay);
     }
