@@ -33,7 +33,6 @@ public class GCMIntentService extends GCMBaseIntentService {
         
         JonopriyoApplication appInstance = (JonopriyoApplication) getApplication();
         Long userId = appInstance.getUserId();
-//        Log.d("NAME", MainActivity.name);
         ServerUtilities.register(context, userId, registrationId);
     }
  

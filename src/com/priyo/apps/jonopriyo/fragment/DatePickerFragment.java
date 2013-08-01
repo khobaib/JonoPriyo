@@ -4,6 +4,7 @@ import java.util.Calendar;
 
 import com.priyo.apps.jonopriyo.LoginFirstTimeActivity;
 import com.priyo.apps.jonopriyo.ProfileActivity;
+import com.priyo.apps.jonopriyo.ProfileNewActivity;
 import com.priyo.apps.jonopriyo.RegisterActivity;
 
 import android.app.DatePickerDialog;
@@ -47,8 +48,9 @@ public class DatePickerFragment extends DialogFragment{
         if(parentActivity.equals("first_login"))
             return new DatePickerDialog(getActivity(), (LoginFirstTimeActivity)getActivity(), mYear, mMonth, mDay);
         else            // "profile"
-            return new DatePickerDialog(getActivity(), (ProfileActivity)getActivity(), mYear, mMonth, mDay);
+            return new DatePickerDialog(getActivity(), (ProfileNewActivity)getActivity(), mYear, mMonth, mDay);
     }
+       
 
 
 }

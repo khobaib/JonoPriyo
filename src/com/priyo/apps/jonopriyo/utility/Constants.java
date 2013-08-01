@@ -49,6 +49,7 @@ public class Constants {
     public static final String METHOD_GET_LAST_POLL_WINNER = "get_last_poll_winner";
     public static final String METHOD_GET_POLL_FROM_POLL_ID = "get_poll_from_poll_id";
     public static final String METHOD_GET_WINNER_FROM_POLL_ID = "get_winner_from_poll_id";
+    public static final String METHOD_POST_FEEDBACK = "post_feedback";
     
     public static final int RESPONSE_STATUS_CODE_SUCCESS = 200;
     

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.astuetz.viewpager.extensions.ViewPagerTabButton 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.priyo.apps.jonopriyo"
+    android:layout_width="0dip"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:background="@drawable/custom_tab_indicator_2"
+    android:gravity="center"
+    android:paddingBottom="16dip"
+    android:paddingTop="15dip"
+    android:textColor="@color/red"
+    android:textSize="18sp"
+    android:textStyle="bold" />

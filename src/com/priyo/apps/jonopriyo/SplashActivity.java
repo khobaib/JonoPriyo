@@ -81,10 +81,10 @@ public class SplashActivity extends Activity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            pDialog.setMessage("Signing in, Please wait...");
-            pDialog.setIndeterminate(true);
-            pDialog.setCancelable(true);
-            pDialog.show();
+//            pDialog.setMessage("Signing in, Please wait...");
+//            pDialog.setIndeterminate(true);
+//            pDialog.setCancelable(true);
+//            pDialog.show();
         }
 
         @Override
@@ -131,7 +131,7 @@ public class SplashActivity extends Activity {
 
         @Override
         protected void onPostExecute(Boolean success) {
-            pDialog.dismiss();
+//            pDialog.dismiss();
             if(success){
                 startActivity(new Intent(SplashActivity.this, HomeActivity.class));
                 finish();

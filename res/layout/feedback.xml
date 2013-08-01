@@ -58,6 +58,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:padding="15dp"
+        android:onClick="onClickSubmit"
         android:text="Submit Feedback"
         android:textColor="@color/white"
         android:textSize="18dp"

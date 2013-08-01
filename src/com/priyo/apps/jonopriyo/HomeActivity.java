@@ -293,7 +293,7 @@ public class HomeActivity extends Activity {
     }
 
     public void onClickProfile(View v){
-        startActivity(new Intent(HomeActivity.this, ProfileActivity.class));
+        startActivity(new Intent(HomeActivity.this, ProfileNewActivity.class));
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
     }
 

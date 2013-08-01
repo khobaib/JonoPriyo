@@ -37,18 +37,18 @@ public class LoginActivity extends Activity {
 
     private static final String TAG = LoginActivity.class.getSimpleName();
 
-    // Progress Dialog
-    private ProgressDialog pDialog;
+    ProgressDialog pDialog;
+    JonopriyoApplication appInstance;
+    JsonParser jsonParser;
 
     EditText Email, Password;
     CheckBox RememberMe;
     TextView ForgetPassword;
 
-    JonopriyoApplication appInstance;
+
     String email, password;
     String uid;
 
-    JsonParser jsonParser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +57,7 @@ public class LoginActivity extends Activity {
         setContentView(R.layout.login);
 
         pDialog = new ProgressDialog(LoginActivity.this);
-
+        jsonParser = new JsonParser();
         appInstance = (JonopriyoApplication) getApplication();
         //        Boolean rememberMeFlag = appInstance.isRememberMe();
         //        Log.d("loggine remember me", "" + rememberMeFlag);
@@ -67,7 +67,7 @@ public class LoginActivity extends Activity {
         //            new LoadCredentials().execute();
         //        }
 
-        jsonParser = new JsonParser();
+
 
         Email = (EditText) findViewById(R.id.et_email);
         Password = (EditText) findViewById(R.id.et_password);	
