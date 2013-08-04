@@ -50,6 +50,7 @@ public class Poll {
     public static Poll parsePoll(JSONObject pollObj){
         Poll poll = null;
         try {
+            Log.d("pollObj", "pollObj = " + pollObj.toString());
             Long id = pollObj.getLong("poll_id");
             Long number = pollObj.getLong("poll_number");
             String question = pollObj.getString("poll_question");
@@ -78,11 +79,12 @@ public class Poll {
 
             //                JSONArray prizeObj = thisPoll.optJSONArray("poll_prize");
             JSONObject prizeObj = pollObj.optJSONObject("poll_prize");
+            //            Log.d("prizeObj", "prizeObj = " + prizeObj.toString());
             //                Log.d("PRIZE", "prize obj = " + prizeObj.toString());
 
-            //                PollPrize pollPrize= new PollPrize();
-            //                if(prizeObj != null)
-            PollPrize pollPrize = PollPrize.parsePrize(prizeObj.toString());
+            PollPrize pollPrize= new PollPrize();
+            if(prizeObj != null)
+                pollPrize = PollPrize.parsePrize(prizeObj.toString());
 
             poll = new Poll(id, number, question, imageUrl, category, isNew, myAnsId,
                     releaseDate, expiryDate, participationCount, answers, isCastByme, description, pollPrize); 

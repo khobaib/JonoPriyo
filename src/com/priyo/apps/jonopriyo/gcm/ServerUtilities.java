@@ -11,11 +11,16 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.content.Context;
 import android.util.Log;
 
 import com.google.android.gcm.GCMRegistrar;
 import com.priyo.apps.jonopriyo.R;
+import com.priyo.apps.jonopriyo.model.ServerResponse;
+import com.priyo.apps.jonopriyo.parser.JsonParser;
 import com.priyo.apps.jonopriyo.utility.Constants;
 import com.priyo.apps.jonopriyo.utility.Utility;
 
@@ -24,9 +29,9 @@ public class ServerUtilities {
     private static final int MAX_ATTEMPTS = 5;
     private static final int BACKOFF_MILLI_SECONDS = 2000;
     private static final Random random = new Random();
-    
+
     static final String TAG = "JonoPriyo GCM";
- 
+
     /**
      * Register this account/device pair within the server.
      *
@@ -34,30 +39,47 @@ public class ServerUtilities {
     public static boolean register(final Context context, Long userId, final String regId) {
         Log.i(TAG, "registering device (regId = " + regId + ")");
         String serverUrl = Constants.SERVER_URL;
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("regId", regId);
-        params.put("userId", "" + userId);
-//        params.put("name", "Khobaib");
-//        params.put("email", "khobaib@gmail.com");
-         
+        ServerResponse response = null;
+
+        String postBody = null;
+        try {
+            JSONObject postObj = new JSONObject();
+            postObj.put("regId", regId);
+            postObj.put("userId", "" + userId);
+            postBody = postObj.toString();
+            Log.d(">>>>>>>><<<<<", "post body = " + postBody);
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+
+        //        params.put("name", "Khobaib");
+        //        params.put("email", "khobaib@gmail.com");
+
         long backoff = BACKOFF_MILLI_SECONDS + random.nextInt(1000);
         // Once GCM returns a registration id, we need to register on our server
         // As the server might be down, we will retry it a couple
         // times.
         for (int i = 1; i <= MAX_ATTEMPTS; i++) {
             Log.d(TAG, "Attempt #" + i + " to register");
-            try {
-                Utility.displayMessage(context, context.getString(R.string.server_registering, i, MAX_ATTEMPTS));
-                post(serverUrl, params);
+            //            try {
+            Utility.displayMessage(context, context.getString(R.string.server_registering, i, MAX_ATTEMPTS));
+            JsonParser jsonParser = new JsonParser();
+            response = jsonParser.retrieveServerData(Constants.REQUEST_TYPE_POST, serverUrl, null, postBody, null);
+            //                post(serverUrl, params);
+            if(response.getStatus() == Constants.RESPONSE_STATUS_CODE_SUCCESS){
                 GCMRegistrar.setRegisteredOnServer(context, true);
                 String message = context.getString(R.string.server_registered);
                 Utility.displayMessage(context, message);
                 return true;
-            } catch (IOException e) {
+            }
+            //            } catch (IOException e) {
+            else{
                 // Here we are simplifying and retrying on any error; in a real
                 // application, it should retry only on unrecoverable errors
                 // (like HTTP error code 503).
-                Log.e(TAG, "Failed to register on attempt " + i + ":" + e);
+                Log.e(TAG, "Failed to register on attempt " + i);
                 if (i == MAX_ATTEMPTS) {
                     break;
                 }
@@ -78,7 +100,7 @@ public class ServerUtilities {
         Utility.displayMessage(context, message);
         return false;
     }
- 
+
     /**
      * Unregister this account/device pair within the server.
      */
@@ -103,7 +125,7 @@ public class ServerUtilities {
             Utility.displayMessage(context, message);
         }
     }
- 
+
     /**
      * Issue a POST request to the server.
      *
@@ -114,7 +136,7 @@ public class ServerUtilities {
      */
     private static void post(String endpoint, Map<String, String> params)
             throws IOException {   
-         
+
         URL url;
         try {
             url = new URL(endpoint);
@@ -127,7 +149,7 @@ public class ServerUtilities {
         while (iterator.hasNext()) {
             Entry<String, String> param = iterator.next();
             bodyBuilder.append(param.getKey()).append('=')
-                    .append(param.getValue());
+            .append(param.getValue());
             if (iterator.hasNext()) {
                 bodyBuilder.append('&');
             }
@@ -152,13 +174,13 @@ public class ServerUtilities {
             // handle the response
             int status = conn.getResponseCode();
             if (status != 200) {
-              throw new IOException("Post failed with error code " + status);
+                throw new IOException("Post failed with error code " + status);
             }
         } finally {
             if (conn != null) {
                 conn.disconnect();
             }
         }
-      }
-    
+    }
+
 }

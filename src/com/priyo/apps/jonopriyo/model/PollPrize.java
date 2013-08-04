@@ -4,6 +4,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.util.Log;
+
 public class PollPrize {
     private String type;
     private Long value;
@@ -11,9 +13,9 @@ public class PollPrize {
     
     public PollPrize() {
         // temporary
-//        this.type = null;
-//        this.value = (long) 0;
-//        this.imageUrl = null;
+        this.type = null;
+        this.value = (long) 0;
+        this.imageUrl = null;
     }
 
     public PollPrize(String type, Long value, String imageUrl) {
@@ -25,7 +27,7 @@ public class PollPrize {
     
     public static PollPrize parsePrize(String jsonStr){
         PollPrize pollPrize= new PollPrize();
-        
+        Log.d("parsePrize", "json data = " + jsonStr);
         
         try {
 //            JSONArray prizeArray = new JSONArray(jsonStr);

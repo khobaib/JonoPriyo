@@ -110,7 +110,7 @@
                 android:layout_height="wrap_content"
                 android:text="Forget Password?"
                 android:textColor="@color/white"
-                android:textSize="18dp"
+                android:textSize="16dp"
                 android:textStyle="bold" />
 
             <TextView

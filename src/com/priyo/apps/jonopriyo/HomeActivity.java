@@ -64,16 +64,16 @@ public class HomeActivity extends Activity {
     JsonParser jsonParser;
     ProgressDialog pDialog;
     Long userId;
-    
+
     Session mCurrentSession;
 
     Typeface tf;
     BijoyFontUtil tfUtil;
-    
+
     private static final List<String> PERMISSIONS = Arrays.asList("publish_actions");
     private static final String PENDING_PUBLISH_KEY = "pendingPublishReauthorization";
     private boolean pendingPublishReauthorization = false;
-    
+
     Button AllPolls, MyPolls, Feedback;
     TextView Title, NewPollHeader, LatestWinnerHeader;
 
@@ -102,13 +102,14 @@ public class HomeActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);   
 
+
         appInstance = (JonopriyoApplication) getApplication();
         jsonParser = new JsonParser();
         pDialog = new ProgressDialog(HomeActivity.this);
-        
+
         tf = Typeface.createFromAsset(getAssets(), "font/suttony.ttf");
         tfUtil = new BijoyFontUtil();
-                                
+
         Log.d(">>>>????????", "first time logged in? =" + appInstance.isFirstTimeLoggedIn());
 
         userId = appInstance.getUserId();
@@ -130,13 +131,54 @@ public class HomeActivity extends Activity {
         LastWinnerName = (TextView) findViewById(R.id.tv_last_winner_name);
         LastWinnerAddress = (TextView) findViewById(R.id.tv_last_winner_address);
         LastWinnerLoading = (ProgressBar) findViewById(R.id.pb_progress_winner);
-        
-        changeStaticTextToBangla();
 
+        changeStaticTextToBangla();
+        registerGCM();                    // will un-comment it later
+
+
+    }
+
+
+    private void changeStaticTextToBangla() {
+        AllPolls = (Button) findViewById(R.id.b_all_polls);
+        MyPolls = (Button) findViewById(R.id.b_my_polls);
+        Feedback = (Button) findViewById(R.id.b_feedback);
+        AllPolls.setTypeface(tf);
+        MyPolls.setTypeface(tf);
+        Feedback.setTypeface(tf);
+
+        AllPolls.setText(tfUtil.convertUnicode2BijoyString("জরিপসমূহ"));
+        MyPolls.setText(tfUtil.convertUnicode2BijoyString("আমার জরিপ"));
+        Feedback.setText(tfUtil.convertUnicode2BijoyString("মতামত"));
+
+        Title = (TextView) findViewById(R.id.tv_title);
+        NewPollHeader = (TextView) findViewById(R.id.tv_latest_poll_heading);
+        LatestWinnerHeader = (TextView) findViewById(R.id.tv_last_winner_heading);
+        Title.setTypeface(tf);
+        NewPollHeader.setTypeface(tf);
+        LatestWinnerHeader.setTypeface(tf);
+
+        Title.setText(tfUtil.convertUnicode2BijoyString("জনপ্রিয়"));
+        NewPollHeader.setText(tfUtil.convertUnicode2BijoyString("নতুন জরিপ"));
+        LatestWinnerHeader.setText(tfUtil.convertUnicode2BijoyString("সর্বশেষ বিজয়ী"));
+
+        WInnerTitle.setTypeface(tf);
+        WInnerTitle.setText(tfUtil.convertUnicode2BijoyString("বিজয়ী"));
+
+        LatestPollVoteNow.setTypeface(tf);
+        LatestPollVoteNow.setText(tfUtil.convertUnicode2BijoyString("ভোট দিন"));
+
+        LatestPollParticipation.setTypeface(tf);
+        //        LatestPollParticipation.setText(tfUtil.convertUnicode2BijoyString(""));
+
+    }
+
+
+    private void registerGCM(){
         if(Utility.hasInternet(HomeActivity.this)){
 
             // Make sure the device has the proper dependencies.
-            GCMRegistrar.checkDevice(this);
+            GCMRegistrar.checkDevice(this);                      
 
             // Make sure the manifest was properly set - comment out this line
             // while developing the app, then uncomment it when it's ready.
@@ -157,6 +199,7 @@ public class HomeActivity extends Activity {
                 // Device is already registered on GCM
                 if (GCMRegistrar.isRegisteredOnServer(HomeActivity.this)) {
                     // Skips registration.             
+                    Log.d(TAG, "Is already registered in server");
                     //                       Toast.makeText(getApplicationContext(), "Already registered with GCM", Toast.LENGTH_LONG).show();
                 } else {
                     // Try to register again, but not in the UI thread.
@@ -186,41 +229,6 @@ public class HomeActivity extends Activity {
                 }
             }
         }
-    }
-
-
-    private void changeStaticTextToBangla() {
-        AllPolls = (Button) findViewById(R.id.b_all_polls);
-        MyPolls = (Button) findViewById(R.id.b_my_polls);
-        Feedback = (Button) findViewById(R.id.b_feedback);
-        AllPolls.setTypeface(tf);
-        MyPolls.setTypeface(tf);
-        Feedback.setTypeface(tf);
-        
-        AllPolls.setText(tfUtil.convertUnicode2BijoyString("জরিপসমূহ"));
-        MyPolls.setText(tfUtil.convertUnicode2BijoyString("আমার জরিপ"));
-        Feedback.setText(tfUtil.convertUnicode2BijoyString("মতামত"));
-        
-        Title = (TextView) findViewById(R.id.tv_title);
-        NewPollHeader = (TextView) findViewById(R.id.tv_latest_poll_heading);
-        LatestWinnerHeader = (TextView) findViewById(R.id.tv_last_winner_heading);
-        Title.setTypeface(tf);
-        NewPollHeader.setTypeface(tf);
-        LatestWinnerHeader.setTypeface(tf);
-        
-        Title.setText(tfUtil.convertUnicode2BijoyString("জনপ্রিয়"));
-        NewPollHeader.setText(tfUtil.convertUnicode2BijoyString("নতুন জরিপ"));
-        LatestWinnerHeader.setText(tfUtil.convertUnicode2BijoyString("সর্বশেষ বিজয়ী"));
-        
-        WInnerTitle.setTypeface(tf);
-        WInnerTitle.setText(tfUtil.convertUnicode2BijoyString("বিজয়ী"));
-        
-        LatestPollVoteNow.setTypeface(tf);
-        LatestPollVoteNow.setText(tfUtil.convertUnicode2BijoyString("ভোট দিন"));
-        
-        LatestPollParticipation.setTypeface(tf);
-//        LatestPollParticipation.setText(tfUtil.convertUnicode2BijoyString(""));
-        
     }
 
 
@@ -281,7 +289,7 @@ public class HomeActivity extends Activity {
         startActivity(new Intent(HomeActivity.this, MyPollsActivity.class));
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
     }
-    
+
     public void onClickFeedback(View v){
         startActivity(new Intent(HomeActivity.this, FeedbackActivity.class));
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
@@ -537,38 +545,38 @@ public class HomeActivity extends Activity {
 
         final Session activeSession = Session.getActiveSession();
         activeSession.onActivityResult(HomeActivity.this, requestCode, resultCode, data);
-//        Log.d(TAG, "requestCode " + requestCode);
-//        Log.d(TAG, "resultCode " + resultCode);
-//
-//        if (data != null) {
-//            Log.d(TAG, "data " + data.getDataString());
-//        }
-//        Log.d(TAG, "activeSession " + activeSession.getAccessToken());
-//        Log.d(TAG, "activeSession " + activeSession.getState());
-//
+        //        Log.d(TAG, "requestCode " + requestCode);
+        //        Log.d(TAG, "resultCode " + resultCode);
+        //
+        //        if (data != null) {
+        //            Log.d(TAG, "data " + data.getDataString());
+        //        }
+        //        Log.d(TAG, "activeSession " + activeSession.getAccessToken());
+        //        Log.d(TAG, "activeSession " + activeSession.getState());
+        //
         Log.d(TAG, "IN onActivityResult");
-//        publishStory();
+        //        publishStory();
         if(mCurrentSession.isOpened()){
             Log.d(TAG, "mCurrentSession opened");
-            
+
             pDialog.setMessage("Sharing the app in FB");
             pDialog.show();
-            
+
             Bundle postParams = new Bundle();
-//            postParams.putString("name", "জনপ্রিয়");
+            //            postParams.putString("name", "জনপ্রিয়");
             postParams.putString("name", "jonpPriyo");
             postParams.putString("caption", "Download & vote.");
             postParams.putString("description", "First polling app in BGD.");
             postParams.putString("link", "http://apps.priyo.com/jonopriyo/index.php");
-//            postParams.putString("picture", "https://raw.github.com/fbsamples/ios-3.x-howtos/master/Images/iossdk_logo.png");
+            //            postParams.putString("picture", "https://raw.github.com/fbsamples/ios-3.x-howtos/master/Images/iossdk_logo.png");
 
             Request.Callback callback= new Request.Callback() {
                 public void onCompleted(Response response) {                    
                     String postId = null;
-                    
+
                     if(pDialog.isShowing())
                         pDialog.dismiss();
-                    
+
                     if(response != null){
                         Log.d(TAG, "response not null");
                         GraphObject graphObject = response.getGraphObject();
@@ -605,7 +613,7 @@ public class HomeActivity extends Activity {
 
     private void publishStory() {
 
-        
+
 
         final SessionTracker mSessionTracker = new SessionTracker(HomeActivity.this, new StatusCallback() {
             @Override
@@ -632,28 +640,28 @@ public class HomeActivity extends Activity {
 
             if (openRequest != null) {
                 Log.d(">>>>>>>>", "openRequest not null");
-                                openRequest.setDefaultAudience(SessionDefaultAudience.FRIENDS);
+                openRequest.setDefaultAudience(SessionDefaultAudience.FRIENDS);
                 openRequest.setPermissions(Arrays.asList("publish_actions"));
-                                openRequest.setLoginBehavior(SessionLoginBehavior.SSO_WITH_FALLBACK);
+                openRequest.setLoginBehavior(SessionLoginBehavior.SSO_WITH_FALLBACK);
 
 
                 mCurrentSession.openForPublish(openRequest);
             }
         }
         //        Session session = Session.getActiveSession();
-//        else{
+        //        else{
         if (mCurrentSession != null){
             Log.d(TAG, "trying to restablish permission");
             // Check for publish permissions    
-//                        List<String> permissions = mCurrentSession.getPermissions();
-//                        if (!Utility.isSubsetOf(PERMISSIONS, permissions)) {
-//                            pendingPublishReauthorization = true;
-//                            Session.NewPermissionsRequest newPermissionsRequest = new Session
-//                                    .NewPermissionsRequest(this, PERMISSIONS);
-//                            mCurrentSession.requestNewPublishPermissions(newPermissionsRequest);
-//                            return;
-//                        }
-            
+            //                        List<String> permissions = mCurrentSession.getPermissions();
+            //                        if (!Utility.isSubsetOf(PERMISSIONS, permissions)) {
+            //                            pendingPublishReauthorization = true;
+            //                            Session.NewPermissionsRequest newPermissionsRequest = new Session
+            //                                    .NewPermissionsRequest(this, PERMISSIONS);
+            //                            mCurrentSession.requestNewPublishPermissions(newPermissionsRequest);
+            //                            return;
+            //                        }
+
             pDialog.setMessage("Sharing the app in FB");
             pDialog.show();
 
@@ -662,14 +670,14 @@ public class HomeActivity extends Activity {
             postParams.putString("caption", "Download & vote.");
             postParams.putString("description", "First polling app in BGD.");
             postParams.putString("link", "http://apps.priyo.com/jonopriyo/index.php");
-//            postParams.putString("picture", "https://raw.github.com/fbsamples/ios-3.x-howtos/master/Images/iossdk_logo.png");
+            //            postParams.putString("picture", "https://raw.github.com/fbsamples/ios-3.x-howtos/master/Images/iossdk_logo.png");
 
             Request.Callback callback= new Request.Callback() {
                 public void onCompleted(Response response) {
                     String postId = null;
                     if(pDialog.isShowing())
                         pDialog.dismiss();
-                    
+
                     if(response != null){
                         Log.d(TAG, "response not null");
                         GraphObject graphObject = response.getGraphObject();

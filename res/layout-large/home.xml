@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white" >
+
+    <RelativeLayout
+        android:id="@+id/rl_title"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_alignParentTop="true"
+        android:background="@color/red" >
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="jonoPriyo"
+            android:textColor="@color/white"
+            android:textSize="32dp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/b_menu"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:background="@drawable/ab_about_us"
+            android:onClick="onClickAboutUs" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:id="@+id/sv_body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl_title" >
+
+        <RelativeLayout
+            android:id="@+id/rl_body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/tv_latest_poll_heading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="7dp"
+                android:layout_marginTop="25dp"
+                android:text="Newest Poll"
+                android:textColor="@color/black"
+                android:textSize="28dp"
+                android:textStyle="bold" />
+
+            <RelativeLayout
+                android:id="@+id/rl_latest_poll"
+                android:layout_width="380dp"
+                android:layout_height="250dp"
+                android:layout_below="@+id/tv_latest_poll_heading"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/background_latest_poll" >
+
+                <ImageView
+                    android:id="@+id/iv_latest_poll_image"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/image_back"
+                    android:padding="5dp"
+                    android:scaleType="fitXY" />
+
+                <TextView
+                    android:id="@+id/tv_latest_poll_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignTop="@+id/iv_latest_poll_image"
+                    android:layout_marginLeft="7dp"
+                    android:layout_toRightOf="@+id/iv_latest_poll_image"
+                    android:ellipsize="end"
+                    android:maxLines="3"
+                    android:text="Latest Poll"
+                    android:textColor="@color/black"
+                    android:textSize="25dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_latest_poll_participation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/iv_latest_poll_image"
+                    android:layout_below="@+id/iv_latest_poll_image"
+                    android:layout_marginTop="7dp"
+                    android:text="12000 people participated."
+                    android:textColor="@color/red"
+                    android:textSize="25dp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/b_vote_now"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_latest_poll_participation"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="7dp"
+                    android:onClick="onClickVoteNow"
+                    android:padding="20dp"
+                    android:text="Vote Now"
+                    android:textColor="@color/white"
+                    android:textSize="25dp"
+                    android:textStyle="bold" />
+
+                <ProgressBar
+                    android:id="@+id/pb_progress_poll"
+                    style="?android:attr/progressBarStyleLarge"
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    android:layout_centerInParent="true"
+                    android:visibility="visible" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/llSideButtons"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/rl_latest_poll"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@+id/rl_latest_poll"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_toRightOf="@+id/rl_latest_poll"
+                android:orientation="vertical"
+                android:weightSum="3" >
+
+                <Button
+                    android:id="@+id/b_winners"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_winner"
+                    android:onClick="onClickWinners"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/b_profile"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_profile"
+                    android:onClick="onClickProfile"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/b_share"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_share"
+                    android:onClick="onClickShare"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llButtons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rl_latest_poll"
+                android:layout_margin="12dp"
+                android:orientation="horizontal"
+                android:weightSum="3" >
+
+                <!--
+             <Button
+            android:id="@+id/b_new_polls"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_weight="1"
+            android:onClick="onClickNewPolls"
+            android:text="New Polls"
+            android:textColor="@color/white"
+            android:textSize="17dp"
+            android:textStyle="bold" />
+
+
+
+                -->
+
+                <Button
+                    android:id="@+id/b_all_polls"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_weight="1"
+                    android:onClick="onClickAllPolls"
+                    android:text="All Polls"
+                    android:textColor="@color/white"
+                    android:textSize="25dp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/b_my_polls"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_weight="1"
+                    android:onClick="onClickMyPolls"
+                    android:text="My Polls"
+                    android:textColor="@color/white"
+                    android:textSize="25dp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/b_feedback"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_weight="1"
+                    android:onClick="onClickFeedback"
+                    android:text="Feedback"
+                    android:textColor="@color/white"
+                    android:textSize="25dp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_last_winner_heading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/llButtons"
+                android:layout_marginLeft="7dp"
+                android:text="Last Poll&apos;s Winner"
+                android:textColor="@color/black"
+                android:textSize="28dp"
+                android:textStyle="bold" />
+
+            <RelativeLayout
+                android:id="@+id/rl_last_winner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_below="@+id/tv_last_winner_heading"
+                android:layout_marginBottom="7dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/background_latest_poll" >
+
+                <TextView
+                    android:id="@+id/tv_last_poll_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:text="Last Poll"
+                    android:textColor="@color/black"
+                    android:textSize="25dp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/iv_last_winner_pic"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:layout_alignLeft="@+id/tv_last_poll_title"
+                    android:layout_below="@+id/tv_last_poll_title"
+                    android:layout_marginTop="7dp"
+                    android:background="@drawable/image_back"
+                    android:padding="5dp"
+                    android:scaleType="fitXY" />
+
+                <TextView
+                    android:id="@+id/tv_last_winner_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/iv_last_winner_pic"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_toRightOf="@+id/iv_last_winner_pic"
+                    android:text="@string/title_winner"
+                    android:textColor="@color/red"
+                    android:textSize="25dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_last_winner_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/tv_last_winner_title"
+                    android:layout_below="@+id/tv_last_winner_title"
+                    android:text="Winner name"
+                    android:textColor="@color/black"
+                    android:textSize="22dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_last_winner_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/tv_last_winner_title"
+                    android:layout_below="@+id/tv_last_winner_name"
+                    android:text="Winner address"
+                    android:textColor="@color/black"
+                    android:textSize="20dp" />
+
+                <ProgressBar
+                    android:id="@+id/pb_progress_winner"
+                    style="?android:attr/progressBarStyleLarge"
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    android:layout_centerInParent="true"
+                    android:visibility="visible" />
+            </RelativeLayout>
+
+            <Spinner
+                android:id="@+id/s_menu"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_alignBottom="@+id/rl_title"
+                android:layout_alignParentRight="true" />
+        </RelativeLayout>
+    </ScrollView>
+
+    <RelativeLayout
+        android:id="@+id/rl_profile_pic"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="7dp"
+        android:layout_marginTop="7dp" >
+
+        <ImageView
+            android:id="@+id/iv_profile_pic"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/image_back"
+            android:onClick="onClickProfilePic"
+            android:padding="7dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/profile_default" />
+
+        <ProgressBar
+            android:id="@+id/pb_progress_pp"
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+</RelativeLayout>
