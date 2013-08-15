@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.priyo.apps.jonopriyo.AllPollsActivity;
+import com.priyo.apps.jonopriyo.MyPollsActivity;
 import com.priyo.apps.jonopriyo.NewPollDetailsActivity;
 import com.priyo.apps.jonopriyo.NewPollsActivity;
 import com.priyo.apps.jonopriyo.R;
@@ -48,7 +50,7 @@ public class PollListAdapter extends ArrayAdapter<Poll> {
         TextView Category;
         TextView ReleaseDate;
         TextView PrizeValue;
-        TextView VoteCasted;
+//        TextView VoteCasted;
         Button VoteNow;
     }
     
@@ -69,14 +71,14 @@ public class PollListAdapter extends ArrayAdapter<Poll> {
             holder.Category = (TextView) convertView.findViewById(R.id.tv_category);
             holder.ReleaseDate = (TextView) convertView.findViewById(R.id.tv_release_date);
             holder.PrizeValue = (TextView) convertView.findViewById(R.id.tv_prize);
-            holder.VoteCasted = (TextView) convertView.findViewById(R.id.tv_voted);            
+//            holder.VoteCasted = (TextView) convertView.findViewById(R.id.tv_voted);            
             holder.VoteNow = (Button) convertView.findViewById(R.id.b_vote_now);
             
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        
+                
         holder.VoteNow.setOnClickListener(new OnClickListener() {
             
             @Override
@@ -91,10 +93,19 @@ public class PollListAdapter extends ArrayAdapter<Poll> {
             }
         });
         
+                       
+        final Poll item = getItem(position);
         
-        
-        
-        Poll item = getItem(position);
+        holder.Category.setOnClickListener(new OnClickListener() {
+            
+            @Override
+            public void onClick(View v) {
+                if(listType == Constants.PARENT_ACTIVITY_ALL_POLLS)
+                    ((AllPollsActivity) mContext).showCategoryWisePollList(item.getCategory());
+                else            // PARENT_ACTIVITY_MY_POLLS
+                    ((MyPollsActivity) mContext).showCategoryWisePollList(item.getCategory());
+            }
+        });
         
         String imageUrl = item.getImageUrl();
         imageLoader.DisplayImage(imageUrl, holder.PollImage);
@@ -109,16 +120,16 @@ public class PollListAdapter extends ArrayAdapter<Poll> {
         
         if(listType == Constants.PARENT_ACTIVITY_MY_POLLS){
             // if my-poll list, we wont show "VOted" message & "Vote now" button
-            holder.VoteCasted.setVisibility(View.GONE);
+//            holder.VoteCasted.setVisibility(View.GONE);
             holder.VoteNow.setVisibility(View.GONE);
         }
         else{
         if(item.getIsCastByMe()){
-            holder.VoteCasted.setVisibility(View.VISIBLE);
+//            holder.VoteCasted.setVisibility(View.VISIBLE);
             holder.VoteNow.setVisibility(View.GONE);
         }
         else{
-            holder.VoteCasted.setVisibility(View.GONE);
+//            holder.VoteCasted.setVisibility(View.GONE);
             if(item.getIsNew())
                 holder.VoteNow.setVisibility(View.VISIBLE);
             else

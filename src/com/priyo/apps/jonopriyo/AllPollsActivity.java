@@ -1,10 +1,12 @@
 package com.priyo.apps.jonopriyo;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.LoaderManager;
@@ -24,6 +26,7 @@ import com.priyo.apps.jonopriyo.adapter.NothingSelectedSpinnerAdapter;
 import com.priyo.apps.jonopriyo.adapter.PollListAdapter;
 import com.priyo.apps.jonopriyo.loader.PollListLoader;
 import com.priyo.apps.jonopriyo.model.Poll;
+import com.priyo.apps.jonopriyo.model.Winner;
 import com.priyo.apps.jonopriyo.utility.Constants;
 import com.priyo.apps.jonopriyo.utility.JonopriyoApplication;
 import com.priyo.apps.jonopriyo.utility.PollCategoryComparator;
@@ -49,13 +52,19 @@ public class AllPollsActivity extends FragmentActivity implements LoaderManager.
     final String[] sortParams = {"sort by Poll Number", "sort by Category", "sort by Release Date", "sort by prize value"};
     Spinner sSort;
     
+    Typeface tf;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.poll_list);
         
+        tf = Typeface.createFromAsset(getAssets(), "font/suttony.ttf");
+        
         Title = (TextView) findViewById(R.id.tv_title);
-        Title.setText("All Polls");
+        Title.setTypeface(tf);
+        Title.setText(getResources().getString(R.string.all_polls));
+
         
         pollList = null;
         
@@ -136,6 +145,24 @@ public class AllPollsActivity extends FragmentActivity implements LoaderManager.
     
     public void onClickSort(View v){
         sSort.performClick();
+    }
+    
+    public void onClickBack(View v){
+        v.setVisibility(View.GONE);
+        Collections.sort(pollList, new PollReleaseDateComparator());
+        mPollListAdapter.setData(pollList);
+    }
+    
+    public void showCategoryWisePollList(String category){
+        List<Poll> categoryPollList = new ArrayList<Poll>();
+        int numOfPolls = pollList.size();
+        for(int pollIndex = 0; pollIndex < numOfPolls; pollIndex++){
+            if(pollList.get(pollIndex).getCategory().equals(category))
+                categoryPollList.add(pollList.get(pollIndex));
+        }     
+        mPollListAdapter.setData(categoryPollList);
+        
+        findViewById(R.id.b_back).setVisibility(View.VISIBLE);
     }
     
     @Override

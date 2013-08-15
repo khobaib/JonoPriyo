@@ -68,7 +68,7 @@ public class HomeActivity extends Activity {
     Session mCurrentSession;
 
     Typeface tf;
-    BijoyFontUtil tfUtil;
+//    BijoyFontUtil tfUtil;
 
     private static final List<String> PERMISSIONS = Arrays.asList("publish_actions");
     private static final String PENDING_PUBLISH_KEY = "pendingPublishReauthorization";
@@ -108,7 +108,7 @@ public class HomeActivity extends Activity {
         pDialog = new ProgressDialog(HomeActivity.this);
 
         tf = Typeface.createFromAsset(getAssets(), "font/suttony.ttf");
-        tfUtil = new BijoyFontUtil();
+//        tfUtil = new BijoyFontUtil();
 
         Log.d(">>>>????????", "first time logged in? =" + appInstance.isFirstTimeLoggedIn());
 
@@ -133,7 +133,7 @@ public class HomeActivity extends Activity {
         LastWinnerLoading = (ProgressBar) findViewById(R.id.pb_progress_winner);
 
         changeStaticTextToBangla();
-        registerGCM();                    // will un-comment it later
+        registerGCM();                   
 
 
     }
@@ -147,9 +147,9 @@ public class HomeActivity extends Activity {
         MyPolls.setTypeface(tf);
         Feedback.setTypeface(tf);
 
-        AllPolls.setText(tfUtil.convertUnicode2BijoyString("জরিপসমূহ"));
-        MyPolls.setText(tfUtil.convertUnicode2BijoyString("আমার জরিপ"));
-        Feedback.setText(tfUtil.convertUnicode2BijoyString("মতামত"));
+        AllPolls.setText(getResources().getString(R.string.all_polls));
+        MyPolls.setText(getResources().getString(R.string.my_polls));
+        Feedback.setText(getResources().getString(R.string.feedback));
 
         Title = (TextView) findViewById(R.id.tv_title);
         NewPollHeader = (TextView) findViewById(R.id.tv_latest_poll_heading);
@@ -158,15 +158,15 @@ public class HomeActivity extends Activity {
         NewPollHeader.setTypeface(tf);
         LatestWinnerHeader.setTypeface(tf);
 
-        Title.setText(tfUtil.convertUnicode2BijoyString("জনপ্রিয়"));
-        NewPollHeader.setText(tfUtil.convertUnicode2BijoyString("নতুন জরিপ"));
-        LatestWinnerHeader.setText(tfUtil.convertUnicode2BijoyString("সর্বশেষ বিজয়ী"));
+        Title.setText(getResources().getString(R.string.jonopriyo));
+        NewPollHeader.setText(getResources().getString(R.string.new_poll));
+        LatestWinnerHeader.setText(getResources().getString(R.string.last_winner));
 
         WInnerTitle.setTypeface(tf);
-        WInnerTitle.setText(tfUtil.convertUnicode2BijoyString("বিজয়ী"));
+        WInnerTitle.setText(getResources().getString(R.string.winner));
 
         LatestPollVoteNow.setTypeface(tf);
-        LatestPollVoteNow.setText(tfUtil.convertUnicode2BijoyString("ভোট দিন"));
+        LatestPollVoteNow.setText(getResources().getString(R.string.cast_vote));
 
         LatestPollParticipation.setTypeface(tf);
         //        LatestPollParticipation.setText(tfUtil.convertUnicode2BijoyString(""));
@@ -489,15 +489,7 @@ public class HomeActivity extends Activity {
             String newMessage = intent.getExtras().getString(Constants.EXTRA_MESSAGE);
             // Waking up mobile if it is sleeping
             WakeLocker.acquire(getApplicationContext());
-
-            /**
-             * Take appropriate action on this message
-             * depending upon your app requirement
-             * For now i am just displaying it on the screen
-             * */
-
-            // Showing received message
-            //            lblMessage.append(newMessage + "\n");          
+      
             Toast.makeText(getApplicationContext(), "New Message: " + newMessage, Toast.LENGTH_LONG).show();
 
             // Releasing wake lock
@@ -612,8 +604,6 @@ public class HomeActivity extends Activity {
     }
 
     private void publishStory() {
-
-
 
         final SessionTracker mSessionTracker = new SessionTracker(HomeActivity.this, new StatusCallback() {
             @Override

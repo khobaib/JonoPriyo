@@ -1,5 +1,6 @@
 package com.priyo.apps.jonopriyo;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -122,6 +123,24 @@ public class MyPollsActivity  extends FragmentActivity implements LoaderManager.
     
     public void onClickSort(View v){
         sSort.performClick();
+    }
+    
+    public void onClickBack(View v){
+        v.setVisibility(View.GONE);
+        Collections.sort(pollList, new PollReleaseDateComparator());
+        mPollListAdapter.setData(pollList);
+    }
+    
+    public void showCategoryWisePollList(String category){
+        List<Poll> categoryPollList = new ArrayList<Poll>();
+        int numOfPolls = pollList.size();
+        for(int pollIndex = 0; pollIndex < numOfPolls; pollIndex++){
+            if(pollList.get(pollIndex).getCategory().equals(category))
+                categoryPollList.add(pollList.get(pollIndex));
+        }     
+        mPollListAdapter.setData(categoryPollList);
+        
+        findViewById(R.id.b_back).setVisibility(View.VISIBLE);
     }
     
     @Override

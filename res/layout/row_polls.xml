@@ -70,6 +70,7 @@
         android:text="Sports"
         android:textColor="@color/black"
         android:textSize="13dp"
+        android:clickable="true"
         android:textStyle="bold" />
 
     <TextView
@@ -153,7 +154,7 @@
         android:textSize="14dp"
         android:textStyle="bold" />
 
-    <TextView
+<!--     <TextView
         android:id="@+id/tv_voted"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -162,6 +163,6 @@
         android:text="Voted"
         android:textColor="@color/cast_poll_back"
         android:textSize="50dp"
-        android:textStyle="bold" />
+        android:textStyle="bold" /> -->
 
 </RelativeLayout>

@@ -232,7 +232,7 @@
             <RelativeLayout
                 android:id="@+id/rl_last_winner"
                 android:layout_width="match_parent"
-                android:layout_height="110dp"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_last_winner_heading"
                 android:layout_marginBottom="3dp"
                 android:layout_marginLeft="2dp"

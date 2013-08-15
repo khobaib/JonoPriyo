@@ -8,15 +8,14 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,7 +26,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.priyo.apps.jonopriyo.model.Country;
 import com.priyo.apps.jonopriyo.model.ServerResponse;
 import com.priyo.apps.jonopriyo.parser.JsonParser;
 import com.priyo.apps.jonopriyo.utility.Constants;
@@ -48,6 +46,8 @@ public class LoginActivity extends Activity {
 
     String email, password;
     String uid;
+    
+    Typeface tf;
 
 
     @Override
@@ -66,6 +66,30 @@ public class LoginActivity extends Activity {
         //            password = appInstance.getPassword();
         //            new LoadCredentials().execute();
         //        }
+        
+        tf = Typeface.createFromAsset(getAssets(), "font/suttony.ttf");
+        
+        TextView AppName = (TextView) findViewById(R.id.tv_app_name);
+        AppName.setTypeface(tf);
+        AppName.setText(getResources().getString(R.string.jonopriyo));
+        
+        TextView ForgetPass = (TextView) findViewById(R.id.tv_forget_pass);
+        ForgetPass.setTypeface(tf);
+        ForgetPass.setText(getResources().getString(R.string.forget_password2));
+      
+        TextView NewUser = (TextView) findViewById(R.id.tv_no_acc);
+        NewUser.setTypeface(tf);
+        NewUser.setText(getResources().getString(R.string.new_user));
+        
+        Button Login = (Button) findViewById(R.id.b_login);
+        Login.setTypeface(tf);
+        Login.setText(getResources().getString(R.string.login));
+        
+        Button Register = (Button) findViewById(R.id.b_register);
+        Register.setTypeface(tf);
+        Register.setText(getResources().getString(R.string.register));
+        
+
 
 
 
@@ -73,6 +97,9 @@ public class LoginActivity extends Activity {
         Password = (EditText) findViewById(R.id.et_password);	
 
         ForgetPassword = (TextView) findViewById(R.id.tv_click_here);
+        ForgetPassword.setTypeface(tf);
+        ForgetPassword.setText(getResources().getString(R.string.click_here));
+        ForgetPassword.setPaintFlags(ForgetPassword.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         ForgetPassword.setOnClickListener(new OnClickListener() {
 
             @Override
@@ -83,6 +110,8 @@ public class LoginActivity extends Activity {
         });
 
         RememberMe = (CheckBox) findViewById(R.id.cb_remember_me);
+        RememberMe.setTypeface(tf);
+        RememberMe.setText(getResources().getString(R.string.remember_me));
         RememberMe.setOnClickListener(new OnClickListener() {
 
             @Override

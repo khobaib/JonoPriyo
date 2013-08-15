@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_margin="30dp"
+        android:layout_margin="20dp"
         android:background="@drawable/background_login" >
 
         <TextView
@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:text="Profile Setup"
+            android:text="Others"
             android:textColor="@color/red"
             android:textSize="20dp"
             android:textStyle="bold" />
@@ -32,29 +32,16 @@
             android:background="@drawable/portfolio_cover_line" />
 
         <TextView
-            android:id="@+id/tv_heading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/view1"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
-            android:text="We need some info to setup your profile."
-            android:textColor="@color/white"
-            android:textSize="18dp"
-            android:textStyle="bold" />
-
-        <TextView
             android:id="@+id/tv_sex"
             android:layout_width="90dp"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/tv_heading"
-            android:layout_marginTop="20dp"
+            android:layout_below="@+id/view1"
+            android:layout_marginTop="35dp"
             android:gravity="right"
             android:text="Gender:"
-            android:textColor="@color/white"
-            android:textSize="16dp"
-            android:textStyle="bold" />
+            android:textColor="@color/red"
+            android:textSize="18dp" />
 
         <Spinner
             android:id="@+id/s_sex"
@@ -77,9 +64,8 @@
             android:layout_marginTop="25dp"
             android:gravity="right"
             android:text="DoB:"
-            android:textColor="@color/white"
-            android:textSize="16dp"
-            android:textStyle="bold" />
+            android:textColor="@color/red"
+            android:textSize="18dp" />
 
         <TextView
             android:id="@+id/tv_dob"
@@ -90,15 +76,15 @@
             android:layout_marginRight="5dp"
             android:layout_toLeftOf="@+id/b_calendar"
             android:background="@color/gray70_transparent_back"
-            android:padding="5dp"
+            android:padding="2dp"
             android:singleLine="true"
             android:textColor="@color/red"
             android:textSize="16dp" />
 
         <Button
             android:id="@+id/b_calendar"
-            android:layout_width="46dp"
-            android:layout_height="42dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_alignBottom="@+id/tv_dob_title"
             android:layout_alignParentRight="true"
             android:background="@drawable/button_calendar"
@@ -114,9 +100,8 @@
             android:layout_marginTop="25dp"
             android:gravity="right"
             android:text="Profession:"
-            android:textColor="@color/white"
-            android:textSize="16dp"
-            android:textStyle="bold" />
+            android:textColor="@color/red"
+            android:textSize="16dp" />
 
         <Spinner
             android:id="@+id/s_profession"
@@ -139,9 +124,8 @@
             android:layout_marginTop="25dp"
             android:gravity="right"
             android:text="Education"
-            android:textColor="@color/white"
-            android:textSize="16dp"
-            android:textStyle="bold" />
+            android:textColor="@color/red"
+            android:textSize="18dp" />
 
         <Spinner
             android:id="@+id/s_education"
@@ -157,24 +141,9 @@
         <View
             android:id="@+id/view2"
             android:layout_width="match_parent"
-            android:layout_height="2dp"
+            android:layout_height="0dp"
             android:layout_below="@+id/tv_education"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/portfolio_cover_line" />
-
-        <Button
-            android:id="@+id/b_update"
-            android:layout_width="110dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/view2"
-            android:layout_centerHorizontal="true"
-            android:layout_margin="10dp"
-            android:onClick="onClickUpdate"
-            android:padding="15dp"
-            android:text="Update"
-            android:textColor="@color/white"
-            android:textSize="20dp"
-            android:textStyle="bold" />
+            android:layout_marginTop="25dp" />
     </RelativeLayout>
 
 </RelativeLayout>

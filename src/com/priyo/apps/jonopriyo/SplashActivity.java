@@ -41,7 +41,7 @@ public class SplashActivity extends Activity {
         appInstance = (JonopriyoApplication) getApplication();
         jsonParser = new JsonParser();
         pDialog = new ProgressDialog(SplashActivity.this);
-        
+
         Boolean isFirstTime = appInstance.isFirstTime();
         if(isFirstTime){
             Utility.createDirectory();
@@ -81,10 +81,10 @@ public class SplashActivity extends Activity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-//            pDialog.setMessage("Signing in, Please wait...");
-//            pDialog.setIndeterminate(true);
-//            pDialog.setCancelable(true);
-//            pDialog.show();
+            //            pDialog.setMessage("Signing in, Please wait...");
+            //            pDialog.setIndeterminate(true);
+            //            pDialog.setCancelable(true);
+            //            pDialog.show();
         }
 
         @Override
@@ -131,9 +131,17 @@ public class SplashActivity extends Activity {
 
         @Override
         protected void onPostExecute(Boolean success) {
-//            pDialog.dismiss();
+            //            pDialog.dismiss();
+
+
             if(success){
-                startActivity(new Intent(SplashActivity.this, HomeActivity.class));
+                if(appInstance.isFirstTimeLoggedIn()){
+                    startActivity(new Intent(SplashActivity.this, LoginFirstTimeActivity.class));
+                }
+                else{
+                    startActivity(new Intent(SplashActivity.this, HomeActivity.class));
+                }
+                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
                 finish();
             }
             else{

@@ -22,6 +22,16 @@
             android:textStyle="bold" />
 
         <Button
+            android:id="@+id/b_back"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:background="@drawable/ab_back"
+            android:onClick="onClickBack"
+            android:visibility="gone" />
+
+        <Button
             android:id="@+id/b_sort"
             android:layout_width="50dp"
             android:layout_height="50dp"

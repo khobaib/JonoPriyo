@@ -11,6 +11,7 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -62,6 +63,8 @@ public class AllPollsDetailsActivity extends Activity{
     NewPollAnswerListAdapter pAnsListAdapter;
     
     List<PollResult> pollResultList;
+    
+    Typeface tf;
 
     
     @Override
@@ -75,6 +78,18 @@ public class AllPollsDetailsActivity extends Activity{
         thisPoll = appInstance.getSelectedPoll();
         thisWinner = null;
         
+        tf = Typeface.createFromAsset(getAssets(), "font/suttony.ttf");
+        
+        TextView Participation = (TextView) findViewById(R.id.tv_participation_count_title);
+        Participation.setTypeface(tf);
+        Participation.setText(getResources().getString(R.string.participation));
+        
+        TextView WinnerTitle = (TextView) findViewById(R.id.tv_winner_title);
+        WinnerTitle.setTypeface(tf);
+        WinnerTitle.setText(getResources().getString(R.string.winner));
+        
+        
+        
         imageLoader = new ImageLoader(AllPollsDetailsActivity.this);
         
         Title = (TextView) findViewById(R.id.tv_title);
@@ -84,23 +99,26 @@ public class AllPollsDetailsActivity extends Activity{
         ParticipationCount.setText("" + thisPoll.getParticipationCount());
         
         ResultOrVote = (Button) findViewById(R.id.b_result_or_vote);
+        ResultOrVote.setTypeface(tf);
+        
         PollCondition = (TextView) findViewById(R.id.tv_poll_condition);
+        PollCondition.setTypeface(tf);
         
         if(thisPoll.getIsNew()){
             if(!thisPoll.getIsCastByMe()){
-                PollCondition.setText("Poll is open -");
-                ResultOrVote.setText("Vote Now");
+                PollCondition.setText(getResources().getString(R.string.poll_open));
+                ResultOrVote.setText(getResources().getString(R.string.cast_vote));
                 flagResultOrVote = VOTE_NOW;
             }
             else{
-                PollCondition.setText("You already voted -");
-                ResultOrVote.setText("Check result"); 
+                PollCondition.setText(getResources().getString(R.string.already_voted));
+                ResultOrVote.setText(getResources().getString(R.string.check_result));
                 flagResultOrVote = CHECK_RESULT;
             }
         }
         else{
-            PollCondition.setText("Poll is closed - ");
-            ResultOrVote.setText("Check result");
+            PollCondition.setText(getResources().getString(R.string.poll_closed));
+            ResultOrVote.setText(getResources().getString(R.string.check_result));
             flagResultOrVote = CHECK_RESULT;
         }
 

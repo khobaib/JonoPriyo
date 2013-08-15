@@ -84,10 +84,10 @@
                     android:layout_marginLeft="3dp"
                     android:layout_toRightOf="@+id/iv_latest_poll_image"
                     android:ellipsize="end"
-                    android:maxLines="4"
+                    android:maxLines="3"
                     android:text="Latest Poll"
                     android:textColor="@color/black"
-                    android:textSize="20dp"
+                    android:textSize="18dp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -233,7 +233,7 @@
             <RelativeLayout
                 android:id="@+id/rl_last_winner"
                 android:layout_width="match_parent"
-                android:layout_height="110dp"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_last_winner_heading"
                 android:layout_marginBottom="3dp"
                 android:layout_marginLeft="2dp"

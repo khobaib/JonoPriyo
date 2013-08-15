@@ -7,7 +7,7 @@
     <RelativeLayout
         android:id="@+id/rl_title"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:layout_alignParentTop="true"
         android:background="@color/red" >
 
@@ -28,85 +28,27 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/rl_title"
         android:layout_centerHorizontal="true"
-        android:layout_margin="10dp"
+        android:layout_margin="5dp"
+        android:maxLines="3"
+        android:ellipsize="end"
         android:text=""
         android:textColor="@color/red"
         android:textSize="20dp"
         android:textStyle="bold" />
 
-    <RelativeLayout
-        android:id="@+id/rl_winner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_poll_question"
-        android:visibility="visible" >
-
-        <ImageView
-            android:id="@+id/iv_winner_pic"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginLeft="30dp"
-            android:background="@drawable/image_back"
-            android:padding="5dp"
-            android:scaleType="fitXY" />
-
-        <TextView
-            android:id="@+id/tv_winner_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/iv_winner_pic"
-            android:layout_marginTop="8dp"
-            android:layout_toRightOf="@+id/iv_winner_pic"
-            android:text="@string/title_winner"
-            android:textColor="@color/red"
-            android:textSize="18dp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tv_winner_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/tv_winner_title"
-            android:layout_below="@+id/tv_winner_title"
-            android:text="Winner name"
-            android:textColor="@color/black"
-            android:textSize="15dp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tv_winner_address"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/tv_winner_title"
-            android:layout_below="@+id/tv_winner_name"
-            android:text="Winner address"
-            android:textColor="@color/black"
-            android:textSize="14dp" />
-    </RelativeLayout>
-
     <ListView
         android:id="@+id/lv_pollanswer_list"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:layout_below="@+id/rl_winner"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="5dp"
+        android:layout_height="180dp"
+        android:layout_below="@+id/tv_poll_question"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="1dp"
         android:background="@color/gray_snow2"
         android:cacheColorHint="@android:color/transparent"
         android:divider="@color/black"
         android:dividerHeight="1dp" >
     </ListView>
-
-    <!--
-         <View
-        android:layout_width="wrap_content"
-        android:layout_height="1dp"
-        android:layout_alignLeft="@+id/lv_pollanswer_list"
-        android:layout_alignRight="@+id/lv_pollanswer_list"
-        android:layout_above="@+id/lv_pollanswer_list"
-        android:background="@color/red" />
-    -->
 
     <TextView
         android:id="@+id/tv_participation_count"
@@ -114,10 +56,10 @@
         android:layout_height="wrap_content"
         android:layout_alignRight="@+id/lv_pollanswer_list"
         android:layout_below="@+id/lv_pollanswer_list"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="5dp"
         android:text="22000"
         android:textColor="@color/red"
-        android:textSize="18dp"
+        android:textSize="16dp"
         android:textStyle="bold" />
 
     <TextView
@@ -128,7 +70,30 @@
         android:layout_toLeftOf="@+id/tv_participation_count"
         android:text="Participation count: "
         android:textColor="@color/black"
-        android:textSize="18dp"
+        android:textSize="16dp"
+        android:textStyle="bold" />
+    
+        <TextView
+        android:id="@+id/tv_expiry_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/lv_pollanswer_list"
+        android:layout_below="@+id/tv_participation_count"
+        android:layout_marginTop="1dp"
+        android:text="2013-08-15"
+        android:textColor="@color/red"
+        android:textSize="16dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_expiry_date_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/tv_expiry_date"
+        android:layout_toLeftOf="@+id/tv_expiry_date"
+        android:text="Last date of vote: "
+        android:textColor="@color/black"
+        android:textSize="16dp"
         android:textStyle="bold" />
 
     <Button
@@ -136,13 +101,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignRight="@+id/lv_pollanswer_list"
-        android:layout_below="@+id/tv_participation_count"
-        android:layout_marginTop="10dp"
+        android:layout_below="@+id/tv_expiry_date"
+        android:layout_marginTop="5dp"
         android:onClick="onClickResultOrVote"
-        android:padding="10dp"
+        android:padding="8dp"
         android:text="Check Result"
         android:textColor="@color/white"
-        android:textSize="20dp"
+        android:textSize="18dp"
         android:textStyle="bold" />
 
     <TextView
@@ -150,11 +115,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/b_result_or_vote"
-        android:layout_marginBottom="5dp"
+        android:layout_marginBottom="3dp"
         android:layout_toLeftOf="@+id/b_result_or_vote"
         android:text="You already voted"
         android:textColor="@color/black"
-        android:textSize="17dp"
+        android:textSize="16dp"
         android:textStyle="bold" />
 
 </RelativeLayout>

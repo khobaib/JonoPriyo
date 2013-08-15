@@ -9,22 +9,22 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -55,6 +55,8 @@ public class LoginFirstTimeActivity extends FragmentActivity implements OnDateSe
     TextView DoB;
     String dobToStore;
     Spinner sProfession, sEducation, sSex;
+    
+    Typeface tf;
 
 
     @Override
@@ -66,6 +68,21 @@ public class LoginFirstTimeActivity extends FragmentActivity implements OnDateSe
         jsonParser = new JsonParser();
         pDialog = new ProgressDialog(LoginFirstTimeActivity.this);
         calendar = Calendar.getInstance();
+        
+        tf = Typeface.createFromAsset(getAssets(), "font/suttony.ttf");
+        
+        TextView Title = (TextView) findViewById(R.id.tv_title);
+        Title.setTypeface(tf);
+        Title.setText(getResources().getString(R.string.profile_setup));
+        
+        TextView TitleDesc = (TextView) findViewById(R.id.tv_heading);
+        TitleDesc.setTypeface(tf);
+        TitleDesc.setText(getResources().getString(R.string.profile_setup_desc));
+        
+        Button bUpdate = (Button) findViewById(R.id.b_update);
+        bUpdate.setTypeface(tf);
+        bUpdate.setText(getResources().getString(R.string.update));
+        
 
         sProfession = (Spinner) findViewById(R.id.s_profession);
         sProfession.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -162,7 +179,7 @@ public class LoginFirstTimeActivity extends FragmentActivity implements OnDateSe
     }
 
 
-    public void onClickGo(View v){
+    public void onClickUpdate(View v){
         new FirstTimeLoginRequest().execute();
     }
 

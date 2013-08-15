@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">JonoPriyo</string>
+    <string name="app_name">jonoPriyo</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
-    <string name="forget_password"><u>Click here</u></string>
+    <!-- <string name="forget_password"><u>Click here</u></string> -->
     <string name="title_idea">Idea &amp; Concept-</string>
     <string name="title_dev">Design &amp; Development-</string>
     <string name="title_backend">API &amp; Backend-</string>
@@ -25,7 +25,31 @@
     <string name="options_register">Register</string>
     <string name="options_unregister">Unregister</string>
     <string name="title_winner">Winner-</string>
-<!--     <string name="facebookApiKey">281433105331755</string> -->
-        <string name="facebookApiKey">504293992948881</string>
+    <!-- <string name="facebookApiKey">281433105331755</string> -->
+    <string name="facebookApiKey">504293992948881</string>
+    <string name="all_polls">mKj Rwic</string>
+    <string name="my_polls">Avgvi Rwic</string>
+    <string name="new_poll">bZyb Rwic</string>
+    <string name="feedback">gZvgZ</string>
+    <string name="jonopriyo"><b>RbwcÖq</b></string>
+    <string name="last_winner">me©‡kl weRqx</string>
+    <string name="winner">weRqx</string>
+    <string name="cast_vote">†fvU w`b</string>
+    <string name="profile_setup">†cÖvdvBj †mUAvc</string>
+    <string name="profile_setup_desc">`qv K‡i Avcbvi †cÖvdvBjwU Avc‡WU Kiæb</string>
+    <string name="update">Avc‡WU</string>
+    <string name="email">B-†gBj</string>
+    <string name="password">cvmIqvW©</string>
+    <string name="remember_me">Avgv‡K g‡b ivL‡eb</string>
+    <string name="login">jM-Bb</string>
+    <string name="forget_password2">cvmIqvW© fz‡j wM‡q‡Qb?</string>
+    <string name="click_here"><u>GLv‡b wK¬K Kiæb</u></string>
+    <string name="new_user">bZzb e¨enviKvix?</string>
+    <string name="register">wbeÜb</string>
+    <string name="participation">Rb †fvU w`‡q‡Qb</string>
+    <string name="poll_open">RwicwU D¤§y³</string>
+    <string name="poll_closed">RwicwU †kl n‡q‡Q</string>
+    <string name="already_voted">Avcwb B‡Zvg‡a¨ ‡fvU w`‡q‡Qb</string>
+    <string name="check_result">djvdj †`Lyb</string>
 
 </resources>

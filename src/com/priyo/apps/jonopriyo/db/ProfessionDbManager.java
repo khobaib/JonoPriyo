@@ -84,6 +84,7 @@ public class ProfessionDbManager {
         if ((c != null) && (c.getCount() > 0)) {
             itemExist = true;
         }
+        c.close();
         return itemExist;
     }
     
