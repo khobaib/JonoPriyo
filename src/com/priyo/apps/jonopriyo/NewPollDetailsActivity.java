@@ -14,6 +14,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -55,6 +56,8 @@ public class NewPollDetailsActivity extends Activity {
     List<PollAnswer> pollAnswerList;
     ListView PollAnswerList;
     NewPollAnswerListAdapter pAnsListAdapter;
+    
+    Typeface tf;
 
     //    List<Integer> rbIdList;
 
@@ -63,11 +66,18 @@ public class NewPollDetailsActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_poll_details);    
 
+        tf = Typeface.createFromAsset(getAssets(), "font/suttony.ttf");
         jsonParser = new JsonParser();
         pDialog = new ProgressDialog(NewPollDetailsActivity.this);
 
         appInstance = (JonopriyoApplication) getApplication();
         thisPoll = appInstance.getSelectedPoll();
+        
+        getBanglaText();        
+        
+        TextView Participation = (TextView) findViewById(R.id.tv_participation_count_title);
+        Participation.setTypeface(tf);
+        Participation.setText(getResources().getString(R.string.participation));
 
         Title = (TextView) findViewById(R.id.tv_title);
         Title.setText("Poll #" + thisPoll.getNumber());
@@ -79,16 +89,23 @@ public class NewPollDetailsActivity extends Activity {
         ExpiryDate.setText(Utility.parseDate(thisPoll.getExpiryDate()));
 
         ResultOrVote = (Button) findViewById(R.id.b_result_or_vote);
+        ResultOrVote.setTypeface(tf);
+        
         PollCondition = (TextView) findViewById(R.id.tv_poll_condition);
+        PollCondition.setTypeface(tf);
 
         if(!thisPoll.getIsCastByMe()){
-            PollCondition.setText("Poll is open -");
-            ResultOrVote.setText("Submit your vote");
+            PollCondition.setText(getResources().getString(R.string.poll_open));
+            ResultOrVote.setText(getResources().getString(R.string.cast_vote));
+//            PollCondition.setText("Poll is open -");
+//            ResultOrVote.setText("Submit your vote");
             flagResultOrVote = VOTE_NOW;
         }
         else{
-            PollCondition.setText("You already voted -");
-            ResultOrVote.setText("Check result"); 
+            PollCondition.setText(getResources().getString(R.string.already_voted));
+            ResultOrVote.setText(getResources().getString(R.string.check_result));
+//            PollCondition.setText("You already voted -");
+//            ResultOrVote.setText("Check result"); 
             flagResultOrVote = CHECK_RESULT;
         }
 
@@ -109,6 +126,18 @@ public class NewPollDetailsActivity extends Activity {
     }
 
 
+    private void getBanglaText() {
+        TextView tvParticipation = (TextView) findViewById(R.id.tv_participation_count_title);
+        tvParticipation.setTypeface(tf);
+        tvParticipation.setText(getResources().getString(R.string.participation));
+        
+        TextView tvLastDate = (TextView) findViewById(R.id.tv_expiry_date_title);
+        tvLastDate.setTypeface(tf);
+        tvLastDate.setText(getResources().getString(R.string.last_vote_date));
+        
+    }
+
+
     public void onClickResultOrVote(View v){
         if(NewPollAnswerListAdapter.mSelectedPosition == -1){
             Toast.makeText(NewPollDetailsActivity.this, "Please choose an option first.", Toast.LENGTH_SHORT).show();
@@ -121,6 +150,7 @@ public class NewPollDetailsActivity extends Activity {
             }
             else{
                 startActivity(new Intent(NewPollDetailsActivity.this, PollResultActivity.class));
+                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
             }
 
         }

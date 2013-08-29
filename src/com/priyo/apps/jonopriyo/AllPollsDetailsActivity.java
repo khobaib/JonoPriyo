@@ -161,6 +161,7 @@ public class AllPollsDetailsActivity extends Activity{
     public void onClickResultOrVote(View v){
         if(flagResultOrVote == VOTE_NOW){
             startActivity(new Intent(AllPollsDetailsActivity.this, NewPollDetailsActivity.class));
+            finish();
         }
         else{
             startActivity(new Intent(AllPollsDetailsActivity.this, PollResultActivity.class));

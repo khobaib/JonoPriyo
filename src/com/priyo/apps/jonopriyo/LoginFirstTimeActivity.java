@@ -79,6 +79,22 @@ public class LoginFirstTimeActivity extends FragmentActivity implements OnDateSe
         TitleDesc.setTypeface(tf);
         TitleDesc.setText(getResources().getString(R.string.profile_setup_desc));
         
+        TextView tvGender = (TextView) findViewById(R.id.tv_sex);
+        tvGender.setTypeface(tf);
+        tvGender.setText(getResources().getString(R.string.gender));
+        
+        TextView tvDoB = (TextView) findViewById(R.id.tv_dob_title);
+        tvDoB.setTypeface(tf);
+        tvDoB.setText(getResources().getString(R.string.dob));
+        
+        TextView tvProfession = (TextView) findViewById(R.id.tv_profession);
+        tvProfession.setTypeface(tf);
+        tvProfession.setText(getResources().getString(R.string.profession));
+        
+        TextView tvEducation = (TextView) findViewById(R.id.tv_education);
+        tvEducation.setTypeface(tf);
+        tvEducation.setText(getResources().getString(R.string.education));
+        
         Button bUpdate = (Button) findViewById(R.id.b_update);
         bUpdate.setTypeface(tf);
         bUpdate.setText(getResources().getString(R.string.update));

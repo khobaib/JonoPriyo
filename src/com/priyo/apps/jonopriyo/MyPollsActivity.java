@@ -5,7 +5,9 @@ import java.util.Collections;
 import java.util.List;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.LoaderManager;
@@ -37,6 +39,7 @@ public class MyPollsActivity  extends FragmentActivity implements LoaderManager.
 
     private static final int LOADER_ID = 1;
     
+    ProgressDialog pDialog;
     JonopriyoApplication appInstance;
     String appToken;
     
@@ -47,6 +50,8 @@ public class MyPollsActivity  extends FragmentActivity implements LoaderManager.
     ListView PollList;
     TextView Title;
     
+    Typeface tf;
+    
     final String[] sortParams = {"sort by Poll Number", "sort by Category", "sort by Release Date", "sort by prize value"};
     Spinner sSort;
     
@@ -55,8 +60,14 @@ public class MyPollsActivity  extends FragmentActivity implements LoaderManager.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.poll_list);
         
+        pDialog = new ProgressDialog(MyPollsActivity.this);
+        pDialog.setMessage("Loading...");
+    
+        tf = Typeface.createFromAsset(getAssets(), "font/suttony.ttf");
+        
         Title = (TextView) findViewById(R.id.tv_title);
-        Title.setText("My Polls");
+        Title.setTypeface(tf);
+        Title.setText(getResources().getString(R.string.my_polls));
         
         appInstance = (JonopriyoApplication) getApplication();
         appToken = appInstance.getAccessToken();
@@ -148,7 +159,9 @@ public class MyPollsActivity  extends FragmentActivity implements LoaderManager.
         super.onResume();
         if (Utility.hasInternet(MyPollsActivity.this)) {
             Log.d(">>><<", "internet available!");
-            getSupportLoaderManager().initLoader(LOADER_ID, null, MyPollsActivity.this);
+            if(!pDialog.isShowing())
+                pDialog.show();
+            getSupportLoaderManager().restartLoader(LOADER_ID, null, MyPollsActivity.this);
 //            new GetOfferData().execute();
         } else {
             alert("Please check your internet connection.");
@@ -175,6 +188,8 @@ public class MyPollsActivity  extends FragmentActivity implements LoaderManager.
         this.pollList = pollList;
         Collections.sort(pollList, new PollReleaseDateComparator());
         mPollListAdapter.setData(pollList);
+        if(pDialog.isShowing())
+            pDialog.dismiss();  
         
     }
 

@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -39,6 +40,7 @@ public class AllPollsActivity extends FragmentActivity implements LoaderManager.
     
     private static final int LOADER_ID = 1;
     
+    ProgressDialog pDialog;
     JonopriyoApplication appInstance;
     String appToken;
     
@@ -60,6 +62,8 @@ public class AllPollsActivity extends FragmentActivity implements LoaderManager.
         setContentView(R.layout.poll_list);
         
         tf = Typeface.createFromAsset(getAssets(), "font/suttony.ttf");
+        pDialog = new ProgressDialog(AllPollsActivity.this);
+        pDialog.setMessage("Loading...");
         
         Title = (TextView) findViewById(R.id.tv_title);
         Title.setTypeface(tf);
@@ -136,7 +140,9 @@ public class AllPollsActivity extends FragmentActivity implements LoaderManager.
         super.onResume();
         if (Utility.hasInternet(AllPollsActivity.this)) {
             Log.d(">>><<", "internet available!");
-            getSupportLoaderManager().initLoader(LOADER_ID, null, AllPollsActivity.this);
+            if(!pDialog.isShowing())
+                pDialog.show();
+            getSupportLoaderManager().restartLoader(LOADER_ID, null, AllPollsActivity.this);
 //            new GetOfferData().execute();
         } else {
             alert("Please check your internet connection.");
@@ -193,7 +199,8 @@ public class AllPollsActivity extends FragmentActivity implements LoaderManager.
         this.pollList = pollList;
         Collections.sort(pollList, new PollReleaseDateComparator());
         mPollListAdapter.setData(pollList);
-        
+        if(pDialog.isShowing())
+            pDialog.dismiss();       
     }
 
     @Override

@@ -22,9 +22,11 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,7 +48,6 @@ import com.priyo.apps.jonopriyo.model.Poll;
 import com.priyo.apps.jonopriyo.model.ServerResponse;
 import com.priyo.apps.jonopriyo.model.Winner;
 import com.priyo.apps.jonopriyo.parser.JsonParser;
-import com.priyo.apps.jonopriyo.uni2bijoyconverer.BijoyFontUtil;
 import com.priyo.apps.jonopriyo.utility.Constants;
 import com.priyo.apps.jonopriyo.utility.JonopriyoApplication;
 import com.priyo.apps.jonopriyo.utility.Utility;
@@ -83,6 +84,7 @@ public class HomeActivity extends Activity {
     Button LatestPollVoteNow;
     ProgressBar LatestPollLoading;
 
+    RelativeLayout rlLastWinner;
     Winner lastWinner;
     ImageView LastWinnerPic;
     TextView LastWinnerName, LastWinnerAddress, LastWinnerPoll, WInnerTitle;
@@ -131,6 +133,16 @@ public class HomeActivity extends Activity {
         LastWinnerName = (TextView) findViewById(R.id.tv_last_winner_name);
         LastWinnerAddress = (TextView) findViewById(R.id.tv_last_winner_address);
         LastWinnerLoading = (ProgressBar) findViewById(R.id.pb_progress_winner);
+        
+        rlLastWinner = (RelativeLayout) findViewById(R.id.rl_last_winner);
+        rlLastWinner.setOnClickListener(new OnClickListener() {
+            
+            @Override
+            public void onClick(View v) {
+                new RetrievePollById().execute(lastWinner.getPollId());
+                
+            }
+        });
 
         changeStaticTextToBangla();
         registerGCM();                   
@@ -701,6 +713,56 @@ public class HomeActivity extends Activity {
             task.execute();
         }
 
+    }
+    
+    
+    private class RetrievePollById extends AsyncTask<Long, Void, Boolean> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pDialog.setMessage("Loading...");
+            pDialog.show();
+        }
+
+        @Override
+        protected Boolean doInBackground(Long... params) {
+            String rootUrl = Constants.URL_ROOT;
+
+            List<NameValuePair> urlParam = new ArrayList<NameValuePair>();
+            urlParam.add(new BasicNameValuePair("method", Constants.METHOD_GET_POLL_FROM_POLL_ID));
+            urlParam.add(new BasicNameValuePair("poll_id", "" + params[0]));
+            
+            String token = appInstance.getAccessToken();
+
+            ServerResponse response = jsonParser.retrieveServerData(Constants.REQUEST_TYPE_GET, rootUrl,
+                    urlParam, null, token);
+            if(response.getStatus() == 200){
+                JSONObject jsonResponse = response.getjObj();
+                try {
+                    JSONObject pollObj = jsonResponse.getJSONObject("poll_data");
+                    Poll winnersPoll = Poll.parsePoll(pollObj);
+                    appInstance.setSelectedPoll(winnersPoll);
+                    return true;
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            } 
+            return false;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            super.onPostExecute(result);
+            if(pDialog.isShowing())
+                pDialog.dismiss();
+            if(result){                
+                Intent i = new Intent(HomeActivity.this, AllPollsDetailsActivity.class);
+                startActivity(i);
+                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+            }
+        }
     }
 
 }

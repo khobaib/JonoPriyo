@@ -59,7 +59,7 @@
                 android:gravity="right"
                 android:text="Gender:"
                 android:textColor="@color/white"
-                android:textSize="16dp"
+                android:textSize="20dp"
                 android:textStyle="bold" />
 
             <Spinner
@@ -84,7 +84,7 @@
                 android:gravity="right"
                 android:text="DoB:"
                 android:textColor="@color/white"
-                android:textSize="16dp"
+                android:textSize="20dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -121,7 +121,7 @@
                 android:gravity="right"
                 android:text="Profession:"
                 android:textColor="@color/white"
-                android:textSize="16dp"
+                android:textSize="20dp"
                 android:textStyle="bold" />
 
             <Spinner
@@ -146,7 +146,7 @@
                 android:gravity="right"
                 android:text="Education"
                 android:textColor="@color/white"
-                android:textSize="16dp"
+                android:textSize="17dp"
                 android:textStyle="bold" />
 
             <Spinner

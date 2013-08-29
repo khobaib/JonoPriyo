@@ -56,7 +56,7 @@ import com.priyo.apps.jonopriyo.utility.Utility;
 public class ProfileNewActivity extends FragmentActivity implements OnDateSetListener  {
 
     private static final String TAG = ProfileNewActivity.class.getSimpleName();
-    public static final String[] CONTENT    = new String[] { "Basic", "Address", "Others" };
+    public static final String[] CONTENT    = new String[] { "প্রাথমিক", "ঠিকানা", "অন্যান্য" };
 
 //    EditText Name, Address, Phone;
 //    TextView DoB, Email;
@@ -103,147 +103,6 @@ public class ProfileNewActivity extends FragmentActivity implements OnDateSetLis
         
         new GetProfileData().execute();
 
-//        Name = (EditText) findViewById(R.id.et_name);
-//        Email = (TextView) findViewById(R.id.tv_email);
-//        Address = (EditText) findViewById(R.id.et_address);
-//        Phone = (EditText) findViewById(R.id.et_phone);
-
-//        DoB = (TextView) findViewById(R.id.tv_dob);
-
-
-        
-        
-//        sProfession = (Spinner) findViewById(R.id.s_profession);
-//        sProfession.setOnTouchListener(new View.OnTouchListener() {
-//
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                if(!sProfessionTouchable){
-//                    Log.d("/////", "profession list retrieving");
-//                    sProfessionTouchable = true;
-//                    new RetrieveProfessionList().execute();
-//                    return false;
-//                }
-//                else{
-//                    return true;
-//                }
-//            }
-//        });
-//
-//        sProfession.setOnItemSelectedListener(new OnItemSelectedListener() {
-//
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
-//                Log.d("/////", "profession selectable");
-//                professionId = professionList.get(position).getId();
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> arg0) {
-//
-//            }
-//        });
-
-//        sEducation = (Spinner) findViewById(R.id.s_education);
-//        sEducation.setOnTouchListener(new View.OnTouchListener() {
-//
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                if(!sEducationTouchable){
-//                    Log.d("/////", "education list retrieving");
-//                    sEducationTouchable = true;
-//                    new RetrieveEducationList().execute();
-//                    return false;
-//                }
-//                else{
-//                    return true;
-//                }
-//            }
-//        });
-//
-//        sEducation.setOnItemSelectedListener(new OnItemSelectedListener() {
-//
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
-//                educationId = educationList.get(position).getId();
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> arg0) {
-//
-//            }
-//        });
-
-//        sSex = (Spinner) findViewById(R.id.s_sex);
-//        generateSpinner(sSex, Utility.sex_array);
-//        sSex.setOnItemSelectedListener(new OnItemSelectedListener() {
-//
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
-//                sex = (String)parent.getItemAtPosition(position);
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> arg0) {
-//
-//            }
-//        });
-
-
-//        tvCountry = (AutoCompleteTextView) findViewById(R.id.et_country);
-//        tvCountry.setOnItemClickListener(new OnItemClickListener() {
-//
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
-//                String selection = (String)parent.getItemAtPosition(pos);
-//                selectedCountryId = (long) 0;
-//                for(Country country : countryList){
-//                    if(selection.equals(country.getName())){
-//                        selectedCountryId = country.getId();
-//                        break;
-//                    }
-//                }
-//                new RetrieveCityList().execute(selectedCountryId);
-//
-//            }
-//        });
-
-
-//        tvCity = (AutoCompleteTextView) findViewById(R.id.et_city);
-//        tvCity.setOnItemClickListener(new OnItemClickListener() {
-//
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
-//                String selection = (String)parent.getItemAtPosition(pos);
-//                selectedCityId = (long) 0;
-//                for(City city : cityList){
-//                    if(selection.equals(city.getName())){
-//                        selectedCityId = city.getId();
-//                        break;
-//                    }
-//                }
-//                new RetrieveAreaList().execute(selectedCityId);
-//
-//            }
-//        });
-
-//        tvArea = (AutoCompleteTextView) findViewById(R.id.et_area);
-//        tvArea.setOnItemClickListener(new OnItemClickListener() {
-//
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
-//                String selection = (String)parent.getItemAtPosition(pos);
-//                selectedAreaId = (long) 0;
-//                for(Area area : areaList){
-//                    if(selection.equals(area.getName())){
-//                        selectedAreaId = area.getId();
-//                        break;
-//                    }
-//                }
-//
-//            }
-//        });
-
 
         FixedTabsView mFixedTabs = (FixedTabsView) findViewById(R.id.fixed_tabs);
 
@@ -251,9 +110,6 @@ public class ProfileNewActivity extends FragmentActivity implements OnDateSetLis
 
         final ViewPager pager = (ViewPager) findViewById(R.id.pager);
         pager.setAdapter(adapter);
-
-        //        final TabPageIndicator indicator = (TabPageIndicator) findViewById(R.id.indicator);
-        //        indicator.setViewPager(pager);
 
         TabsAdapter mFixedTabsAdapter = new FixedTabsAdapter(this);
         mFixedTabs.setAdapter(mFixedTabsAdapter);
@@ -346,15 +202,6 @@ public class ProfileNewActivity extends FragmentActivity implements OnDateSetLis
             new PostProfileData().execute();
         }
     }
-    
-    
-//    private void generateSpinner(Spinner spinner, String[] arrayToSpinner) {
-//        ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(
-//                ProfileNewActivity.this, R.layout.my_simple_spinner_item, arrayToSpinner);
-//        spinner.setAdapter(myAdapter);
-//        myAdapter.setDropDownViewResource(R.layout.my_simple_spinner_dropdown_item);
-//
-//    }
 
 
     private void initializeFields(){
@@ -371,57 +218,15 @@ public class ProfileNewActivity extends FragmentActivity implements OnDateSetLis
         int day = Integer.parseInt(date.substring(8, 10));
         calendar.set(year, month, day);
         ProfileOthersFragment.dobToStore = String.format("%04d-%02d-%02d", year, (month + 1), day);
-//        ProfileOthersFragment.DoB.setText(Utility.parseDate(ProfileOthersFragment.dobToStore));
 
-//        generateSpinner(ProfileOthersFragment.sSex, Utility.sex_array);
-//        if(regInfo.getSex().equals("M")){
-//            ProfileOthersFragment.sSex.setSelection(0);
-//            sex = "male";
-//        }
-//        else{
-//            ProfileOthersFragment.sSex.setSelection(1);
-//            sex = "female";
-//        }
-
-//        selectedCountryId = regInfo.getCountryId();
         selectedCountryId = (long) 14;
         selectedCityId = regInfo.getCityId();
         selectedAreaId = regInfo.getAreaId();
         educationId = regInfo.getEducationId();
         professionId = regInfo.getProfessionId();
 
-
-//        new RetrieveCountryList().execute();
         new RetrieveCityList().execute(selectedCountryId);
         new RetrieveAreaList().execute(selectedCityId);
-
-//        List<String> educationTypeList = new ArrayList<String>();
-//        for(Education education : educationList)
-//            educationTypeList.add(education.getType());
-//
-//        String[] eArray = educationTypeList.toArray(new String[0]);
-//        generateSpinner(ProfileOthersFragment.sEducation, eArray);
-//
-//        for(int educationIndex = 0; educationIndex < educationList.size(); educationIndex++){
-//            if(educationId.equals(educationList.get(educationIndex).getId())){
-//                ProfileOthersFragment.sEducation.setSelection(educationIndex);
-//                break;
-//            }
-//        }
-//
-//        List<String> professionTypeList = new ArrayList<String>();
-//        for(Profession profession : professionList)
-//            professionTypeList.add(profession.getType());
-//
-//        String[] pArray = professionTypeList.toArray(new String[0]);
-//        generateSpinner(ProfileOthersFragment.sProfession, pArray);
-//
-//        for(int professionIndex = 0; professionIndex < professionList.size(); professionIndex++){
-//            if(professionId.equals(professionList.get(professionIndex).getId())){
-//                ProfileOthersFragment.sProfession.setSelection(professionIndex);
-//                break;
-//            }
-//        }
     }
 
 
@@ -613,58 +418,7 @@ public class ProfileNewActivity extends FragmentActivity implements OnDateSetLis
         }
 
     }   
-//    
-//    public class RetrieveCountryList extends AsyncTask<Void, Void, Boolean> {
-//
-//        @Override
-//        protected void onPreExecute() {
-//            super.onPreExecute();
-//            //            pDialog = new ProgressDialog(ProfileActivity.this);
-//            //            pDialog.setMessage("Retrieving data, please wait...");
-//            //            pDialog.show();
-//        }
-//
-//        @Override
-//        protected Boolean doInBackground(Void... params) {
-//            String rootUrl = Constants.URL_ROOT;
-//
-//            List<NameValuePair> urlParam = new ArrayList<NameValuePair>();
-//            urlParam.add(new BasicNameValuePair("method", Constants.METHOD_GET_COUNTRY));
-//
-//            ServerResponse response = jsonParser.retrieveServerData(Constants.REQUEST_TYPE_GET, rootUrl,
-//                    urlParam, null, null);
-//            if(response.getStatus() == 200){
-//                Log.d(">>>><<<<", "success in retrieving country list");
-//                countryList = Country.parseCountryList(response.getjObj().toString());
-//                return true;
-//            }
-//
-//            return false;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(Boolean result) {
-//            super.onPostExecute(result);
-//            if(result){
-//                List<String> countryNameList = new ArrayList<String>();
-//                for(Country country : countryList)
-//                    countryNameList.add(country.getName());
-//
-//                ArrayAdapter<String> countryAdapter = new ArrayAdapter<String>(ProfileNewActivity.this,
-//                        
-//                        R.layout.my_autocomplete_text_style, countryNameList);
-//                tvCountry.setAdapter(countryAdapter);
-//
-//                for(int countryIndex = 0; countryIndex < countryList.size(); countryIndex++){
-//
-//                    if(selectedCountryId.equals(countryList.get(countryIndex).getId())){
-//                        tvCountry.setText(countryList.get(countryIndex).getName());
-//                        break;
-//                    }
-//                }
-//            }
-//        }        
-//    }
+
     
     
     public class RetrieveCityList extends AsyncTask<Long, Void, Boolean> {
@@ -763,125 +517,6 @@ public class ProfileNewActivity extends FragmentActivity implements OnDateSetLis
             }
         }        
     }
-
-
-
-//    public class RetrieveProfessionList extends AsyncTask<Long, Void, Boolean> {
-//
-//        @Override
-//        protected void onPreExecute() {
-//            super.onPreExecute();
-//            pDialog.show();
-//        }
-//
-//        @Override
-//        protected Boolean doInBackground(Long... params) {
-//            String rootUrl = Constants.URL_ROOT;
-//
-//            List<NameValuePair> urlParam = new ArrayList<NameValuePair>();
-//            urlParam.add(new BasicNameValuePair("method", Constants.METHOD_GET_PROFESSION));
-//
-//            ServerResponse response = jsonParser.retrieveServerData(Constants.REQUEST_TYPE_GET, rootUrl,
-//                    urlParam, null, null);
-//            if(response.getStatus() == 200){
-//                Log.d(">>>><<<<", "success in retrieving area list");
-//                professionList = Profession.parseprofessionList(response.getjObj().toString());
-//                return true;
-//            }
-//
-//            return false;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(Boolean result) {
-//            super.onPostExecute(result);
-//            if(pDialog.isShowing())
-//                pDialog.dismiss();
-//            if(result){
-//                List<String> professionTypeList = new ArrayList<String>();
-//                for(Profession profession : professionList)
-//                    professionTypeList.add(profession.getType());
-//                
-//                JonopriyoDatabase dbInstance = new JonopriyoDatabase(ProfileNewActivity.this);
-//                dbInstance.open();
-//                for(Profession profession : professionList){
-//                    dbInstance.insertOrUpdateProfession(profession);
-//                }
-//                dbInstance.close();
-//
-//                String[] strarray = professionTypeList.toArray(new String[0]);
-//                generateSpinner(sProfession, strarray);
-//
-//                for(int professionIndex = 0; professionIndex < professionList.size(); professionIndex++){
-//                    if(professionId.equals(professionList.get(professionIndex).getId())){
-//                        sProfession.setSelection(professionIndex);
-//                        break;
-//                    }
-//                }
-//                sProfessionTouchable = false;
-//                sProfession.performClick();
-//            }
-//        }        
-//    }
-
-
-//    public class RetrieveEducationList extends AsyncTask<Long, Void, Boolean> {
-//
-//        @Override
-//        protected void onPreExecute() {
-//            super.onPreExecute();
-//            pDialog.show();
-//        }
-//
-//        @Override
-//        protected Boolean doInBackground(Long... params) {
-//            String rootUrl = Constants.URL_ROOT;
-//
-//            List<NameValuePair> urlParam = new ArrayList<NameValuePair>();
-//            urlParam.add(new BasicNameValuePair("method", Constants.METHOD_GET_EDUCATION));
-//
-//            ServerResponse response = jsonParser.retrieveServerData(Constants.REQUEST_TYPE_GET, rootUrl,
-//                    urlParam, null, null);
-//            if(response.getStatus() == 200){
-//                Log.d(">>>><<<<", "success in retrieving area list");
-//                educationList = Education.parseEducationList(response.getjObj().toString());
-//                return true;
-//            }
-//
-//            return false;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(Boolean result) {
-//            super.onPostExecute(result);
-//            if(pDialog.isShowing())
-//                pDialog.dismiss();
-//            if(result){
-//                List<String> educationTypeList = new ArrayList<String>();
-//                for(Education education : educationList)
-//                    educationTypeList.add(education.getType());
-//                
-//                JonopriyoDatabase dbInstance = new JonopriyoDatabase(ProfileNewActivity.this);
-//                dbInstance.open();
-//                for(Education education : educationList){
-//                    dbInstance.insertOrUpdateEducation(education);
-//                }
-//                dbInstance.close();
-//
-//                String[] strarray = educationTypeList.toArray(new String[0]);
-//                generateSpinner(sEducation, strarray);
-//
-//                for(int educationIndex = 0; educationIndex < educationList.size(); educationIndex++){
-//                    if(educationId.equals(educationList.get(educationIndex).getId())){
-//                        sEducation.setSelection(educationIndex);
-//                        break;
-//                    }
-//                }
-//                sEducationTouchable = false;
-//                sEducation.performClick();
-//            }
-//        }        
-//    }
 
 
 

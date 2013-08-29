@@ -43,7 +43,7 @@ public class PollResultActivity extends Activity {
     
     TextView PollQuestion, ParticipationCount, PollNumber;
 
-    private ProgressDialog pDialog;
+    ProgressDialog pDialog;
     JsonParser jsonParser;
     JonopriyoApplication appInstance;
 
@@ -227,10 +227,12 @@ public class PollResultActivity extends Activity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent i = new Intent(PollResultActivity.this, HomeActivity.class);
-        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(i);
-        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+        finish();
+        overridePendingTransition(R.anim.prev_slide_in, R.anim.prev_slide_out);
+//        Intent i = new Intent(PollResultActivity.this, HomeActivity.class);
+//        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//        startActivity(i);
+//        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
     }
 
 }

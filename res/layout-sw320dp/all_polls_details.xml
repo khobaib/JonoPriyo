@@ -146,7 +146,7 @@
         android:layout_toLeftOf="@+id/b_result_or_vote"
         android:text="You already voted"
         android:textColor="@color/black"
-        android:textSize="17dp"
+        android:textSize="20dp"
         android:textStyle="bold" />
 
 </RelativeLayout>

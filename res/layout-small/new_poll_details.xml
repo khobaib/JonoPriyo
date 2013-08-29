@@ -51,25 +51,26 @@
     </ListView>
 
     <TextView
-        android:id="@+id/tv_participation_count"
+        android:id="@+id/tv_participation_count_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignRight="@+id/lv_pollanswer_list"
         android:layout_below="@+id/lv_pollanswer_list"
         android:layout_marginTop="5dp"
-        android:text="22000"
-        android:textColor="@color/red"
+        android:layout_marginLeft="3dp"
+        android:text="Participation count: "
+        android:textColor="@color/black"
         android:textSize="16dp"
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/tv_participation_count_title"
+        android:id="@+id/tv_participation_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/tv_participation_count"
-        android:layout_toLeftOf="@+id/tv_participation_count"
-        android:text="Participation count: "
-        android:textColor="@color/black"
+        android:layout_alignTop="@+id/tv_participation_count_title"
+        android:layout_toLeftOf="@+id/tv_participation_count_title"
+        android:text="22000"
+        android:textColor="@color/red"
         android:textSize="16dp"
         android:textStyle="bold" />
     
@@ -107,7 +108,7 @@
         android:padding="8dp"
         android:text="Check Result"
         android:textColor="@color/white"
-        android:textSize="18dp"
+        android:textSize="20dp"
         android:textStyle="bold" />
 
     <TextView

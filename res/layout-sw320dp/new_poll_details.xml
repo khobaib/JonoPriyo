@@ -51,26 +51,27 @@
     </ListView>
 
     <TextView
-        android:id="@+id/tv_participation_count"
+        android:id="@+id/tv_participation_count_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignRight="@+id/lv_pollanswer_list"
         android:layout_below="@+id/lv_pollanswer_list"
         android:layout_marginTop="5dp"
-        android:text="22000"
-        android:textColor="@color/red"
-        android:textSize="18dp"
+        android:layout_marginLeft="4dp"
+        android:text="Participation count: "
+        android:textColor="@color/black"
+        android:textSize="20dp"
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/tv_participation_count_title"
+        android:id="@+id/tv_participation_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/tv_participation_count"
-        android:layout_toLeftOf="@+id/tv_participation_count"
-        android:text="Participation count: "
-        android:textColor="@color/black"
-        android:textSize="18dp"
+        android:layout_alignTop="@+id/tv_participation_count_title"
+        android:layout_toLeftOf="@+id/tv_participation_count_title"
+        android:text="22000"
+        android:textColor="@color/red"
+        android:textSize="20dp"
         android:textStyle="bold" />
     
         <TextView
@@ -82,7 +83,7 @@
         android:layout_marginTop="1dp"
         android:text="2013-08-15"
         android:textColor="@color/red"
-        android:textSize="18dp"
+        android:textSize="20dp"
         android:textStyle="bold" />
 
     <TextView
@@ -93,7 +94,7 @@
         android:layout_toLeftOf="@+id/tv_expiry_date"
         android:text="Last date of vote: "
         android:textColor="@color/black"
-        android:textSize="18dp"
+        android:textSize="20dp"
         android:textStyle="bold" />
 
     <Button
@@ -107,7 +108,7 @@
         android:padding="10dp"
         android:text="Check Result"
         android:textColor="@color/white"
-        android:textSize="20dp"
+        android:textSize="25dp"
         android:textStyle="bold" />
 
     <TextView
@@ -119,7 +120,7 @@
         android:layout_toLeftOf="@+id/b_result_or_vote"
         android:text="You already voted"
         android:textColor="@color/black"
-        android:textSize="18dp"
+        android:textSize="20dp"
         android:textStyle="bold" />
 
 </RelativeLayout>
