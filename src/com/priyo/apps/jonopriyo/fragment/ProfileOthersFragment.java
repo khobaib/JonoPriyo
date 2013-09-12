@@ -9,6 +9,7 @@ import org.apache.http.message.BasicNameValuePair;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -44,6 +45,10 @@ public class ProfileOthersFragment extends Fragment {
 
     List<Education> educationList;
     List<Profession> professionList;
+    
+    Typeface tf;
+    
+    TextView Gender, DoBTitle, ProfessionTitle, EducationTitle, OthersTitle;
 
     public static TextView DoB;
     public static String dobToStore;
@@ -144,7 +149,13 @@ public class ProfileOthersFragment extends Fragment {
 
         DoB = (TextView) view.findViewById(R.id.tv_dob);
         if(dobToStore != null)
-            DoB.setText(Utility.parseDate(ProfileOthersFragment.dobToStore));
+            DoB.setText(Utility.parseDate(ProfileOthersFragment.dobToStore));        
+        
+        Gender = (TextView) view.findViewById(R.id.tv_sex);
+        DoBTitle = (TextView) view.findViewById(R.id.tv_dob_title);
+        ProfessionTitle = (TextView) view.findViewById(R.id.tv_profession);
+        EducationTitle = (TextView) view.findViewById(R.id.tv_education);
+        OthersTitle = (TextView) view.findViewById(R.id.tv_title);
 
         return view;
     }
@@ -155,6 +166,20 @@ public class ProfileOthersFragment extends Fragment {
         this.activity = getActivity();
 
         if (this.activity != null) {
+            
+            tf = Typeface.createFromAsset(this.activity.getAssets(), "font/suttony.ttf");
+            
+            Gender.setTypeface(tf);
+            DoBTitle.setTypeface(tf);
+            ProfessionTitle.setTypeface(tf);
+            EducationTitle.setTypeface(tf);
+            OthersTitle.setTypeface(tf);
+            
+            Gender.setText(getResources().getString(R.string.gender));
+            DoBTitle.setText(getResources().getString(R.string.dob));
+            ProfessionTitle.setText(getResources().getString(R.string.profession));
+            EducationTitle.setText(getResources().getString(R.string.education));
+            OthersTitle.setText(getResources().getString(R.string.others));
 
             appInstance = (JonopriyoApplication) this.activity.getApplication();
             jsonParser = new JsonParser();

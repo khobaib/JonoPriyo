@@ -1,6 +1,7 @@
 package com.priyo.apps.jonopriyo.fragment;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -18,6 +19,10 @@ public class ProfileBasicFragment extends Fragment {
     public static EditText etName, etPhone;
     public static TextView tvEmail;
     
+    TextView NameTitle, EmailTitle, PhoneTitle, BasicInfoTitle;
+    
+    Typeface tf;
+    
     public ProfileBasicFragment() {
     }
 
@@ -34,6 +39,12 @@ public class ProfileBasicFragment extends Fragment {
         etPhone = (EditText) view.findViewById(R.id.et_phone);
         
         tvEmail = (TextView) view.findViewById(R.id.tv_email);
+        
+        NameTitle = (TextView) view.findViewById(R.id.tv_name);
+        EmailTitle = (TextView) view.findViewById(R.id.tv_email_title);
+        PhoneTitle = (TextView) view.findViewById(R.id.tv_phone);
+        BasicInfoTitle = (TextView) view.findViewById(R.id.tv_title);
+        
         return view;
     }
 
@@ -43,6 +54,17 @@ public class ProfileBasicFragment extends Fragment {
         this.activity = getActivity();
 
         if (this.activity != null) {
+            tf = Typeface.createFromAsset(this.activity.getAssets(), "font/suttony.ttf");
+            NameTitle.setTypeface(tf);
+            EmailTitle.setTypeface(tf);
+            PhoneTitle.setTypeface(tf);
+            BasicInfoTitle.setTypeface(tf);
+            
+            NameTitle.setText(getResources().getString(R.string.name));
+            EmailTitle.setText(getResources().getString(R.string.email));
+            PhoneTitle.setText(getResources().getString(R.string.phone));
+            BasicInfoTitle.setText(getResources().getString(R.string.basic_info));
+            
             if(ProfileNewActivity.regInfo != null)
                 tvEmail.setText(ProfileNewActivity.regInfo.getEmail());
         }

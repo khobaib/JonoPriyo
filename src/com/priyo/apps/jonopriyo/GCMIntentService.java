@@ -39,11 +39,14 @@ public class GCMIntentService extends GCMBaseIntentService {
     @Override
     protected void onRegistered(Context context, String registrationId) {
         Log.i(TAG, "Device registered: regId = " + registrationId);
-        Utility.displayMessage(context, "Your device registred with GCM");
+//        Utility.displayMessage(context, "Your device registred with GCM");
         
         JonopriyoApplication appInstance = (JonopriyoApplication) getApplication();
         Long userId = appInstance.getUserId();
-        ServerUtilities.register(context, userId, registrationId);
+        boolean registered = ServerUtilities.register(context, userId, registrationId);
+        if (!registered) {
+            GCMRegistrar.unregister(context);
+        }
     }
  
     /**
@@ -52,7 +55,7 @@ public class GCMIntentService extends GCMBaseIntentService {
     @Override
     protected void onUnregistered(Context context, String registrationId) {
         Log.i(TAG, "Device unregistered");
-        Utility.displayMessage(context, getString(R.string.gcm_unregistered));
+//        Utility.displayMessage(context, getString(R.string.gcm_unregistered));
         if (GCMRegistrar.isRegisteredOnServer(context)) {
             ServerUtilities.unregister(context, registrationId);
         } else {
@@ -79,7 +82,7 @@ public class GCMIntentService extends GCMBaseIntentService {
     protected void onDeletedMessages(Context context, int total) {
         Log.i(TAG, "Received deleted messages notification");
         String message = getString(R.string.gcm_deleted, total);
-        Utility.displayMessage(context, message);
+//        Utility.displayMessage(context, message);
         // notifies user
         generateNotification(context, message);
     }
@@ -90,15 +93,14 @@ public class GCMIntentService extends GCMBaseIntentService {
     @Override
     public void onError(Context context, String errorId) {
         Log.i(TAG, "Received error: " + errorId);
-        Utility.displayMessage(context, getString(R.string.gcm_error, errorId));
+//        Utility.displayMessage(context, getString(R.string.gcm_error, errorId));
     }
  
     @Override
     protected boolean onRecoverableError(Context context, String errorId) {
         // log message
         Log.i(TAG, "Received recoverable error: " + errorId);
-        Utility.displayMessage(context, getString(R.string.gcm_recoverable_error,
-                errorId));
+//        Utility.displayMessage(context, getString(R.string.gcm_recoverable_error, errorId));
         return super.onRecoverableError(context, errorId);
     }
     

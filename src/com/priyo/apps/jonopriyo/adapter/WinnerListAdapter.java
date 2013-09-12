@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ public class WinnerListAdapter extends ArrayAdapter<Winner>{
     private List<Winner> mWinners;
     private LayoutInflater mInflater;
     private ImageLoader imageLoader;
+    private Typeface tf;
 
     public WinnerListAdapter(Context context, List<Winner> winners) {
         super(context, R.layout.row_winners);
@@ -28,6 +30,7 @@ public class WinnerListAdapter extends ArrayAdapter<Winner>{
         this.mWinners = winners;
         mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         imageLoader = new ImageLoader((Activity) mContext);
+        tf = Typeface.createFromAsset(mContext.getAssets(), "font/suttony.ttf");
     }
     
     
@@ -38,6 +41,9 @@ public class WinnerListAdapter extends ArrayAdapter<Winner>{
         TextView WinnerAddress;
         ImageView WinnerPic;
         TextView PrizeVal;
+        
+        TextView WinnerTitle;
+        TextView PrizeTitle;
     }
     
     
@@ -56,6 +62,16 @@ public class WinnerListAdapter extends ArrayAdapter<Winner>{
             holder.WinnerPic = (ImageView) convertView.findViewById(R.id.iv_winner_pic);
             holder.PrizeVal = (TextView) convertView.findViewById(R.id.tv_prize);
             
+            holder.WinnerTitle = (TextView) convertView.findViewById(R.id.tv_winner);
+            holder.PrizeTitle = (TextView) convertView.findViewById(R.id.tv_prize_title);
+            
+            holder.WinnerTitle.setTypeface(tf);
+            holder.PrizeTitle.setTypeface(tf);
+            holder.PrizeVal.setTypeface(tf);
+            
+            holder.WinnerTitle.setText(mContext.getResources().getString(R.string.winner) + ":");
+            holder.PrizeTitle.setText(mContext.getResources().getString(R.string.prize) + ":");
+            
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -67,7 +83,7 @@ public class WinnerListAdapter extends ArrayAdapter<Winner>{
         holder.PollNumber.setText("" + item.getPollNumber());
         holder.PollWinner.setText(item.getWinnerName());
         holder.WinnerAddress.setText(item.getAddress());
-        holder.PrizeVal.setText("Won " + item.getPrizeValue() + " " + item.getPrizeType());
+        holder.PrizeVal.setText(item.getPrizeValue() + " " + item.getPrizeType() + " " + mContext.getResources().getString(R.string.won));
         
         String imageUrl = item.getWinnerPicUrl();
         imageLoader.DisplayImage(imageUrl, holder.WinnerPic);

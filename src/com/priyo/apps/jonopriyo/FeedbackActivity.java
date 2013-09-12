@@ -13,17 +13,21 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.priyo.apps.jonopriyo.model.ServerResponse;
 import com.priyo.apps.jonopriyo.parser.JsonParser;
 import com.priyo.apps.jonopriyo.utility.Constants;
 import com.priyo.apps.jonopriyo.utility.JonopriyoApplication;
+import com.priyo.apps.jonopriyo.utility.Utility;
 
 public class FeedbackActivity extends Activity {
 
@@ -42,14 +46,32 @@ public class FeedbackActivity extends Activity {
         pDialog = new ProgressDialog(FeedbackActivity.this);
         jsonParser = new JsonParser();
         appInstance = (JonopriyoApplication) getApplication();
+        
+        Typeface tf = Typeface.createFromAsset(getAssets(), "font/suttony.ttf");
 
         etFeedback = (EditText) findViewById(R.id.et_feedback);
+        etFeedback.setTypeface(tf);
+        etFeedback.setHint(getResources().getString(R.string.write_feedback_here));
+        
+        Utility.HandlingHintsInEditText(FeedbackActivity.this, etFeedback, getResources().getString(R.string.write_feedback_here));        
+        
+        TextView Title = (TextView) findViewById(R.id.tv_title);
+        Title.setTypeface(tf);
+        Title.setText(getResources().getString(R.string.feedback));
+        
+        TextView feedbackTitle = (TextView) findViewById(R.id.tv_feedback_title);
+        feedbackTitle.setTypeface(tf);
+        feedbackTitle.setText(getResources().getString(R.string.feedback_content));
+        
+        Button Submit = (Button) findViewById(R.id.b_submit);
+        Submit.setTypeface(tf);
+        Submit.setText(getResources().getString(R.string.submit_feedback));
     }
 
     public void onClickSubmit(View v){
         String feedback = etFeedback.getText().toString().trim();
         if(feedback == null || feedback.equals("")){
-            Toast.makeText(FeedbackActivity.this, "Feedback text is empty.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(FeedbackActivity.this, "দয়া করে মন্তব্য লিখুন", Toast.LENGTH_SHORT).show();
         }
         else{
             new UploadFeedback().execute(feedback);

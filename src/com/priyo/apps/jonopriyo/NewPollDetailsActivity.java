@@ -80,12 +80,15 @@ public class NewPollDetailsActivity extends Activity {
         Participation.setText(getResources().getString(R.string.participation));
 
         Title = (TextView) findViewById(R.id.tv_title);
-        Title.setText("Poll #" + thisPoll.getNumber());
+        Title.setTypeface(tf);
+        Title.setText(getResources().getString(R.string.poll) + " #" + thisPoll.getNumber());
 
         ParticipationCount = (TextView) findViewById(R.id.tv_participation_count);
-        ParticipationCount.setText("" + thisPoll.getParticipationCount());
+        ParticipationCount.setTypeface(tf);
+        ParticipationCount.setText(thisPoll.getParticipationCount() + "");
         
         ExpiryDate = (TextView) findViewById(R.id.tv_expiry_date); 
+        ExpiryDate.setTypeface(tf);
         ExpiryDate.setText(Utility.parseDate(thisPoll.getExpiryDate()));
 
         ResultOrVote = (Button) findViewById(R.id.b_result_or_vote);
@@ -140,7 +143,7 @@ public class NewPollDetailsActivity extends Activity {
 
     public void onClickResultOrVote(View v){
         if(NewPollAnswerListAdapter.mSelectedPosition == -1){
-            Toast.makeText(NewPollDetailsActivity.this, "Please choose an option first.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(NewPollDetailsActivity.this, "আপনাকে একটি অপসন সিলেক্ট করতে হবে", Toast.LENGTH_SHORT).show();
         }
         else{
             if(flagResultOrVote == VOTE_NOW){
@@ -173,7 +176,7 @@ public class NewPollDetailsActivity extends Activity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            pDialog.setMessage("Casting your vote, Please wait...");
+            pDialog.setMessage("আপনার ভোট গৃহীত হচ্ছে, একটু অপেক্ষা করুন...");
             pDialog.show();
         }
 
@@ -218,10 +221,10 @@ public class NewPollDetailsActivity extends Activity {
             if(pDialog.isShowing())
                 pDialog.dismiss();
             if(success){
-                alert("Your vote is cast successfully.", true);
+                alert(getResources().getString(R.string.your_vote_is_cast), true);
             }
             else{
-                alert("You already voted once.", false);
+                alert(getResources().getString(R.string.you_voted_once), false);
             }
 
         }
@@ -230,8 +233,9 @@ public class NewPollDetailsActivity extends Activity {
 
     void alert(String message, final Boolean success) {
         AlertDialog.Builder bld = new AlertDialog.Builder(NewPollDetailsActivity.this);
+
         bld.setMessage(message);
-        bld.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+        bld.setNeutralButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {

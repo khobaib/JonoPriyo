@@ -145,25 +145,26 @@ public class SplashActivity extends Activity {
                 finish();
             }
             else{
-                alert("Login error, please try again");                
+                startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+                finish();               
             }
 
         }
     }
 
-    void alert(String message) {
-        AlertDialog.Builder bld = new AlertDialog.Builder(SplashActivity.this);
-        bld.setMessage(message);
-        bld.setNeutralButton("OK", new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                startActivity(new Intent(SplashActivity.this, LoginActivity.class));
-                finish();
-
-            }
-        });
-        bld.create().show();
-    }
+//    void alert(String message) {
+//        AlertDialog.Builder bld = new AlertDialog.Builder(SplashActivity.this);
+//        bld.setMessage(message);
+//        bld.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+//
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+//                finish();
+//
+//            }
+//        });
+//        bld.create().show();
+//    }
 
 }

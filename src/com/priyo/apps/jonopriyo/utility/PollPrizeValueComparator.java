@@ -13,9 +13,9 @@ public class PollPrizeValueComparator implements Comparator<Poll> {
     @Override
     public int compare(Poll pollA, Poll pollB) {
         if (pollA.getPollPrize().getValue() < pollB.getPollPrize().getValue())
-            return -1;
-        if (pollA.getPollPrize().getValue() > pollB.getPollPrize().getValue())
             return 1;
+        if (pollA.getPollPrize().getValue() > pollB.getPollPrize().getValue())
+            return -1;
         return 0;
     }
 

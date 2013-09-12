@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white" >
+
+    <RelativeLayout
+        android:id="@+id/rl_title"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentTop="true"
+        android:background="@color/red" >
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="About Us"
+            android:textColor="@color/white"
+            android:textSize="25dp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl_title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:fadingEdge="none"
+        android:scrollbars="none" >
+
+        <RelativeLayout
+            android:id="@+id/rl_credit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <RelativeLayout
+                android:id="@+id/rl_app_desc"
+                android:layout_width="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_height="35dp" >
+
+                <ImageView
+                    android:id="@+id/iv_app_logo"
+                    android:layout_width="35dp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_launcher" />
+
+                <TextView
+                    android:id="@+id/tv_app_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@+id/iv_app_logo"
+                    android:text="jonoPriyo"
+                    android:textColor="@color/red"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_org_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_alignLeft="@+id/rl_app_desc"
+                android:layout_below="@+id/rl_app_desc"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="5dp" >
+
+                <TextView
+                    android:id="@+id/tv_powered_by"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="Product of:"
+                    android:textColor="@color/black"
+                    android:textSize="15dp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/iv_app_logo"
+                    android:layout_width="70dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="3dp"
+                    android:layout_toRightOf="@+id/tv_powered_by"
+                    android:src="@drawable/priyo_logo_new" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/about_us_body"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rl_org_desc"
+                android:layout_margin="20dp"
+                android:text="TextView"
+                android:textColor="@color/black"
+                android:textSize="15dp" />
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>

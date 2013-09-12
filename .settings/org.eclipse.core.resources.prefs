@@ -1,4 +1,14 @@
 eclipse.preferences.version=1
+encoding//src/com/priyo/apps/jonopriyo/AllPollsActivity.java=UTF-8
+encoding//src/com/priyo/apps/jonopriyo/FeedbackActivity.java=UTF-8
 encoding//src/com/priyo/apps/jonopriyo/HomeActivity.java=UTF-8
+encoding//src/com/priyo/apps/jonopriyo/LoginActivity.java=UTF-8
+encoding//src/com/priyo/apps/jonopriyo/LoginFirstTimeActivity.java=UTF-8
+encoding//src/com/priyo/apps/jonopriyo/MyPollsActivity.java=UTF-8
+encoding//src/com/priyo/apps/jonopriyo/NewPollDetailsActivity.java=UTF-8
+encoding//src/com/priyo/apps/jonopriyo/NewPollsActivity.java=UTF-8
+encoding//src/com/priyo/apps/jonopriyo/PollResultActivity.java=UTF-8
 encoding//src/com/priyo/apps/jonopriyo/ProfileNewActivity.java=UTF-8
+encoding//src/com/priyo/apps/jonopriyo/WinnerListActivity.java=UTF-8
 encoding//src/com/priyo/apps/jonopriyo/uni2bijoyconverer/BijoyFontUtil.java=UTF-8
+encoding//src/com/priyo/apps/jonopriyo/utility/Utility.java=UTF-8

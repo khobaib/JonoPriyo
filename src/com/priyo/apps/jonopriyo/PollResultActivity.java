@@ -26,6 +26,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -49,6 +50,8 @@ public class PollResultActivity extends Activity {
 
     List<PollResult> pollResultList;
     Poll thisPoll;
+    
+    Typeface tf;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,9 +62,15 @@ public class PollResultActivity extends Activity {
         jsonParser = new JsonParser();
         pDialog = new ProgressDialog(PollResultActivity.this);
         
+        tf = Typeface.createFromAsset(getAssets(), "font/suttony.ttf");
+        
+        
         PollQuestion = (TextView) findViewById(R.id.tv_poll_question);
         ParticipationCount = (TextView) findViewById(R.id.tv_participation_count);
         PollNumber = (TextView) findViewById(R.id.tv_poll_number);
+        
+        ParticipationCount.setTypeface(tf);
+        PollNumber.setTypeface(tf);
 
         appInstance = (JonopriyoApplication) getApplication();
         thisPoll = appInstance.getSelectedPoll();
@@ -72,9 +81,9 @@ public class PollResultActivity extends Activity {
 
     private void createChart(){
         
-        PollNumber.setText("Poll #" + thisPoll.getNumber());
+        PollNumber.setText(getResources().getString(R.string.poll) +" #" + thisPoll.getNumber());
         PollQuestion.setText(thisPoll.getQuestion());
-        ParticipationCount.setText(thisPoll.getParticipationCount() + " people participated.");
+        ParticipationCount.setText(thisPoll.getParticipationCount() + " " + getResources().getString(R.string.participation));
         
         List<String> pollAnswerList = new ArrayList<String>();
         List<Long> pollCastCount = new ArrayList<Long>();
@@ -105,9 +114,11 @@ public class PollResultActivity extends Activity {
         mRenderer.setMargins(new int[] { 0, 0, 0, 0 });
         //        mRenderer.setZoomButtonsVisible(true);
         mRenderer.setStartAngle(90);
-
+        
+        
+        
         for (int i = 0; i < resultNumberCount; i++) {
-            mSeries.add(pollAnswerList.get(i) + " " + pollCastCount.get(i), pollCastCount.get(i));
+            mSeries.add(pollAnswerList.get(i) + " " + pollCastCount.get(i) + "\n", pollCastCount.get(i));
             SimpleSeriesRenderer renderer = new SimpleSeriesRenderer();
             renderer.setColor(COLORS[(mSeries.getItemCount() - 1) % COLORS.length]);
             mRenderer.addSeriesRenderer(renderer);
@@ -170,7 +181,7 @@ public class PollResultActivity extends Activity {
         protected void onPreExecute() {
             super.onPreExecute();
 
-            pDialog.setMessage("Retrieving poll data, Please wait...");
+            pDialog.setMessage("একটু অপেক্ষা করুন...");
             pDialog.show();
         }
 
@@ -209,7 +220,7 @@ public class PollResultActivity extends Activity {
             if(success){
                 Log.d(">>>>>>>>>>>", "success");
                 if(pollResultList.size() == 0){
-                    Toast.makeText(PollResultActivity.this, "No vote cast yet.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PollResultActivity.this, "এই জরিপে এখনও ভোট প্রদান করা হয়নি.", Toast.LENGTH_SHORT).show();
                 }
                 else{
                     createChart();

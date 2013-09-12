@@ -30,7 +30,7 @@
         android:paddingTop="4dp"
         android:text="112"
         android:textColor="@color/white"
-        android:textSize="14dp" />
+        android:textSize="16dp" />
 
 
     <TextView
@@ -54,10 +54,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_poll_question"
+        android:layout_marginTop="3dp"
         android:layout_toRightOf="@+id/iv_poll_pic"
         android:text="Category:"
         android:textColor="@color/red"
-        android:textSize="12dp"
+        android:textSize="13dp"
         android:textStyle="bold" />
 
     <TextView
@@ -81,7 +82,7 @@
         android:layout_toRightOf="@+id/tv_category"
         android:text=" Rel:"
         android:textColor="@color/red"
-        android:textSize="12dp"
+        android:textSize="13dp"
         android:textStyle="bold" />
 
     <TextView
@@ -112,10 +113,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/tv_participation_count"
-        android:layout_marginLeft="2dp"
+        android:layout_marginLeft="4dp"
         android:layout_toRightOf="@+id/tv_participation_count"
         android:text="people participated."
         android:textColor="@color/black"
+        android:textStyle="bold" 
         android:textSize="13dp" />
 
     <TextView
@@ -126,7 +128,7 @@
         android:layout_toRightOf="@+id/iv_poll_pic"
         android:text="Prize:"
         android:textColor="@color/black"
-        android:textSize="14dp"
+        android:textSize="13dp"
         android:textStyle="bold" />
 
     <TextView
@@ -151,18 +153,7 @@
         android:focusable="false"
         android:text="Vote Now"
         android:textColor="@color/white"
-        android:textSize="14dp"
+        android:textSize="17dp"
         android:textStyle="bold" />
-
-<!--     <TextView
-        android:id="@+id/tv_voted"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:rotation="-20"
-        android:text="Voted"
-        android:textColor="@color/cast_poll_back"
-        android:textSize="50dp"
-        android:textStyle="bold" /> -->
 
 </RelativeLayout>

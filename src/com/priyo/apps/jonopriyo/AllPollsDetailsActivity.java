@@ -93,10 +93,12 @@ public class AllPollsDetailsActivity extends Activity{
         imageLoader = new ImageLoader(AllPollsDetailsActivity.this);
         
         Title = (TextView) findViewById(R.id.tv_title);
-        Title.setText("Poll #" + thisPoll.getNumber());
+        Title.setTypeface(tf);
+        Title.setText(getResources().getString(R.string.poll) + " #" + thisPoll.getNumber());
         
         ParticipationCount =  (TextView) findViewById(R.id.tv_participation_count);
-        ParticipationCount.setText("" + thisPoll.getParticipationCount());
+        ParticipationCount.setTypeface(tf);
+        ParticipationCount.setText(thisPoll.getParticipationCount() + "");
         
         ResultOrVote = (Button) findViewById(R.id.b_result_or_vote);
         ResultOrVote.setTypeface(tf);

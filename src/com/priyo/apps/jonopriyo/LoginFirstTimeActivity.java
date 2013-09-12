@@ -226,7 +226,7 @@ public class LoginFirstTimeActivity extends FragmentActivity implements OnDateSe
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            pDialog.setMessage("Please wait while app is uploading your profile data...");
+            pDialog.setMessage("একটু অপেক্ষা করুন...");
             pDialog.show();
         }
 
@@ -273,10 +273,10 @@ public class LoginFirstTimeActivity extends FragmentActivity implements OnDateSe
                 pDialog.dismiss();
             if(result){
                 appInstance.setFirstTimeLoggedIn(false);
-                alert("Your profile is updated. To make yourself eligible to win polls, you must update your address.", true);
+                alert(getResources().getString(R.string.your_profile_is_updated), true);
             }
             else{
-                alert("Registration error, please try again.", false);
+                alert(getResources().getString(R.string.update_error), false);
             }
         }        
     }
@@ -290,7 +290,7 @@ public class LoginFirstTimeActivity extends FragmentActivity implements OnDateSe
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            pDialog.setMessage("Please wait while app is being initialized...");
+            pDialog.setMessage("অ্যাপ্লিকেশন সক্রিয় হচ্ছে...");
             pDialog.show();
         }
 
@@ -339,7 +339,7 @@ public class LoginFirstTimeActivity extends FragmentActivity implements OnDateSe
     void alert(String message, final Boolean success) {
         AlertDialog.Builder bld = new AlertDialog.Builder(LoginFirstTimeActivity.this);
         bld.setMessage(message);
-        bld.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+        bld.setNeutralButton("ঠিক আছে", new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {

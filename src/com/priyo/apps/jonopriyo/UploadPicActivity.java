@@ -20,6 +20,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -30,6 +31,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bugsense.trace.BugSenseHandler;
@@ -64,6 +66,8 @@ public class UploadPicActivity extends Activity {
     private String selectedImagePath;
     //ADDED
 //    private String filemanagerstring;
+    
+    Typeface tf;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +78,8 @@ public class UploadPicActivity extends Activity {
 
         appInstance = (JonopriyoApplication) getApplication();
         jsonParser = new JsonParser();
+        
+        tf = Typeface.createFromAsset(getAssets(), "font/suttony.ttf");
 
         ProfilePic = (ImageView) findViewById(R.id.iv_profile_pic);
         Update = (Button) findViewById(R.id.b_update);
@@ -82,6 +88,35 @@ public class UploadPicActivity extends Activity {
         String imageUrl = appInstance.getProfileImageUrl();
         imageLoader = new ImageLoader(UploadPicActivity.this);
         imageLoader.DisplayImage(imageUrl, ProfilePic);
+        
+        createBanglaText();
+    }
+    
+    private void createBanglaText() {
+
+        TextView Title = (TextView) findViewById(R.id.tv_title);
+        TextView TakePic = (TextView) findViewById(R.id.b_take_pic);
+        TextView GoToGallery = (TextView) findViewById(R.id.b_go_gallery);
+        
+        Title.setTypeface(tf);
+        TakePic.setTypeface(tf);
+        GoToGallery.setTypeface(tf);
+        Update.setTypeface(tf);
+
+        Title.setText(getResources().getString(R.string.profile_pic));
+        TakePic.setText(getResources().getString(R.string.take_pic));
+        GoToGallery.setText(getResources().getString(R.string.go_to_gallery));
+        Update.setText(getResources().getString(R.string.update));
+
+//        WInnerTitle.setTypeface(tf);
+//        WInnerTitle.setText(getResources().getString(R.string.winner));
+
+//        LatestPollVoteNow.setTypeface(tf);
+//        LatestPollVoteNow.setText(getResources().getString(R.string.cast_vote));
+//
+//        LatestPollParticipation.setTypeface(tf);
+        //        LatestPollParticipation.setText(tfUtil.convertUnicode2BijoyString(""));
+
     }
 
 

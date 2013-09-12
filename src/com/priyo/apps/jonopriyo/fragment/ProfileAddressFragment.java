@@ -7,6 +7,7 @@ import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -39,6 +40,10 @@ public class ProfileAddressFragment extends Fragment {
 
     public static List<City> cityList;
     public static List<Area> areaList;
+    
+    Typeface tf;
+    
+    TextView CountryTitle, CityTitle, AreaTitle, tvAddress, AddressTitle;
 
     JsonParser jsonParser;
 
@@ -92,8 +97,13 @@ public class ProfileAddressFragment extends Fragment {
             }
         });
 
-
-        etAddress = (EditText) view.findViewById(R.id.et_address);
+        etAddress = (EditText) view.findViewById(R.id.et_address);        
+        
+        CountryTitle = (TextView) view.findViewById(R.id.tv_country_title);
+        CityTitle = (TextView) view.findViewById(R.id.tv_city_title);
+        AreaTitle = (TextView) view.findViewById(R.id.tv_area_title);
+        tvAddress = (TextView) view.findViewById(R.id.tv_address_title);
+        AddressTitle = (TextView) view.findViewById(R.id.tv_title);
 
         return view;
     }
@@ -104,6 +114,20 @@ public class ProfileAddressFragment extends Fragment {
         this.activity = getActivity();
 
         if (this.activity != null) {
+            
+            tf = Typeface.createFromAsset(this.activity.getAssets(), "font/suttony.ttf");
+ 
+            CountryTitle.setTypeface(tf);
+            CityTitle.setTypeface(tf);
+            AreaTitle.setTypeface(tf);
+            tvAddress.setTypeface(tf);
+            AddressTitle.setTypeface(tf);
+            
+            CountryTitle.setText(getResources().getString(R.string.country));
+            CityTitle.setText(getResources().getString(R.string.city));
+            AreaTitle.setText(getResources().getString(R.string.area));
+            tvAddress.setText(getResources().getString(R.string.address));
+            AddressTitle.setText(getResources().getString(R.string.address));
 
             jsonParser = new JsonParser();
             //            new RetrieveCityList().execute(ProfileNewActivity.selectedCountryId);

@@ -5,16 +5,28 @@ import java.util.Collection;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Environment;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnFocusChangeListener;
+import android.view.View.OnTouchListener;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 
 public class Utility {
 
     public static final String[] month_name = {
         "JAN", "FEB", "MAR", "APR", "MAY", "JUN",
         "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"
+    };
+    
+    public static final String[] month_name_bangla = {
+        "জানুয়ারী", "ফেব্রুয়ারী", "মার্চ", "এপ্রিল", "মে", "জুন",
+        "জুলাই", "আগস্ট", "সেপ্টেম্বর", "অক্টোবর", "নভেম্বর", "ডিসেম্বর"
     };
     
     
@@ -61,7 +73,7 @@ public class Utility {
         Log.d(">>>>>>>>", "year = " + year + " month = " + month + " day = " + day);
         String dateToShow = dateFromDb;
         if(month > 0 && month <=12)
-            dateToShow = day + " " + month_name[month-1] + " " + year;
+            dateToShow = day + " " + month_name_bangla[month-1] + " " + year;
         return dateToShow;
     }
     
@@ -104,10 +116,46 @@ public class Utility {
         return false;
     }
 
-    public static void displayMessage(Context context, String message) {
-        Intent intent = new Intent(Constants.DISPLAY_MESSAGE_ACTION);
-        intent.putExtra(Constants.EXTRA_MESSAGE, message);
-        context.sendBroadcast(intent);
+//    public static void displayMessage(Context context, String message) {
+//        Intent intent = new Intent(Constants.DISPLAY_MESSAGE_ACTION);
+//        intent.putExtra(Constants.EXTRA_MESSAGE, message);
+//        context.sendBroadcast(intent);
+//    }
+    
+    
+   public static void HandlingHintsInEditText(final Context context, final EditText et, final String hintText) {
+        
+        final Typeface tf = Typeface.createFromAsset(context.getAssets(), "font/suttony.ttf");
+        et.setOnTouchListener(new OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                et.setHint("");
+                et.setTypeface(Typeface.SANS_SERIF); 
+
+                return false;
+            }
+        });
+
+        et.setOnFocusChangeListener(new OnFocusChangeListener() {
+
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                    et.setHint("");
+                    ((InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE)).toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+//                    et.requestFocus();
+                }
+                else{
+                    if(et.getText().toString().equals("")){
+                        et.setTypeface(tf);
+                        et.setHint(hintText);
+                        ((InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(et.getWindowToken(), 0);
+                    }
+                }
+
+            }
+        });                
     }
 
 }

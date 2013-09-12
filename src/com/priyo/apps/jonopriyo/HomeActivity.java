@@ -208,11 +208,12 @@ public class HomeActivity extends Activity {
                 GCMRegistrar.register(this, Constants.SENDER_ID);
                 Log.d(">>>>><<<<<", "regId = " + GCMRegistrar.getRegistrationId(HomeActivity.this));
             } else {
-                // Device is already registered on GCM
+                // if the device is already registered in our server?? this flag becomes true when we get success response
+                // while connecting to our server earlier.
                 if (GCMRegistrar.isRegisteredOnServer(HomeActivity.this)) {
-                    // Skips registration.             
+                 // Skips registration in the server             
                     Log.d(TAG, "Is already registered in server");
-                    //                       Toast.makeText(getApplicationContext(), "Already registered with GCM", Toast.LENGTH_LONG).show();
+                    //                       Toast.makeText(getApplicationContext(), "Already registered with server", Toast.LENGTH_LONG).show();
                 } else {
                     // Try to register again, but not in the UI thread.
                     // It's also necessary to cancel the thread onDestroy(),
@@ -405,6 +406,9 @@ public class HomeActivity extends Activity {
 
                 LatestPollTitle.setText(latestPoll.getQuestion());
                 LatestPollParticipation.setText(latestPoll.getParticipationCount() + " জন অংশগ্রহন করেছে");
+                
+                if(latestPoll.getIsCastByMe())
+                    LatestPollVoteNow.setVisibility(View.GONE);
 
             }
             else{    
@@ -530,7 +534,7 @@ public class HomeActivity extends Activity {
     void alert(String message, final Boolean success) {
         AlertDialog.Builder bld = new AlertDialog.Builder(HomeActivity.this);
         bld.setMessage(message);
-        bld.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+        bld.setNeutralButton("ঠিক আছে", new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -664,7 +668,7 @@ public class HomeActivity extends Activity {
             //                            return;
             //                        }
 
-            pDialog.setMessage("Sharing the app in FB");
+            pDialog.setMessage("অপ্লিকেসনটি ফেসবুকে শেয়ার করা হচ্ছে");
             pDialog.show();
 
             Bundle postParams = new Bundle();
@@ -721,7 +725,7 @@ public class HomeActivity extends Activity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            pDialog.setMessage("Loading...");
+            pDialog.setMessage("একটু অপেক্ষা করুন...");
             pDialog.show();
         }
 

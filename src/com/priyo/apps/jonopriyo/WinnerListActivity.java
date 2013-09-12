@@ -11,6 +11,7 @@ import org.json.JSONObject;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -55,6 +56,8 @@ public class WinnerListActivity extends FragmentActivity implements LoaderManage
 
     ListView WinnerList;
     TextView Title;
+    
+    Typeface tf;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +68,16 @@ public class WinnerListActivity extends FragmentActivity implements LoaderManage
 
         appInstance = (JonopriyoApplication) getApplication();
         appToken = appInstance.getAccessToken();
+        tf = Typeface.createFromAsset(getAssets(), "font/suttony.ttf");
+        
+        Title = (TextView) findViewById(R.id.tv_title);
+        Title.setTypeface(tf);
+        Title.setText(getResources().getString(R.string.winners));
+        
+        Button SwitchWinner = (Button) findViewById(R.id.b_winner);
+        SwitchWinner.setTypeface(tf);
+        SwitchWinner.setText(getResources().getString(R.string.my_win));
+        
         userId = appInstance.getUserId();
         flagWinnerType = Constants.FLAG_WINNER_ALL;
         winnerList = null;
@@ -101,7 +114,7 @@ public class WinnerListActivity extends FragmentActivity implements LoaderManage
             getSupportLoaderManager().initLoader(LOADER_ID, null, WinnerListActivity.this);
             //            new GetOfferData().execute();
         } else {
-            alert("Please check your internet connection.");
+            alert("অনুগ্রহপূর্বক আপনার ইন্টারনেট  কানেকসন পরীক্ষা করুন.");
         }
     }
 
@@ -117,15 +130,15 @@ public class WinnerListActivity extends FragmentActivity implements LoaderManage
     }
 
     public void onClickWinner(View v){
-        if(((Button) v).getText().equals("My Wins")){
-            ((Button) v).setText("All Wins");
+        if(flagWinnerType == Constants.FLAG_WINNER_ALL){
+            ((Button) v).setText(getResources().getString(R.string.all_wins));
             flagWinnerType = Constants.FLAG_WINNER_ONLY_ME;
             if(winnerList != null){
                 showMyWinList();                
             }
         }
         else{
-            ((Button) v).setText("My Wins");
+            ((Button) v).setText(getResources().getString(R.string.my_wins));
             flagWinnerType = Constants.FLAG_WINNER_ALL;
             mWinnerListAdapter.setData(winnerList);
         }
@@ -179,7 +192,7 @@ public class WinnerListActivity extends FragmentActivity implements LoaderManage
         protected void onPreExecute() {
             super.onPreExecute();
             winnersPoll = null;
-            pDialog.setMessage("Loading...");
+            pDialog.setMessage("একটু অপেক্ষা করুন...");
             pDialog.show();
         }
 

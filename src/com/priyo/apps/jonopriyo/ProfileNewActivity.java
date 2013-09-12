@@ -14,6 +14,7 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -25,14 +26,14 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,7 +46,6 @@ import com.priyo.apps.jonopriyo.fragment.ProfileBasicFragment;
 import com.priyo.apps.jonopriyo.fragment.ProfileOthersFragment;
 import com.priyo.apps.jonopriyo.model.Area;
 import com.priyo.apps.jonopriyo.model.City;
-import com.priyo.apps.jonopriyo.model.Country;
 import com.priyo.apps.jonopriyo.model.RegistrationInfo;
 import com.priyo.apps.jonopriyo.model.ServerResponse;
 import com.priyo.apps.jonopriyo.parser.JsonParser;
@@ -73,7 +73,7 @@ public class ProfileNewActivity extends FragmentActivity implements OnDateSetLis
 
     public static Long selectedCountryId, selectedCityId, selectedAreaId;    
     public static Long educationId, professionId;
-    public static String sex;
+    public static String sex = "male";
 
 
     JsonParser jsonParser;
@@ -83,6 +83,11 @@ public class ProfileNewActivity extends FragmentActivity implements OnDateSetLis
     private static final int DATE_PICKER = 1;
 
     Calendar calendar;
+    
+    TextView Title;
+    Button Update;
+    
+    Typeface tf;
 
     //  boolean sProfessionSelectable, sEducationSelectable;
 //    boolean sProfessionTouchable, sEducationTouchable;
@@ -99,6 +104,16 @@ public class ProfileNewActivity extends FragmentActivity implements OnDateSetLis
         jsonParser = new JsonParser();
         calendar = Calendar.getInstance();
         pDialog = new ProgressDialog(ProfileNewActivity.this);  
+        
+        tf = Typeface.createFromAsset(getAssets(), "font/suttony.ttf");
+        
+        Title = (TextView) findViewById(R.id.tv_title);
+        Title.setTypeface(tf);
+        Title.setText(getResources().getString(R.string.profile));
+        
+        Update = (Button) findViewById(R.id.b_update);
+        Update.setTypeface(tf);
+        Update.setText(getResources().getString(R.string.update));
         
         
         new GetProfileData().execute();
@@ -149,13 +164,55 @@ public class ProfileNewActivity extends FragmentActivity implements OnDateSetLis
         View textEntryView = inflater.inflate(R.layout.dialog_change_password, null);
         final AlertDialog alert = new AlertDialog.Builder(ProfileNewActivity.this).create();
         alert.setView(textEntryView, 0, 0, 0, 0);
+        
+        TextView ChangePass = (TextView) textEntryView.findViewById(R.id.tv_title);
+        Typeface tf = Typeface.createFromAsset(getAssets(), "font/suttony.ttf");
+        ChangePass.setTypeface(tf);
+        ChangePass.setText(getResources().getString(R.string.change_pass));
 
         final EditText CurrentPass = (EditText) textEntryView.findViewById(R.id.et_current_password);
         final EditText NewPass = (EditText) textEntryView.findViewById(R.id.et_new_password);
         final EditText ConfirmNewPass = (EditText) textEntryView.findViewById(R.id.et_confirm_new_password);
 
-
+        CurrentPass.setTypeface(tf);
+        NewPass.setTypeface(tf);
+        ConfirmNewPass.setTypeface(tf);
+        CurrentPass.setHint(getResources().getString(R.string.current_pass));
+        NewPass.setHint(getResources().getString(R.string.new_pass));
+        ConfirmNewPass.setHint(getResources().getString(R.string.confirm_new_pass));
+        
         Button OK = (Button) textEntryView.findViewById(R.id.b_ok);
+        OK.setTypeface(tf);
+        OK.setText(getResources().getString(R.string.ok));        
+        
+        CurrentPass.setOnTouchListener(new OnTouchListener() {
+            
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                CurrentPass.setTypeface(Typeface.SANS_SERIF); 
+                return false;
+            }
+        });
+        
+        NewPass.setOnTouchListener(new OnTouchListener() {
+            
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                NewPass.setTypeface(Typeface.SANS_SERIF); 
+                return false;
+            }
+        });
+        
+        ConfirmNewPass.setOnTouchListener(new OnTouchListener() {
+            
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                ConfirmNewPass.setTypeface(Typeface.SANS_SERIF); 
+                return false;
+            }
+        });        
+        
+        
         OK.setOnClickListener(new OnClickListener() {
 
             @Override
@@ -163,12 +220,15 @@ public class ProfileNewActivity extends FragmentActivity implements OnDateSetLis
                 String curPass = CurrentPass.getText().toString();
                 String newPass = NewPass.getText().toString();
                 String confirmNewPass = ConfirmNewPass.getText().toString();
-                alert.dismiss(); 
-                // HERE WE NEED TO ADD CHECK ON CURRENT PASS, NEED TO MODIFY API
-                if(newPass.equals(confirmNewPass))
+                if(curPass.trim().equals("")){
+                    Toast.makeText(ProfileNewActivity.this, "বর্তমান পাসওয়ার্ড সঠিক ভাবে লিখুন", Toast.LENGTH_SHORT).show();
+                }
+                else if(newPass.trim().equals("") || newPass.equals(confirmNewPass)){
+                    alert.dismiss(); 
                     new ChangePasswordReq().execute(curPass, newPass);
+                }
                 else{
-                    Toast.makeText(ProfileNewActivity.this, "Confirmation mismatch.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ProfileNewActivity.this, "পাসওয়ার্ড নিশ্চিতকরণে ভুল হয়েছে", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -183,7 +243,7 @@ public class ProfileNewActivity extends FragmentActivity implements OnDateSetLis
         String selectedDate = ProfileOthersFragment.dobToStore;
 
         if(name == null || name.equals("")){
-            Toast.makeText(ProfileNewActivity.this, "Please insert your name.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ProfileNewActivity.this, "দয়া করে সঠিক ভাবে নাম লিখুন", Toast.LENGTH_SHORT).show();
         }
 
         else{
@@ -285,7 +345,10 @@ public class ProfileNewActivity extends FragmentActivity implements OnDateSetLis
             if(pDialog.isShowing())
                 pDialog.dismiss();
             if(result){
-                alert("Password updated.", false);
+                alert("পাসওয়ার্ড আপডেট করা হয়েছে", false);
+            }
+            else{
+                alert("পাসওয়ার্ড আপডেট সফল হয়নি, অনুগ্রহ করে আবার চেষ্টা করুন.", false);
             }
 
         }
@@ -354,10 +417,10 @@ public class ProfileNewActivity extends FragmentActivity implements OnDateSetLis
             if(pDialog.isShowing())
                 pDialog.dismiss();
             if(result){
-                alert("Profile Update successful.", true);
+                alert("প্রোফাইল আপডেট সফল হয়েছে.", true);
             }
             else{
-                alert("Error updating profile.", false);
+                alert("প্রোফাইল আপডেট সফল হয়নি, অনুগ্রহ করে আবার চেষ্টা করুন.", false);
             }
             //                updateUI();
         }        
@@ -371,7 +434,7 @@ public class ProfileNewActivity extends FragmentActivity implements OnDateSetLis
         protected void onPreExecute() {
             super.onPreExecute();
 
-            pDialog.setMessage("Loading...");
+            pDialog.setMessage("একটু অপেক্ষা করুন...");
             pDialog.show();
         }
 
@@ -523,7 +586,7 @@ public class ProfileNewActivity extends FragmentActivity implements OnDateSetLis
     void alert(String message, final Boolean success) {
         AlertDialog.Builder bld = new AlertDialog.Builder(ProfileNewActivity.this);
         bld.setMessage(message);
-        bld.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+        bld.setNeutralButton("ঠিক আছে", new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {

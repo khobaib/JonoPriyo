@@ -51,7 +51,7 @@ public class AllPollsActivity extends FragmentActivity implements LoaderManager.
     
     List<Poll> pollList;
     
-    final String[] sortParams = {"sort by Poll Number", "sort by Category", "sort by Release Date", "sort by prize value"};
+    final String[] sortParams = {"জরিপের ক্রম অনুযায়ী","জরিপের বিভাগ অনুযায়ী", "প্রকাশের তারিখ অনুযায়ী", "পুরস্কারের মূল্য অনুযায়ী"};
     Spinner sSort;
     
     Typeface tf;

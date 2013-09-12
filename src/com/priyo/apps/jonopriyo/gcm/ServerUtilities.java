@@ -64,17 +64,25 @@ public class ServerUtilities {
         for (int i = 1; i <= MAX_ATTEMPTS; i++) {
             Log.d(TAG, "Attempt #" + i + " to register");
             //            try {
-            Utility.displayMessage(context, context.getString(R.string.server_registering, i, MAX_ATTEMPTS));
+//            Utility.displayMessage(context, context.getString(R.string.server_registering, i, MAX_ATTEMPTS));
             JsonParser jsonParser = new JsonParser();
             response = jsonParser.retrieveServerData(Constants.REQUEST_TYPE_POST, serverUrl, null, postBody, null);
             //                post(serverUrl, params);
             if(response.getStatus() == Constants.RESPONSE_STATUS_CODE_SUCCESS){
-                GCMRegistrar.setRegisteredOnServer(context, true);
-                String message = context.getString(R.string.server_registered);
-                Utility.displayMessage(context, message);
-                return true;
-            }
-            //            } catch (IOException e) {
+                try {
+                    String successType = response.getjObj().getString("success");
+                    Log.d(">>>>>>>>>>><<<<<<<<<<", "SUCCESS type = " + successType);
+                    if(successType.equals("1")){
+                        GCMRegistrar.setRegisteredOnServer(context, true);
+                        String message = context.getString(R.string.server_registered);
+//                        Utility.displayMessage(context, message);
+                        return true;
+                    }
+                } catch (JSONException e) {
+                    return false;
+                }
+                return false;                              
+            }        
             else{
                 // Here we are simplifying and retrying on any error; in a real
                 // application, it should retry only on unrecoverable errors
@@ -97,7 +105,7 @@ public class ServerUtilities {
             }
         }
         String message = context.getString(R.string.server_register_error, MAX_ATTEMPTS);
-        Utility.displayMessage(context, message);
+//        Utility.displayMessage(context, message);
         return false;
     }
 
@@ -113,7 +121,7 @@ public class ServerUtilities {
             post(serverUrl, params);
             GCMRegistrar.setRegisteredOnServer(context, false);
             String message = context.getString(R.string.server_unregistered);
-            Utility.displayMessage(context, message);
+//            Utility.displayMessage(context, message);
         } catch (IOException e) {
             // At this point the device is unregistered from GCM, but still
             // registered in the server.
@@ -122,7 +130,7 @@ public class ServerUtilities {
             // a "NotRegistered" error message and should unregister the device.
             String message = context.getString(R.string.server_unregister_error,
                     e.getMessage());
-            Utility.displayMessage(context, message);
+//            Utility.displayMessage(context, message);
         }
     }
 
