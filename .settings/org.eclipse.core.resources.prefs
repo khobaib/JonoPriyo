@@ -1,6 +1,7 @@
 eclipse.preferences.version=1
 encoding//src/com/priyo/apps/jonopriyo/AllPollsActivity.java=UTF-8
 encoding//src/com/priyo/apps/jonopriyo/FeedbackActivity.java=UTF-8
+encoding//src/com/priyo/apps/jonopriyo/GCMIntentService.java=UTF-8
 encoding//src/com/priyo/apps/jonopriyo/HomeActivity.java=UTF-8
 encoding//src/com/priyo/apps/jonopriyo/LoginActivity.java=UTF-8
 encoding//src/com/priyo/apps/jonopriyo/LoginFirstTimeActivity.java=UTF-8

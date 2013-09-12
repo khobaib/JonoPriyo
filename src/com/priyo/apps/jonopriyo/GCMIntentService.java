@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.google.android.gcm.GCMBaseIntentService;
@@ -22,7 +23,6 @@ import com.google.android.gcm.GCMRegistrar;
 import com.priyo.apps.jonopriyo.gcm.ServerUtilities;
 import com.priyo.apps.jonopriyo.utility.Constants;
 import com.priyo.apps.jonopriyo.utility.JonopriyoApplication;
-import com.priyo.apps.jonopriyo.utility.Utility;
 
 public class GCMIntentService extends GCMBaseIntentService {
 
@@ -153,13 +153,10 @@ public class GCMIntentService extends GCMBaseIntentService {
 
         int icon = R.drawable.ic_launcher;
         CharSequence tickerText = "New Notification";
-        long when = System.currentTimeMillis();
+//        long when = System.currentTimeMillis();
 
-        Notification notification = new Notification(icon, tickerText, when);
-
-
-
-        CharSequence contentTitle = "Jonopriyo";
+//        Notification notification = new Notification(icon, tickerText, when);
+        CharSequence contentTitle = "জনপ্রিয়";
         CharSequence contentText = "" + text;
         Intent notificationIntent = new Intent(context, SplashActivity.class);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -167,7 +164,17 @@ public class GCMIntentService extends GCMBaseIntentService {
         notificationIntent.putExtra("message", text);
         PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
 
-        notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
+        Notification notification = new Notification.Builder(context)
+        .setContentTitle(contentTitle)
+        .setContentText(contentText)
+        .setTicker("জনপ্রিয় বার্তা")
+        .setSmallIcon(icon)     
+        .setContentIntent(contentIntent)
+        .setStyle(new Notification.BigTextStyle().bigText(text))
+        .build();
+
+
+//        notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
         notification.flags |= Notification.FLAG_AUTO_CANCEL;
 
         // Play default notification sound
