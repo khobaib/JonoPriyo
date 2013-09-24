@@ -85,7 +85,7 @@ public class FeedbackActivity extends Activity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            pDialog.setMessage("Loading...");
+            pDialog.setMessage("একটু অপেক্ষা করুন...");
             pDialog.setIndeterminate(true);
             pDialog.setCancelable(true);
             pDialog.show();
@@ -130,10 +130,10 @@ public class FeedbackActivity extends Activity {
             if(pDialog.isShowing())
                 pDialog.dismiss();
             if(success){
-                alert("Successfully posted feedback", true);
+                alert("আপনার মন্তব্য গৃহীত হয়েছে, ধন্যবাদ", true);
             }
             else{
-                alert("Failed to post feedback. Please try again", false);
+                alert("মন্তব্য প্রদানে সমস্যা দেখা দিয়েছে, অনুগ্রহ করে আবার চেস্টা করুন", false);
             }
 
         }
@@ -143,7 +143,7 @@ public class FeedbackActivity extends Activity {
     void alert(String message, final boolean success) {
         AlertDialog.Builder bld = new AlertDialog.Builder(FeedbackActivity.this);
         bld.setMessage(message);
-        bld.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+        bld.setNeutralButton("ঠিক আছে", new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {

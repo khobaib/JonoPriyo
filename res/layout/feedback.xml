@@ -24,44 +24,53 @@
             android:textStyle="bold" />
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/tv_feedback_title"
+    <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rl_title"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="10dp"
-        android:text="You can provide feedback on the app - how we can make it better. Any constructive feedback would be appreciated."
-        android:textColor="@color/black"
-        android:textSize="18dp"
-        android:textStyle="bold" />
+        android:layout_centerHorizontal="true" >
 
-    <EditText
-        android:id="@+id/et_feedback"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_feedback_title"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="10dp"
-        android:background="@drawable/background_login"
-        android:gravity="top"
-        android:hint="Write feedback here"
-        android:minLines="8"
-        android:textColor="@color/black"
-        android:textSize="18dp" />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
 
-    <Button
-        android:id="@+id/b_submit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/et_feedback"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:padding="15dp"
-        android:onClick="onClickSubmit"
-        android:text="Submit Feedback"
-        android:textColor="@color/white"
-        android:textSize="18dp"
-        android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tv_feedback_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="You can provide feedback on the app - how we can make it better. Any constructive feedback would be appreciated."
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/et_feedback"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_feedback_title"
+                android:layout_margin="10dp"
+                android:background="@drawable/background_login"
+                android:gravity="top"
+                android:hint="Write feedback here"
+                android:minLines="8"
+                android:textColor="@color/black"
+                android:textSize="18dp" />
+
+            <Button
+                android:id="@+id/b_submit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/et_feedback"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:onClick="onClickSubmit"
+                android:padding="15dp"
+                android:text="Submit Feedback"
+                android:textColor="@color/white"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+    </ScrollView>
 
 </RelativeLayout>

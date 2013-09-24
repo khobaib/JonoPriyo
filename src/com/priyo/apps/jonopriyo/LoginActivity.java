@@ -246,7 +246,7 @@ public class LoginActivity extends Activity {
                 alert("এটি বৈধ ইমেইল নয়");
             }
             else{
-                alert("আপনার রিকুএস্ট টি সঠিক ভাবে সম্পন্ন হয়নি");
+                alert("আপনার রিকুয়েস্ট টি সঠিক ভাবে সম্পন্ন হয়নি");
             }
 
         }

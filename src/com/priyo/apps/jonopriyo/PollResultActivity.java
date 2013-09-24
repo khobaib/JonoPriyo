@@ -110,8 +110,10 @@ public class PollResultActivity extends Activity {
         mRenderer.setBackgroundColor(Color.argb(255, 255, 255, 255));
         mRenderer.setLabelsTextSize(30);
         mRenderer.setLabelsColor(getResources().getColor(R.color.red));
-        mRenderer.setLegendTextSize(40);
-        mRenderer.setMargins(new int[] { 0, 0, 0, 0 });
+        mRenderer.setLegendTextSize(20);
+        mRenderer.setMargins(new int[] { 10, 0, 0, 0 });
+        mRenderer.setFitLegend(true);
+        mRenderer.setLegendHeight(20);
         //        mRenderer.setZoomButtonsVisible(true);
         mRenderer.setStartAngle(90);
         

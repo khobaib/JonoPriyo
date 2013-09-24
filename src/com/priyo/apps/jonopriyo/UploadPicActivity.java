@@ -300,7 +300,7 @@ public class UploadPicActivity extends Activity {
 
         protected void onPreExecute() {
             pDialog = new ProgressDialog(UploadPicActivity.this);
-            pDialog.setMessage("Uploading profile pic ...");
+            pDialog.setMessage("আপনার প্রোফাইল পিকচার আপলোড হচ্ছে, একটু অপেক্ষা করুন...");
             pDialog.setIndeterminate(true);
             pDialog.setCancelable(false);
             pDialog.show();

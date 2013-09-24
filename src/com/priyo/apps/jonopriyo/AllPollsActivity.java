@@ -63,7 +63,7 @@ public class AllPollsActivity extends FragmentActivity implements LoaderManager.
         
         tf = Typeface.createFromAsset(getAssets(), "font/suttony.ttf");
         pDialog = new ProgressDialog(AllPollsActivity.this);
-        pDialog.setMessage("Loading...");
+        pDialog.setMessage("একটু অপেক্ষা করুন...");
         
         Title = (TextView) findViewById(R.id.tv_title);
         Title.setTypeface(tf);
@@ -145,7 +145,7 @@ public class AllPollsActivity extends FragmentActivity implements LoaderManager.
             getSupportLoaderManager().restartLoader(LOADER_ID, null, AllPollsActivity.this);
 //            new GetOfferData().execute();
         } else {
-            alert("Please check your internet connection.");
+            alert("অনুগ্রহপূর্বক আপনার ইন্টারনেট কানেকসন চেক করুন");
         }
     }
     
@@ -185,7 +185,7 @@ public class AllPollsActivity extends FragmentActivity implements LoaderManager.
         AlertDialog.Builder bld = new AlertDialog.Builder(AllPollsActivity.this);
         bld.setMessage(message);
         bld.setCancelable(false);
-        bld.setNeutralButton("Ok", null);
+        bld.setNeutralButton("ঠিক আছে", null);
         bld.create().show();
     }
 

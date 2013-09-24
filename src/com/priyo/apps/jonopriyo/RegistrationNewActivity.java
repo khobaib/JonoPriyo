@@ -134,16 +134,16 @@ public class RegistrationNewActivity extends Activity {
         phone = Phone.getText().toString();
 
         if(name == null || name.equals("")){
-            Toast.makeText(RegistrationNewActivity.this, "Please insert your name.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(RegistrationNewActivity.this, "নাম এর ফিল্ড টি খালি রয়েছে", Toast.LENGTH_SHORT).show();
         }
         else if(email == null || email.equals("")){
-            Toast.makeText(RegistrationNewActivity.this, "Please insert your email.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(RegistrationNewActivity.this, "ইমেইল ফিল্ড টি খালি রয়েছে", Toast.LENGTH_SHORT).show();
         }
         else if(password == null || password.equals("")){
-            Toast.makeText(RegistrationNewActivity.this, "Please select your password.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(RegistrationNewActivity.this, "পাসওয়ার্ড ফিল্ড টি খালি রয়েছে", Toast.LENGTH_SHORT).show();
         }
         else if(!password.equals(confirmPass)){
-            Toast.makeText(RegistrationNewActivity.this, "Password mismatch.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(RegistrationNewActivity.this, "পাসওয়ার্ড কনফার্ম সফল হয়নি", Toast.LENGTH_SHORT).show();
         }
 
         else{
@@ -158,7 +158,7 @@ public class RegistrationNewActivity extends Activity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            pDialog.setMessage("Please wait while app is registering you to the system...");
+            pDialog.setMessage("আপনি নিবন্ধিত হচ্ছেন, একটু অপেক্ষা করুন...");
             pDialog.show();
         }
 
@@ -203,10 +203,10 @@ public class RegistrationNewActivity extends Activity {
             if(pDialog != null)
                 pDialog.dismiss();
             if(result){
-                alert("Registration Successful.", true);
+                alert("আপনার নিবন্ধন সফল হয়েছে, ধন্যবাদ", true);
             }
             else{
-                alert("Email already exist, please try again.", false);
+                alert("এই ইমেল টি ইতোপূর্বে ব্যবহার করা হয়েছে, অনুগ্রহপূর্বক অন্য কোনো ইমেল এড্রেস ব্যবহার করুন", false);
             }
         }        
     }
@@ -214,7 +214,7 @@ public class RegistrationNewActivity extends Activity {
     void alert(String message, final Boolean success) {
         AlertDialog.Builder bld = new AlertDialog.Builder(RegistrationNewActivity.this);
         bld.setMessage(message);
-        bld.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+        bld.setNeutralButton("ঠিক আছে", new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {

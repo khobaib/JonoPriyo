@@ -52,7 +52,7 @@ public class MyPollsActivity  extends FragmentActivity implements LoaderManager.
     
     Typeface tf;
     
-    final String[] sortParams = {"জরিপের ক্রম অনুযায়ী","জরিপের বিভাগ অনুযায়ী", "প্রকাশের তারিখ অনুযায়ী", "পুরস্কারের মূল্য অনুযায়ী"};
+    final String[] sortParams = {"জরিপের ক্রম অনুযায়ী", "জরিপের বিভাগ অনুযায়ী", "প্রকাশের তারিখ অনুযায়ী", "পুরস্কারের মূল্য অনুযায়ী"};
     Spinner sSort;
     
     @Override
@@ -61,7 +61,7 @@ public class MyPollsActivity  extends FragmentActivity implements LoaderManager.
         setContentView(R.layout.poll_list);
         
         pDialog = new ProgressDialog(MyPollsActivity.this);
-        pDialog.setMessage("Loading...");
+        pDialog.setMessage("একটু অপেক্ষা করুন...");
     
         tf = Typeface.createFromAsset(getAssets(), "font/suttony.ttf");
         
@@ -164,7 +164,7 @@ public class MyPollsActivity  extends FragmentActivity implements LoaderManager.
             getSupportLoaderManager().restartLoader(LOADER_ID, null, MyPollsActivity.this);
 //            new GetOfferData().execute();
         } else {
-            alert("Please check your internet connection.");
+            alert("অনুগ্রহপূর্বক আপনার ইন্টারনেট কানেকসন চেক করুন");
         }
     }
     
@@ -204,7 +204,7 @@ public class MyPollsActivity  extends FragmentActivity implements LoaderManager.
         AlertDialog.Builder bld = new AlertDialog.Builder(MyPollsActivity.this);
         bld.setMessage(message);
         bld.setCancelable(false);
-        bld.setNeutralButton("Ok", null);
+        bld.setNeutralButton("ঠিক আছে", null);
         bld.create().show();
     }
 
