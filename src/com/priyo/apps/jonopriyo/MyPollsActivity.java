@@ -23,6 +23,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.bugsense.trace.BugSenseHandler;
 import com.priyo.apps.jonopriyo.adapter.NothingSelectedSpinnerAdapter;
 import com.priyo.apps.jonopriyo.adapter.PollListAdapter;
 import com.priyo.apps.jonopriyo.loader.PollListLoader;
@@ -35,7 +36,7 @@ import com.priyo.apps.jonopriyo.utility.PollPrizeValueComparator;
 import com.priyo.apps.jonopriyo.utility.PollReleaseDateComparator;
 import com.priyo.apps.jonopriyo.utility.Utility;
 
-public class MyPollsActivity  extends FragmentActivity implements LoaderManager.LoaderCallbacks<List<Poll>> {
+public class MyPollsActivity extends FragmentActivity implements LoaderManager.LoaderCallbacks<List<Poll>> {
 
     private static final int LOADER_ID = 1;
     
@@ -58,6 +59,7 @@ public class MyPollsActivity  extends FragmentActivity implements LoaderManager.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        BugSenseHandler.initAndStartSession(MyPollsActivity.this, "e8ecd3f1");
         setContentView(R.layout.poll_list);
         
         pDialog = new ProgressDialog(MyPollsActivity.this);
@@ -127,9 +129,13 @@ public class MyPollsActivity  extends FragmentActivity implements LoaderManager.
                 // TODO Auto-generated method stub
 
             }
-        });
-        
-        
+        });                
+    }
+    
+    @Override
+    protected void onStop() {
+        super.onStop();
+        BugSenseHandler.closeSession(MyPollsActivity.this);
     }
     
     public void onClickSort(View v){
@@ -171,6 +177,7 @@ public class MyPollsActivity  extends FragmentActivity implements LoaderManager.
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if ((keyCode == KeyEvent.KEYCODE_BACK)) { // Back key pressed
+            BugSenseHandler.closeSession(MyPollsActivity.this);
             finish();
             overridePendingTransition(R.anim.prev_slide_in, R.anim.prev_slide_out);
             return true;

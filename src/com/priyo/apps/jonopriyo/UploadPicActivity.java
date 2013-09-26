@@ -277,8 +277,8 @@ public class UploadPicActivity extends Activity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if ((keyCode == KeyEvent.KEYCODE_BACK)) { // Back key pressed
-            finish();
             BugSenseHandler.closeSession(UploadPicActivity.this);
+            finish();            
             overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
             return true;
         }

@@ -23,6 +23,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.bugsense.trace.BugSenseHandler;
 import com.priyo.apps.jonopriyo.adapter.NothingSelectedSpinnerAdapter;
 import com.priyo.apps.jonopriyo.adapter.PollListAdapter;
 import com.priyo.apps.jonopriyo.loader.PollListLoader;
@@ -59,6 +60,7 @@ public class AllPollsActivity extends FragmentActivity implements LoaderManager.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        BugSenseHandler.initAndStartSession(AllPollsActivity.this, "e8ecd3f1");
         setContentView(R.layout.poll_list);
         
         tf = Typeface.createFromAsset(getAssets(), "font/suttony.ttf");
@@ -136,6 +138,13 @@ public class AllPollsActivity extends FragmentActivity implements LoaderManager.
     }
     
     @Override
+    protected void onStop() {
+        super.onStop();
+        BugSenseHandler.closeSession(AllPollsActivity.this);
+    }
+    
+    
+    @Override
     protected void onResume() {
         super.onResume();
         if (Utility.hasInternet(AllPollsActivity.this)) {
@@ -174,6 +183,7 @@ public class AllPollsActivity extends FragmentActivity implements LoaderManager.
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if ((keyCode == KeyEvent.KEYCODE_BACK)) { // Back key pressed
+            BugSenseHandler.closeSession(AllPollsActivity.this);
             finish();
             overridePendingTransition(R.anim.prev_slide_in, R.anim.prev_slide_out);
             return true;

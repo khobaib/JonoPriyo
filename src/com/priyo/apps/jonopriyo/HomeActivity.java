@@ -30,6 +30,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bugsense.trace.BugSenseHandler;
 import com.facebook.FacebookRequestError;
 import com.facebook.HttpMethod;
 import com.facebook.Request;
@@ -102,6 +103,7 @@ public class HomeActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        BugSenseHandler.initAndStartSession(HomeActivity.this, "e8ecd3f1");
         setContentView(R.layout.home);   
 
 
@@ -148,6 +150,12 @@ public class HomeActivity extends Activity {
         registerGCM();                   
 
 
+    }
+    
+    @Override
+    protected void onStop() {
+        super.onStop();
+        BugSenseHandler.closeSession(HomeActivity.this);
     }
 
 
