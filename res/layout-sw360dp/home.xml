@@ -144,10 +144,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:background="@drawable/button_winner"
-                    android:onClick="onClickWinners"
-                    android:text=""
-                    android:textColor="@color/white"
-                    android:textStyle="bold" />
+                    android:onClick="onClickWinners" />
 
                 <Button
                     android:id="@+id/b_profile"
@@ -156,10 +153,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_weight="1"
                     android:background="@drawable/button_profile"
-                    android:onClick="onClickProfile"
-                    android:text=""
-                    android:textColor="@color/white"
-                    android:textStyle="bold" />
+                    android:onClick="onClickProfile" />
 
                 <Button
                     android:id="@+id/b_share"
@@ -168,10 +162,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_weight="1"
                     android:background="@drawable/button_share"
-                    android:onClick="onClickShare"
-                    android:text=""
-                    android:textColor="@color/white"
-                    android:textStyle="bold" />
+                    android:onClick="onClickShare" />
             </LinearLayout>
 
             <LinearLayout

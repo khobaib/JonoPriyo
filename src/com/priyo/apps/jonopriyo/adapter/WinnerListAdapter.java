@@ -43,7 +43,7 @@ public class WinnerListAdapter extends ArrayAdapter<Winner>{
         TextView PrizeVal;
         
         TextView WinnerTitle;
-        TextView PrizeTitle;
+//        TextView PrizeTitle;
     }
     
     
@@ -63,14 +63,14 @@ public class WinnerListAdapter extends ArrayAdapter<Winner>{
             holder.PrizeVal = (TextView) convertView.findViewById(R.id.tv_prize);
             
             holder.WinnerTitle = (TextView) convertView.findViewById(R.id.tv_winner);
-            holder.PrizeTitle = (TextView) convertView.findViewById(R.id.tv_prize_title);
+//            holder.PrizeTitle = (TextView) convertView.findViewById(R.id.tv_prize_title);
             
             holder.WinnerTitle.setTypeface(tf);
-            holder.PrizeTitle.setTypeface(tf);
+//            holder.PrizeTitle.setTypeface(tf);
             holder.PrizeVal.setTypeface(tf);
             
             holder.WinnerTitle.setText(mContext.getResources().getString(R.string.winner) + ":");
-            holder.PrizeTitle.setText(mContext.getResources().getString(R.string.prize) + ":");
+//            holder.PrizeTitle.setText(mContext.getResources().getString(R.string.prize) + ":");
             
             convertView.setTag(holder);
         } else {

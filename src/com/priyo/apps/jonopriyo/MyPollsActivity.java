@@ -193,6 +193,7 @@ public class MyPollsActivity extends FragmentActivity implements LoaderManager.L
     @Override
     public void onLoadFinished(Loader<List<Poll>> loader, List<Poll> pollList) {
         this.pollList = pollList;
+        Log.e("?????????", "pollList size = " + pollList.size());
         Collections.sort(pollList, new PollReleaseDateComparator());
         mPollListAdapter.setData(pollList);
         if(pDialog.isShowing())

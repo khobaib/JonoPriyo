@@ -138,7 +138,7 @@ public class WinnerListActivity extends FragmentActivity implements LoaderManage
             }
         }
         else{
-            ((Button) v).setText(getResources().getString(R.string.my_wins));
+            ((Button) v).setText(getResources().getString(R.string.my_win));
             flagWinnerType = Constants.FLAG_WINNER_ALL;
             mWinnerListAdapter.setData(winnerList);
         }

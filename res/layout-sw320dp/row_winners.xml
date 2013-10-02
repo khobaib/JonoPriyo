@@ -6,14 +6,14 @@
 
     <ImageView
         android:id="@+id/iv_winner_pic"
-        android:layout_width="110dp"
-        android:layout_height="110dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:layout_marginLeft="1dp"
         android:layout_marginTop="1dp"
         android:background="@drawable/image_back"
-        android:padding="5dp"
+        android:padding="4dp"
         android:scaleType="fitXY" />
 
     <TextView
@@ -24,13 +24,13 @@
         android:layout_alignTop="@+id/iv_winner_pic"
         android:background="@drawable/badge_poll_number"
         android:gravity="center"
-        android:paddingBottom="4dp"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:paddingTop="4dp"
+        android:paddingBottom="3dp"
+        android:paddingLeft="7dp"
+        android:paddingRight="7dp"
+        android:paddingTop="3dp"
         android:text="112"
         android:textColor="@color/white"
-        android:textSize="14dp" />
+        android:textSize="13dp" />
 
     <TextView
         android:id="@+id/tv_poll"
@@ -46,22 +46,7 @@
         android:minLines="2"
         android:text="Who will win the champions trophy?"
         android:textColor="@color/black"
-        android:textSize="15dp" />
-
-    <!--
-         <TextView
-        android:id="@+id/tv_prize"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/tv_poll"
-        android:gravity="center"
-        android:rotation="-20"
-        android:text="Won 12000 cash"
-        android:textColor="@color/red"
-        android:textSize="15dp"
-        android:textStyle="bold" />
-    -->
+        android:textSize="14dp" />
 
     <TextView
         android:id="@+id/tv_winner"
@@ -71,7 +56,7 @@
         android:layout_below="@+id/tv_poll"
         android:text="Winner:"
         android:textColor="@color/black"
-        android:textSize="15dp"
+        android:textSize="14dp"
         android:textStyle="bold" />
 
     <TextView
@@ -85,7 +70,7 @@
         android:singleLine="true"
         android:text="Khobaib"
         android:textColor="@color/red"
-        android:textSize="14dp"
+        android:textSize="13dp"
         android:textStyle="bold" />
 
     <TextView
@@ -98,18 +83,8 @@
         android:maxLines="2"
         android:text="Gulshan, Dhaka, Bangladesh"
         android:textColor="@color/black"
-        android:textSize="14dp" />
+        android:textSize="13dp" />
 
-<!--     <TextView
-        android:id="@+id/tv_prize_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/tv_poll"
-        android:layout_below="@+id/tv_winner_address"
-        android:text="Prize:"
-        android:textColor="@color/black"
-        android:textSize="14dp"
-        android:textStyle="bold" /> -->
 
     <TextView
         android:id="@+id/tv_prize"
@@ -121,13 +96,13 @@
         android:singleLine="true"
         android:text="12000"
         android:textColor="@color/red"
-        android:textSize="14dp"
+        android:textSize="13dp"
         android:textStyle="bold" />
 
     <View
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_below="@+id/tv_prize_title"
-        android:layout_marginTop="8dp" />
+        android:layout_marginTop="7dp" />
 
 </RelativeLayout>

@@ -50,11 +50,10 @@ public class PollListLoader extends AsyncTaskLoader<List<Poll>> {
                 JSONArray pollArray = result.getJSONArray("poll_list");
                 
                 pollList = Poll.parsePollList(pollArray.toString());
+                return pollList;
             } catch (JSONException e) {
                 e.printStackTrace();
-            }            
-
-            return pollList;
+            }                        
         }
 
         return null;

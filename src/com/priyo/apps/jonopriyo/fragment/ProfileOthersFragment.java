@@ -45,9 +45,9 @@ public class ProfileOthersFragment extends Fragment {
 
     List<Education> educationList;
     List<Profession> professionList;
-    
+
     Typeface tf;
-    
+
     TextView Gender, DoBTitle, ProfessionTitle, EducationTitle, OthersTitle;
 
     public static TextView DoB;
@@ -150,7 +150,7 @@ public class ProfileOthersFragment extends Fragment {
         DoB = (TextView) view.findViewById(R.id.tv_dob);
         if(dobToStore != null)
             DoB.setText(Utility.parseDate(ProfileOthersFragment.dobToStore));        
-        
+
         Gender = (TextView) view.findViewById(R.id.tv_sex);
         DoBTitle = (TextView) view.findViewById(R.id.tv_dob_title);
         ProfessionTitle = (TextView) view.findViewById(R.id.tv_profession);
@@ -166,15 +166,15 @@ public class ProfileOthersFragment extends Fragment {
         this.activity = getActivity();
 
         if (this.activity != null) {
-            
+
             tf = Typeface.createFromAsset(this.activity.getAssets(), "font/suttony.ttf");
-            
+
             Gender.setTypeface(tf);
             DoBTitle.setTypeface(tf);
             ProfessionTitle.setTypeface(tf);
             EducationTitle.setTypeface(tf);
             OthersTitle.setTypeface(tf);
-            
+
             Gender.setText(getResources().getString(R.string.gender));
             DoBTitle.setText(getResources().getString(R.string.dob));
             ProfessionTitle.setText(getResources().getString(R.string.profession));
@@ -185,41 +185,51 @@ public class ProfileOthersFragment extends Fragment {
             jsonParser = new JsonParser();
             //            calendar = Calendar.getInstance();
             pDialog = new ProgressDialog(this.activity); 
-            
+
             if(dobToStore != null)
                 DoB.setText(Utility.parseDate(ProfileOthersFragment.dobToStore));
-            
+
             JonopriyoDatabase dbInstance = new JonopriyoDatabase(this.activity);
             dbInstance.open();
             professionList = dbInstance.retrieveProfessionList();
             educationList = dbInstance.retrieveEducationList();
             dbInstance.close();
 
-            List<String> educationTypeList = new ArrayList<String>();
-            for(Education education : educationList)
-                educationTypeList.add(education.getType());
+            if(educationList == null || educationList.size() == 0){
+                new RetrieveEducationList().execute();
+            }
+            else{
+                List<String> educationTypeList = new ArrayList<String>();
+                for(Education education : educationList)
+                    educationTypeList.add(education.getType());
 
-            String[] eArray = educationTypeList.toArray(new String[0]);
-            generateSpinner(ProfileOthersFragment.sEducation, eArray);
+                String[] eArray = educationTypeList.toArray(new String[0]);
+                generateSpinner(ProfileOthersFragment.sEducation, eArray);
 
-            for(int educationIndex = 0; educationIndex < educationList.size(); educationIndex++){
-                if(ProfileNewActivity.educationId.equals(educationList.get(educationIndex).getId())){
-                    ProfileOthersFragment.sEducation.setSelection(educationIndex);
-                    break;
+                for(int educationIndex = 0; educationIndex < educationList.size(); educationIndex++){
+                    if(ProfileNewActivity.educationId.equals(educationList.get(educationIndex).getId())){
+                        ProfileOthersFragment.sEducation.setSelection(educationIndex);
+                        break;
+                    }
                 }
             }
 
-            List<String> professionTypeList = new ArrayList<String>();
-            for(Profession profession : professionList)
-                professionTypeList.add(profession.getType());
+            if(professionList == null || professionList.size() == 0){
+                new RetrieveProfessionList().execute();
+            }
+            else{
+                List<String> professionTypeList = new ArrayList<String>();
+                for(Profession profession : professionList)
+                    professionTypeList.add(profession.getType());
 
-            String[] pArray = professionTypeList.toArray(new String[0]);
-            generateSpinner(ProfileOthersFragment.sProfession, pArray);
+                String[] pArray = professionTypeList.toArray(new String[0]);
+                generateSpinner(ProfileOthersFragment.sProfession, pArray);
 
-            for(int professionIndex = 0; professionIndex < professionList.size(); professionIndex++){
-                if(ProfileNewActivity.professionId.equals(professionList.get(professionIndex).getId())){
-                    ProfileOthersFragment.sProfession.setSelection(professionIndex);
-                    break;
+                for(int professionIndex = 0; professionIndex < professionList.size(); professionIndex++){
+                    if(ProfileNewActivity.professionId.equals(professionList.get(professionIndex).getId())){
+                        ProfileOthersFragment.sProfession.setSelection(professionIndex);
+                        break;
+                    }
                 }
             }
 

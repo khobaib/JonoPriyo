@@ -28,19 +28,19 @@ public class GCMIntentService extends GCMBaseIntentService {
 
     @SuppressWarnings("hiding")
     private static final String TAG = "GCMIntentService";
-    
+
     public GCMIntentService() {
         super(Constants.SENDER_ID);
     }
- 
+
     /**
      * Method called on device registered
      **/
     @Override
     protected void onRegistered(Context context, String registrationId) {
         Log.i(TAG, "Device registered: regId = " + registrationId);
-//        Utility.displayMessage(context, "Your device registred with GCM");
-        
+        //        Utility.displayMessage(context, "Your device registred with GCM");
+
         JonopriyoApplication appInstance = (JonopriyoApplication) getApplication();
         Long userId = appInstance.getUserId();
         boolean registered = ServerUtilities.register(context, userId, registrationId);
@@ -48,14 +48,14 @@ public class GCMIntentService extends GCMBaseIntentService {
             GCMRegistrar.unregister(context);
         }
     }
- 
+
     /**
      * Method called on device un registred
      * */
     @Override
     protected void onUnregistered(Context context, String registrationId) {
         Log.i(TAG, "Device unregistered");
-//        Utility.displayMessage(context, getString(R.string.gcm_unregistered));
+        //        Utility.displayMessage(context, getString(R.string.gcm_unregistered));
         if (GCMRegistrar.isRegisteredOnServer(context)) {
             ServerUtilities.unregister(context, registrationId);
         } else {
@@ -64,7 +64,7 @@ public class GCMIntentService extends GCMBaseIntentService {
             Log.i(TAG, "Ignoring unregister callback");
         }
     }
- 
+
     /**
      * Method called on Receiving a new message
      * */
@@ -74,7 +74,7 @@ public class GCMIntentService extends GCMBaseIntentService {
 
         handleMessage(context, intent);
     }
- 
+
     /**
      * Method called on receiving a deleted message
      * */
@@ -82,30 +82,30 @@ public class GCMIntentService extends GCMBaseIntentService {
     protected void onDeletedMessages(Context context, int total) {
         Log.i(TAG, "Received deleted messages notification");
         String message = getString(R.string.gcm_deleted, total);
-//        Utility.displayMessage(context, message);
+        //        Utility.displayMessage(context, message);
         // notifies user
         generateNotification(context, message);
     }
- 
+
     /**
      * Method called on Error
      * */
     @Override
     public void onError(Context context, String errorId) {
         Log.i(TAG, "Received error: " + errorId);
-//        Utility.displayMessage(context, getString(R.string.gcm_error, errorId));
+        //        Utility.displayMessage(context, getString(R.string.gcm_error, errorId));
     }
- 
+
     @Override
     protected boolean onRecoverableError(Context context, String errorId) {
         // log message
         Log.i(TAG, "Received recoverable error: " + errorId);
-//        Utility.displayMessage(context, getString(R.string.gcm_recoverable_error, errorId));
+        //        Utility.displayMessage(context, getString(R.string.gcm_recoverable_error, errorId));
         return super.onRecoverableError(context, errorId);
     }
-    
-    
-    
+
+
+
     private void handleMessage(Context context, Intent intent) {
         Log.e("Jonopriyo App", "Message received");
         Bundle extras = intent.getExtras();
@@ -113,8 +113,9 @@ public class GCMIntentService extends GCMBaseIntentService {
         if (extras != null) {
             Log.e("Notification received----------", "" + (String) extras.get("notification"));
             String not = "" + (String) extras.get("notification");
-//            Comman.setPrefesetPreferencerence(context, "MESSAGE", not);
-            createNotification(context, not);
+            //            Comman.setPrefesetPreferencerence(context, "MESSAGE", not);
+            if(!not.equals("Registered"))
+                createNotification(context, not);
         }
 
     }
@@ -153,9 +154,9 @@ public class GCMIntentService extends GCMBaseIntentService {
 
         int icon = R.drawable.ic_launcher;
         CharSequence tickerText = "New Notification";
-//        long when = System.currentTimeMillis();
+        //        long when = System.currentTimeMillis();
 
-//        Notification notification = new Notification(icon, tickerText, when);
+        //        Notification notification = new Notification(icon, tickerText, when);
         CharSequence contentTitle = "জনপ্রিয়";
         CharSequence contentText = "" + text;
         Intent notificationIntent = new Intent(context, SplashActivity.class);
@@ -174,7 +175,7 @@ public class GCMIntentService extends GCMBaseIntentService {
         .build();
 
 
-//        notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
+        //        notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
         notification.flags |= Notification.FLAG_AUTO_CANCEL;
 
         // Play default notification sound
@@ -210,7 +211,7 @@ public class GCMIntentService extends GCMBaseIntentService {
         }
 
     }
- 
+
     /**
      * Issues a notification to inform the user that server has sent a message.
      */
@@ -220,9 +221,9 @@ public class GCMIntentService extends GCMBaseIntentService {
         NotificationManager notificationManager = (NotificationManager)
                 context.getSystemService(Context.NOTIFICATION_SERVICE);
         Notification notification = new Notification(icon, message, when);
-         
+
         String title = context.getString(R.string.app_name);
-         
+
         Intent notificationIntent = new Intent(context, HomeActivity.class);
         // set intent so it does not start a new activity
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
@@ -230,14 +231,14 @@ public class GCMIntentService extends GCMBaseIntentService {
         PendingIntent intent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
         notification.setLatestEventInfo(context, title, message, intent);
         notification.flags |= Notification.FLAG_AUTO_CANCEL;
-         
+
         // Play default notification sound
         notification.defaults |= Notification.DEFAULT_SOUND;
-         
+
         // Vibrate if vibrate is enabled
         notification.defaults |= Notification.DEFAULT_VIBRATE;
         notificationManager.notify(0, notification);     
- 
+
     }
 
 }
