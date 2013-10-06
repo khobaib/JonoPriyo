@@ -580,7 +580,7 @@ public class HomeActivity extends Activity {
 
             Bundle postParams = new Bundle();
             //            postParams.putString("name", "জনপ্রিয়");
-            postParams.putString("name", "jonpPriyo");
+            postParams.putString("name", "jonoPriyo");
             postParams.putString("caption", "Download & vote.");
             postParams.putString("description", "First polling app in BGD.");
             postParams.putString("link", "http://apps.priyo.com/jonopriyo/index.php");
@@ -601,7 +601,7 @@ public class HomeActivity extends Activity {
                             JSONObject graphResponse = response.getGraphObject().getInnerJSONObject();
 
                             try {
-                                alert("Successfully Posted to facebook.", true);
+                                alert("পোস্টটি ফেসবুকে শেয়ার করা হয়েছে.", true);
                                 postId = graphResponse.getString("id");
                             } catch (JSONException e) {
                                 Log.i(">>>>><<", "JSON error "+ e.getMessage());
@@ -676,7 +676,7 @@ public class HomeActivity extends Activity {
             //                            return;
             //                        }
 
-            pDialog.setMessage("অপ্লিকেসনটি ফেসবুকে শেয়ার করা হচ্ছে");
+            pDialog.setMessage("অপ্লিকেশনটি ফেসবুকে শেয়ার করা হচ্ছে");
             pDialog.show();
 
             Bundle postParams = new Bundle();
@@ -700,7 +700,7 @@ public class HomeActivity extends Activity {
                             JSONObject graphResponse = response.getGraphObject().getInnerJSONObject();
 
                             try {
-                                alert("Successfully Posted to facebook.", true);
+                                alert("পোস্টটি ফেসবুকে শেয়ার করা হয়েছে.", true);
                                 postId = graphResponse.getString("id");
                             } catch (JSONException e) {
                                 Log.i(">>>>><<", "JSON error "+ e.getMessage());
@@ -711,15 +711,14 @@ public class HomeActivity extends Activity {
                     FacebookRequestError error = response.getError();
                     if (error != null) {
                         Log.d(TAG, error.getErrorMessage());
-                        Toast.makeText(HomeActivity.this, error.getErrorMessage(), Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(HomeActivity.this, error.getErrorMessage(), Toast.LENGTH_SHORT).show();
                     } else {
                         Log.d(TAG, postId);
                     }                    
                 }
             };
 
-            Request request = new Request(mCurrentSession, "me/feed", postParams, 
-                    HttpMethod.POST, callback);
+            Request request = new Request(mCurrentSession, "me/feed", postParams, HttpMethod.POST, callback);
 
             RequestAsyncTask task = new RequestAsyncTask(request);
             task.execute();

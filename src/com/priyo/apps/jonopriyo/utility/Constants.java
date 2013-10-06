@@ -23,7 +23,7 @@ public class Constants {
     public static final int FLAG_WINNER_ONLY_ME = 1;
     public static final int FLAG_WINNER_ALL = 2;
     
-    public static final String URL_ROOT = "http://apps.priyo.com/jonopriyo/api-v3.php";
+    public static final String URL_ROOT = "http://apps.priyo.com/jonopriyo/api-v4.php";
     
     public static final String METHOD_LOGIN = "user_login";
     public static final String METHOD_REGISTRATION = "registration";
